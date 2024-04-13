@@ -1,3 +1,5 @@
 <RCC>
-    <qresource prefix="/Images"/>
+    <qresource prefix="/">
+        <file>assets/tent.ico</file>
+    </qresource>
 </RCC>

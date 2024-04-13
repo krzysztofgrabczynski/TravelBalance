@@ -37,6 +37,7 @@ qt_add_executable(appWonderer
     ${QmlFiles}
     ${AssetsFiles}
     qml/components/GlobalVariables.qml
+    qml/components/GlobalIcon.qml
     qml/pages/LoginPage.qml
     assets.qrc
 )
