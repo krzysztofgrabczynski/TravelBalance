@@ -2,6 +2,8 @@
 build*
 Wonderer/*.user
 
+# Django
+
 # Prerequisites
 *.d
 
