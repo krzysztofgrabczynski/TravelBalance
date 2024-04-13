@@ -1,3 +1,7 @@
+# Felgo QT QML
+build*
+Wonderer/*.user
+
 # Prerequisites
 *.d
 
