@@ -1,16 +1,17 @@
 import Felgo
 import QtQuick
 import "./components"
+import "./pages"
 
 App {
-  GlobalVariables {
-    id: globalProperties
-  }
-
   NavigationStack {
+    id: navigationStackView
+    initialPage: loginPage
 
-    AppPage {
-      title: qsTr("Main Page")
+    Component {
+      id: loginPage
+      LoginPage {//onGoForward: stackView.push(drugaStrona)
+      }
     }
   }
 }

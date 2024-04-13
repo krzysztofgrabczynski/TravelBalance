@@ -4,6 +4,7 @@ import "."
 
 // FOR RELEASE UNCOMMENTTHIS
 
+
 /*
 AppImage {
   width: InsertWidth as below
@@ -11,13 +12,15 @@ AppImage {
   defaultSource: "qrc:/assets/tent.ico"
 }
 */
-AppIcon {
-
-  size: dp(30)
-  color: globalProperties.leadingGreenColor
-
-  iconType: IconType.heart
-  GlobalVariables {
-    id: globalProperties
+Rectangle {
+  AppIcon {
+    id: icon
+    size: dp(30)
+    color: globalProperties.leadingColor
+    iconType: IconType.heart
+    anchors.centerIn: parent
+    GlobalVariables {
+      id: globalProperties
+    }
   }
 }
