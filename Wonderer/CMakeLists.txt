@@ -36,6 +36,9 @@ qt_add_executable(appWonderer
     main.cpp
     ${QmlFiles}
     ${AssetsFiles}
+    qml/components/GlobalVariables.qml
+    qml/pages/LoginPage.qml
+    assets.qrc
 )
 
 felgo_configure_executable(appWonderer)
