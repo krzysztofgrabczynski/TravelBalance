@@ -10,8 +10,14 @@ App {
 
     Component {
       id: loginPage
-      LoginPage {//onGoForward: stackView.push(drugaStrona)
+      LoginPage {
+        onSignUpClicked: navigationStackView.push(signUpPage)
       }
+    }
+
+    Component {
+      id: signUpPage
+      SignUpPage {}
     }
   }
 }

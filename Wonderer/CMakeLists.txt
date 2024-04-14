@@ -39,7 +39,9 @@ qt_add_executable(appWonderer
     qml/components/GlobalVariables.qml
     qml/components/GlobalIcon.qml
     qml/pages/LoginPage.qml
+    qml/pages/SignUpPage.qml
     qml/components/CustomTextField.qml
+    apimanager.h apimanager.cpp
     assets.qrc
 )
 

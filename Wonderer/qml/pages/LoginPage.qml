@@ -10,6 +10,9 @@ AppPage {
 
   navigationBarHidden: true
 
+  signal signUpClicked
+  signal forgotPasswordClicked
+
   Column {
     id: columnLayout
     anchors.horizontalCenter: parent.horizontalCenter
@@ -36,11 +39,14 @@ AppPage {
     }
 
     CustomTextField {
+      id: loginTextField
       anchors.horizontalCenter: parent.horizontalCenter
       inputMode: 0
       placeholderText: "Login"
     }
+
     CustomTextField {
+      id: passwordTextField
       anchors.horizontalCenter: parent.horizontalCenter
       inputMode: 4
       placeholderText: "Password"
@@ -58,6 +64,10 @@ AppPage {
       text: "Login"
       width: dp(320)
       height: dp(50)
+      onClicked: {
+        console.log("Login Clicked")
+        g_apiManager.loginUser(loginTextField.text, passwordTextField.text)
+      }
     }
   }
   AppButton {
@@ -71,7 +81,8 @@ AppPage {
     minimumHeight: 0
     horizontalMargin: dp(6)
     onClicked: {
-      console.log("SignUpClicked")
+      console.log("Sign Up Clicked")
+      signUpClicked()
     }
   }
   AppButton {
@@ -85,7 +96,8 @@ AppPage {
     minimumHeight: 0
     horizontalMargin: dp(6)
     onClicked: {
-      console.log("LogInClicked")
+      console.log("Forgot Password clicked")
+      forgotPasswordClicked()
     }
   }
 }

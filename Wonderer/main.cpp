@@ -2,7 +2,10 @@
 #include <FelgoApplication>
 
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 //#include <FelgoLiveClient>
+
+#include "apimanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,10 +28,12 @@ int main(int argc, char *argv[])
     //felgo.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 
     engine.load(QUrl(felgo.mainQmlFileName()));
-
     // to start your project as Live Client, comment (remove) the lines "felgo.setMainQmlFileName ..." & "engine.load ...",
     // and uncomment the line below
     //FelgoLiveClient client (&engine);
+
+    ApiManager g_apiManager;
+    engine.rootContext()->setContextProperty("g_apiManager", &g_apiManager);
 
     return app.exec();
 }

@@ -7,9 +7,13 @@ import Felgo
 //property int inputModeUrl: 3
 //property int inputModePassword: 4
 AppPaper {
+  GlobalVariables {
+    id: globalVariables
+  }
   id: root
   property string placeholderText
-  property int inputMode
+  property alias inputMode: textField.inputMode
+  property alias text: textField.text
 
   width: dp(300)
   height: dp(40)
@@ -18,6 +22,6 @@ AppPaper {
     id: textField
     anchors.fill: parent
     placeholderText: root.placeholderText
-    inputMode: root.inputMode
+    passwordVisibleButton.color: globalVariables.leadingColor
   }
 }
