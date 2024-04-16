@@ -26,7 +26,7 @@ set(FELGO_PLUGINS
 )
 
 # Find all QML/JS files for the QML compiler:
-file(GLOB_RECURSE QmlFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} qml/*.qml qml/*.js)
+file(GLOB_RECURSE QmlFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} qml/*.qml qml/*.js qml/components/*.qml qml/pages/*.qml)
 
 # Find all non-QML/JS files in the qml and assets folder to add as resources:
 file(GLOB_RECURSE AssetsFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} assets/* qml/*)
@@ -36,11 +36,6 @@ qt_add_executable(appWonderer
     main.cpp
     ${QmlFiles}
     ${AssetsFiles}
-    qml/components/GlobalVariables.qml
-    qml/components/GlobalIcon.qml
-    qml/pages/LoginPage.qml
-    qml/pages/SignUpPage.qml
-    qml/components/CustomTextField.qml
     apimanager.h apimanager.cpp
     assets.qrc
 )
