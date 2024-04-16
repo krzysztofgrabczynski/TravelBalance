@@ -15,13 +15,15 @@ AppPaper {
   property alias inputMode: textField.inputMode
   property alias text: textField.text
 
+  shadowSizeDefault: dp(5)
   width: dp(300)
   height: dp(40)
-
+  radius: dp(15)
   AppTextField {
     id: textField
     anchors.fill: parent
     placeholderText: root.placeholderText
     passwordVisibleButton.color: globalVariables.leadingColor
+    radius: dp(20)
   }
 }

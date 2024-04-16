@@ -64,6 +64,7 @@ AppPage {
       text: "Login"
       width: dp(320)
       height: dp(50)
+      radius: dp(15)
       onClicked: {
         console.log("Login Clicked")
         g_apiManager.loginUser(loginTextField.text, passwordTextField.text)
