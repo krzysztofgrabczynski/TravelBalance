@@ -22,7 +22,7 @@ AppPage {
       id: icon
       anchors.horizontalCenter: parent.horizontalCenter
       width: dp(100)
-      height: dp(200)
+      height: dp(150)
     }
 
     AppText {

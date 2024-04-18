@@ -14,6 +14,7 @@ AppPaper {
   property string placeholderText
   property alias inputMode: textField.inputMode
   property alias text: textField.text
+  signal focusToggled
 
   shadowSizeDefault: dp(5)
   width: dp(300)
@@ -25,5 +26,8 @@ AppPaper {
     placeholderText: root.placeholderText
     passwordVisibleButton.color: globalVariables.leadingColor
     radius: dp(20)
+    onFocusChanged: {
+      focusToggled()
+    }
   }
 }
