@@ -1,10 +1,12 @@
 setup:
   addons:
     - plan: heroku-postgresql
+      options:
+        version: 12
 
 build:
   docker:
-    web: backend/Dockerfile
+    web: Dockerfile
 
 run:
-  web: gunicorn backend.core.wsgi:application --bind 0.0.0.0:$PORT
+  web: gunicorn core.wsgi:application --bind 0.0.0.0:$PORT
