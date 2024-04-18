@@ -13,10 +13,10 @@ media
 env/ 
 venv/ 
 
-backend/.env
-backend/.venv
-backend/.pytest_cache/ 
-backend/.mypy_cache/
+.env
+.venv
+.pytest_cache/ 
+.mypy_cache/
 
 # Prerequisites
 *.d
