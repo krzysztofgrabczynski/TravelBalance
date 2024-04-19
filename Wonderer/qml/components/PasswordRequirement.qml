@@ -6,6 +6,7 @@ Row {
   property color itemsColor: "red"
 
   spacing: dp(5)
+  opacity: 0
   AppIcon {
     id: iconItem
     anchors.verticalCenter: parent.verticalCenter
@@ -18,5 +19,11 @@ Row {
     text: "Password should be at least 8 characters long."
     color: itemsColor
     fontSize: dp(10)
+  }
+
+  Behavior on itemsColor {
+    ColorAnimation {
+      duration: 200
+    }
   }
 }

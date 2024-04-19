@@ -8,13 +8,77 @@ AppPage {
     return specialCharacters.test(text)
   }
   function containsNumber(text) {
-    var numberPattern = /[1234567890]/
+    var numberPattern = /[0-9]+/
     return numberPattern.test(text)
   }
   function containsUpperLetter(text) {
     var upperLetter = /[A-Z]/
     return upperLetter.test(text)
   }
+  function validatePassword(password) {
+    var isValid = true
+
+    if (password.length < 8) {
+      isValid = false
+    }
+
+    if (!containsSpecialCharacter(password)) {
+      isValid = false
+    }
+
+    if (!containsUpperLetter(password)) {
+      isValid = false
+    }
+
+    if (!containsNumber(password)) {
+      isValid = false
+    }
+
+    if (password !== confirmPasswordTextField.text || password.length === 0) {
+      isValid = false
+    }
+
+    joinButton.enabled = isValid
+  }
+  function changeMatchRequirementsColor(password, confirmationPassword) {
+    if (password === confirmationPassword && password.length > 0) {
+      passwordRequirement5.itemsColor = "green"
+    } else {
+      passwordRequirement5.itemsColor = "red"
+    }
+  }
+  function changeRequirementsColor(password, confirmationPassword) {
+    if (password.length >= 8) {
+      passwordRequirement1.itemsColor = "green"
+    } else {
+      passwordRequirement1.itemsColor = "red"
+    }
+
+    if (containsSpecialCharacter(password)) {
+      passwordRequirement2.itemsColor = "green"
+    } else {
+      passwordRequirement2.itemsColor = "red"
+    }
+
+    if (containsUpperLetter(password)) {
+      passwordRequirement3.itemsColor = "green"
+    } else {
+      passwordRequirement3.itemsColor = "red"
+    }
+
+    if (containsNumber(password)) {
+      passwordRequirement4.itemsColor = "green"
+    } else {
+      passwordRequirement4.itemsColor = "red"
+    }
+
+    if (password === confirmationPassword && password.length > 0) {
+      passwordRequirement5.itemsColor = "green"
+    } else {
+      passwordRequirement5.itemsColor = "red"
+    }
+  }
+
   GlobalVariables {
     id: globalVariables
   }
@@ -65,45 +129,14 @@ AppPage {
     inputMode: 4
     placeholderText: "Password"
     onTextChanged: {
-      if (passwordTextField.text.length >= 8) {
-        redToGreen1.start()
-      } else {
-        greenToRed1.start()
-      }
+      changeRequirementsColor(passwordTextField.text,
+                              confirmPasswordTextField.text)
 
-      if (containsSpecialCharacter(passwordTextField.text)) {
-        redToGreen2.start()
-      } else {
-        greenToRed2.start()
-      }
-
-      if (containsUpperLetter(passwordTextField.text)) {
-        redToGreen3.start()
-      } else {
-        greenToRed3.start()
-      }
-
-      if (containsNumber(passwordTextField.text)) {
-        redToGreen4.start()
-      } else {
-        greenToRed4.start()
-      }
-
-      if (passwordTextField.text === confirmPasswordTextField.text
-          && passwordTextField.text.length > 0) {
-        redToGreen5.start()
-      } else {
-        greenToRed5.start()
-      }
+      validatePassword(passwordTextField.text, confirmPasswordTextField.text)
     }
     onFocusToggled: {
-      console.log("page.state")
       page.state = page.state
           === "downConfirmPassword" ? "upConfirmPassword" : "downConfirmPassword"
-      changeOpacity1.start()
-      changeOpacity2.start()
-      changeOpacity3.start()
-      changeOpacity4.start()
     }
   }
 
@@ -121,7 +154,6 @@ AppPage {
     anchors.left: usernameTextField.left
     anchors.top: dummyRec2.bottom
     text: "Password should be at least 8 characters long."
-    opacity: 0
   }
 
   PasswordRequirement {
@@ -129,7 +161,6 @@ AppPage {
     anchors.left: usernameTextField.left
     anchors.top: passwordRequirement1.bottom
     text: "Password should contain at least one special character."
-    opacity: 0
   }
 
   PasswordRequirement {
@@ -137,7 +168,6 @@ AppPage {
     anchors.left: usernameTextField.left
     anchors.top: passwordRequirement2.bottom
     text: "Password should contain at least one uppercase letter."
-    opacity: 0
   }
 
   PasswordRequirement {
@@ -145,7 +175,6 @@ AppPage {
     anchors.left: usernameTextField.left
     anchors.top: passwordRequirement3.bottom
     text: "Password should contain at least one number."
-    opacity: 0
   }
 
   Rectangle {
@@ -163,17 +192,13 @@ AppPage {
     inputMode: 4
     placeholderText: "Confirm Password"
     onTextChanged: {
-      if (passwordTextField.text === confirmPasswordTextField.text
-          && passwordTextField.text.length > 0) {
-        redToGreen5.start()
-      } else {
-        greenToRed5.start()
-      }
+      changeMatchRequirementsColor(passwordTextField.text,
+                                   confirmPasswordTextField.text)
+
+      validatePassword(passwordTextField.text, confirmPasswordTextField.text)
     }
     onFocusToggled: {
-      console.log("page.statecobf")
       page.state = page.state === "downEmailAddress" ? "upEmailAddress" : "downEmailAddress"
-      changeOpacity5.start()
     }
   }
 
@@ -189,7 +214,6 @@ AppPage {
     anchors.left: usernameTextField.left
     anchors.top: dummyRec4.bottom
     text: "Password should match each other."
-    opacity: 0
   }
 
   Rectangle {
@@ -207,141 +231,6 @@ AppPage {
     placeholderText: "Email address"
   }
 
-  PropertyAnimation {
-    id: redToGreen1
-    target: passwordRequirement1
-    property: "itemsColor"
-    from: passwordRequirement1.itemsColor === "red" ? "red" : "green"
-    to: "green"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: greenToRed1
-    target: passwordRequirement1
-    property: "itemsColor"
-    from: passwordRequirement1.itemsColor === "green" ? "green" : "red"
-    to: "red"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: redToGreen2
-    target: passwordRequirement2
-    property: "itemsColor"
-    from: passwordRequirement2.itemsColor === "red" ? "red" : "green"
-    to: "green"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: greenToRed2
-    target: passwordRequirement2
-    property: "itemsColor"
-    from: passwordRequirement2.itemsColor === "green" ? "green" : "red"
-    to: "red"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: redToGreen3
-    target: passwordRequirement3
-    property: "itemsColor"
-    from: passwordRequirement3.itemsColor === "red" ? "red" : "green"
-    to: "green"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: greenToRed3
-    target: passwordRequirement3
-    property: "itemsColor"
-    from: passwordRequirement3.itemsColor === "green" ? "green" : "red"
-    to: "red"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: redToGreen4
-    target: passwordRequirement4
-    property: "itemsColor"
-    from: passwordRequirement4.itemsColor === "red" ? "red" : "green"
-    to: "green"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: greenToRed4
-    target: passwordRequirement4
-    property: "itemsColor"
-    from: passwordRequirement4.itemsColor === "green" ? "green" : "red"
-    to: "red"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: redToGreen5
-    target: passwordRequirement5
-    property: "itemsColor"
-    from: passwordRequirement5.itemsColor === "red" ? "red" : "green"
-    to: "green"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: greenToRed5
-    target: passwordRequirement5
-    property: "itemsColor"
-    from: passwordRequirement5.itemsColor === "green" ? "green" : "red"
-    to: "red"
-    duration: 200
-  }
-
-  PropertyAnimation {
-    id: changeOpacity1
-    target: passwordRequirement1
-    property: "opacity"
-    from: passwordRequirement1.opacity // Początkowa wartość przezroczystości
-    to: passwordRequirement1.opacity === 1 ? 0 : 1 // Docelowa wartość przezroczystości
-    duration: 500
-  }
-
-  PropertyAnimation {
-    id: changeOpacity2
-    target: passwordRequirement2
-    property: "opacity"
-    from: passwordRequirement2.opacity // Początkowa wartość przezroczystości
-    to: passwordRequirement2.opacity === 1 ? 0 : 1 // Docelowa wartość przezroczystości
-    duration: 500
-  }
-
-  PropertyAnimation {
-    id: changeOpacity3
-    target: passwordRequirement3
-    property: "opacity"
-    from: passwordRequirement3.opacity // Początkowa wartość przezroczystości
-    to: passwordRequirement3.opacity === 1 ? 0 : 1 // Docelowa wartość przezroczystości
-    duration: 500
-  }
-
-  PropertyAnimation {
-    id: changeOpacity4
-    target: passwordRequirement4
-    property: "opacity"
-    from: passwordRequirement4.opacity // Początkowa wartość przezroczystości
-    to: passwordRequirement4.opacity === 1 ? 0 : 1 // Docelowa wartość przezroczystości
-    duration: 500
-  }
-
-  PropertyAnimation {
-    id: changeOpacity5
-    target: passwordRequirement5
-    property: "opacity"
-    from: passwordRequirement5.opacity // Początkowa wartość przezroczystości
-    to: passwordRequirement5.opacity === 1 ? 0 : 1 // Docelowa wartość przezroczystości
-    duration: 500
-  }
-
   states: [
     State {
       name: "upConfirmPassword"
@@ -350,12 +239,44 @@ AppPage {
         target: confirmPasswordTextField
         anchors.top: dummyRec2.bottom
       }
+      PropertyChanges {
+        target: passwordRequirement1
+        opacity: 0
+      }
+      PropertyChanges {
+        target: passwordRequirement2
+        opacity: 0
+      }
+      PropertyChanges {
+        target: passwordRequirement3
+        opacity: 0
+      }
+      PropertyChanges {
+        target: passwordRequirement4
+        opacity: 0
+      }
     },
     State {
       name: "downConfirmPassword"
       AnchorChanges {
         target: confirmPasswordTextField
         anchors.top: dummyRec3.bottom
+      }
+      PropertyChanges {
+        target: passwordRequirement1
+        opacity: 1
+      }
+      PropertyChanges {
+        target: passwordRequirement2
+        opacity: 1
+      }
+      PropertyChanges {
+        target: passwordRequirement3
+        opacity: 1
+      }
+      PropertyChanges {
+        target: passwordRequirement4
+        opacity: 1
       }
     },
     State {
@@ -365,12 +286,21 @@ AppPage {
         target: emailAddressTextField
         anchors.top: dummyRec4.bottom
       }
+      PropertyChanges {
+        target: passwordRequirement5
+        opacity: 0
+      }
     },
     State {
       name: "downEmailAddress"
       AnchorChanges {
         target: emailAddressTextField
         anchors.top: dummyRec5.bottom
+      }
+
+      PropertyChanges {
+        target: passwordRequirement5
+        opacity: 1
       }
     }
   ]
@@ -380,29 +310,30 @@ AppPage {
       duration: 1000
       easing.type: Easing.OutBounce
     }
+
+    NumberAnimation {
+      properties: "opacity"
+      duration: 500
+    }
   }
 
   AppButton {
-    id: join
+    id: joinButton
     flat: false
     anchors.horizontalCenter: parent.horizontalCenter
-    y: parent.height - nativeUtils.safeAreaInsets.bottom - join.height
+    y: parent.height - nativeUtils.safeAreaInsets.bottom - joinButton.height
     backgroundColor: globalVariables.leadingColor
     borderColor: globalVariables.leadingColor
     textColor: "white"
     textColorPressed: globalVariables.leadingColor
     borderColorPressed: globalVariables.leadingColor
     text: "Join"
+    enabled: false
     width: dp(320)
     height: dp(50)
     radius: dp(15)
     onClicked: {
-      if (passwordTextField.text === confirmPasswordTextField.text) {
-        g_apiManager.registerUser(usernameTextField.text,
-                                  passwordTextField.text)
-      } else {
-        nativeUtils.displayMessageBox("Warning", "Passwords do not match!", 1)
-      }
+      g_apiManager.registerUser(usernameTextField.text, passwordTextField.text)
     }
   }
 }
