@@ -17,3 +17,10 @@ RUN poetry install --no-root
 COPY . /code/
 
 RUN poetry install
+
+# RUN apk add --no-cache postgresql-dev musl-dev
+
+# COPY requirements.txt /code/
+# RUN pip install -r requirements.txt
+
+# COPY . /code/
