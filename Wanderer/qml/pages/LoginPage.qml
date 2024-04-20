@@ -4,10 +4,6 @@ import Felgo
 import "../components"
 
 AppPage {
-  GlobalVariables {
-    id: globalVariables
-  }
-
   navigationBarHidden: true
 
   signal signUpClicked
@@ -56,10 +52,10 @@ AppPage {
       anchors.horizontalCenter: parent.horizontalCenter
       id: loginButton
       flat: false
-      backgroundColor: globalVariables.leadingColor
-      borderColor: globalVariables.leadingColor
-      textColorPressed: globalVariables.leadingColor
-      borderColorPressed: globalVariables.leadingColor
+      backgroundColor: GlobalProperties.leadingColor
+      borderColor: GlobalProperties.leadingColor
+      textColorPressed: GlobalProperties.leadingColor
+      borderColorPressed: GlobalProperties.leadingColor
       textColor: "white"
       text: "Login"
       width: dp(320)
@@ -76,7 +72,7 @@ AppPage {
     anchors.left: columnLayout.left
     flat: true
     textColor: "black"
-    textColorPressed: globalVariables.leadingColor
+    textColorPressed: GlobalProperties.leadingColor
     text: "Sign up"
     minimumWidth: 0
     minimumHeight: 0
@@ -91,7 +87,7 @@ AppPage {
     anchors.right: columnLayout.right
     flat: true
     textColor: "black"
-    textColorPressed: globalVariables.leadingColor
+    textColorPressed: GlobalProperties.leadingColor
     text: "Forgot password?"
     minimumWidth: 0
     minimumHeight: 0

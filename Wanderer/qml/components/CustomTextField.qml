@@ -1,5 +1,6 @@
 import QtQuick
 import Felgo
+import "."
 
 //property int inputModeDefault: 0
 //property int inputModeUsername: 1
@@ -7,9 +8,6 @@ import Felgo
 //property int inputModeUrl: 3
 //property int inputModePassword: 4
 AppPaper {
-  GlobalVariables {
-    id: globalVariables
-  }
   id: root
   property string placeholderText
   property alias inputMode: textField.inputMode
@@ -24,7 +22,7 @@ AppPaper {
     id: textField
     anchors.fill: parent
     placeholderText: root.placeholderText
-    passwordVisibleButton.color: globalVariables.leadingColor
+    passwordVisibleButton.color: GlobalProperties.leadingColor
     radius: dp(20)
     onFocusChanged: {
       focusToggled()

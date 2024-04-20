@@ -78,10 +78,6 @@ AppPage {
       passwordRequirement5.itemsColor = "red"
     }
   }
-
-  GlobalVariables {
-    id: globalVariables
-  }
   id: page
   navigationBarHidden: true
 
@@ -322,11 +318,11 @@ AppPage {
     flat: false
     anchors.horizontalCenter: parent.horizontalCenter
     y: parent.height - nativeUtils.safeAreaInsets.bottom - joinButton.height
-    backgroundColor: globalVariables.leadingColor
-    borderColor: globalVariables.leadingColor
+    backgroundColor: GlobalProperties.leadingColor
+    borderColor: GlobalProperties.leadingColor
     textColor: "white"
-    textColorPressed: globalVariables.leadingColor
-    borderColorPressed: globalVariables.leadingColor
+    textColorPressed: GlobalProperties.leadingColor
+    borderColorPressed: GlobalProperties.leadingColor
     text: "Join"
     enabled: false
     width: dp(320)

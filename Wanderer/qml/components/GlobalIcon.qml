@@ -16,11 +16,8 @@ Rectangle {
   AppIcon {
     id: icon
     size: dp(30)
-    color: globalProperties.leadingColor
+    color: GlobalProperties.leadingColor
     iconType: IconType.heart
     anchors.centerIn: parent
-    GlobalVariables {
-      id: globalProperties
-    }
   }
 }
