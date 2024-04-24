@@ -12,12 +12,19 @@ App {
       id: loginPage
       LoginPage {
         onSignUpClicked: navigationStackView.push(signUpPage)
+        onForgotPasswordClicked: navigationStackView.push(
+                                   forgotPasswordEmailPage)
       }
     }
 
     Component {
       id: signUpPage
       SignUpPage {}
+    }
+
+    Component {
+      id: forgotPasswordEmailPage
+      ForgotPasswordEmailPage {}
     }
   }
 }

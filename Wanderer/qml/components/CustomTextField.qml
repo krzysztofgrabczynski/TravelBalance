@@ -12,6 +12,10 @@ AppPaper {
   property string placeholderText
   property alias inputMode: textField.inputMode
   property alias text: textField.text
+  property alias readOnly: textField.readOnly
+  property alias textColor: textField.textColor
+  property alias showClearButton: textField.showClearButton
+  property alias clickEnabled: textField.clickEnabled
   signal focusToggled
 
   shadowSizeDefault: dp(5)

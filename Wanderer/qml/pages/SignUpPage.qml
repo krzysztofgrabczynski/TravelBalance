@@ -79,7 +79,7 @@ AppPage {
     }
   }
   id: page
-  navigationBarHidden: true
+  navigationBarHidden: false
 
   Column {
     id: columnLayout
