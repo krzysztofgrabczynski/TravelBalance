@@ -4,7 +4,7 @@ import Felgo
 import "../components"
 
 AppPage {
-  navigationBarHidden: true
+  navigationBarHidden: false
 
   signal signUpClicked
   signal forgotPasswordClicked
