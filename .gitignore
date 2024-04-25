@@ -1,6 +1,7 @@
 # Felgo QT QML
 build*
-Wonderer/*.user
+Wanderer/*.user
+*.autosave
 
 # Backend
 *.log
