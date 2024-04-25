@@ -4,6 +4,29 @@ import Felgo
 import "../components"
 
 AppPage {
+  function enableLoginButton(loginField, PasswordField) {
+    var isValid = true
+
+    if (loginField.length === 0 || PasswordField.length === 0)
+      isValid = false
+
+    loginButton.enabled = isValid
+  }
+
+  function loginCorrectHandler(token) {
+    console.log("Token:", token)
+  }
+
+  Connections {
+    target: g_apiManager
+    onLoginCorrect: {
+      loginCorrectHandler(token)
+    }
+    onLoginFailed: {
+      console.log("Login failed")
+    }
+  }
+  id: page
   navigationBarHidden: false
 
   signal signUpClicked
@@ -39,6 +62,9 @@ AppPage {
       anchors.horizontalCenter: parent.horizontalCenter
       inputMode: 0
       placeholderText: "Login"
+      onTextChanged: {
+        enableLoginButton(loginTextField.text, passwordTextField.text)
+      }
     }
 
     CustomTextField {
@@ -46,6 +72,9 @@ AppPage {
       anchors.horizontalCenter: parent.horizontalCenter
       inputMode: 4
       placeholderText: "Password"
+      onTextChanged: {
+        enableLoginButton(loginTextField.text, passwordTextField.text)
+      }
     }
 
     AppButton {
@@ -61,6 +90,7 @@ AppPage {
       width: dp(320)
       height: dp(50)
       radius: dp(15)
+      enabled: false
       onClicked: {
         console.log("Login Clicked")
         g_apiManager.loginUser(loginTextField.text, passwordTextField.text)

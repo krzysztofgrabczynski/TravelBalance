@@ -14,11 +14,15 @@ public:
 public slots:
    Q_INVOKABLE void loginUser(const QString& login, const QString& password);
    Q_INVOKABLE void registerUser(const QString &login, const QString &password);
+   Q_INVOKABLE void logoutUser();
 signals:
    Q_INVOKABLE void loginCorrect(const QString& token);
    Q_INVOKABLE void loginFailed();
    Q_INVOKABLE void registerCorrect();
    Q_INVOKABLE void registerFailed();
+   Q_INVOKABLE void logoutCorrect();
+   Q_INVOKABLE void logoutFailed();
+
 private:
     QNetworkAccessManager* networkManager;
     QString m_token;
@@ -26,6 +30,7 @@ private:
     QByteArray prepareUserData(const QString &login, const QString &password);
     void handleLoginResponse(QNetworkReply *reply);
     void handleRegisterResponse(QNetworkReply *reply);
+    void handleLogoutResponse(QNetworkReply *reply);
 };
 
 
