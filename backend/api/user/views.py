@@ -19,10 +19,13 @@ class LoginView(generics.CreateAPIView):
 
         if user:
             token = self._create_user_auth_token(user)
-            return Response({"token": token.key}, status=status.HTTP_200_OK)
+            return Response({"token": token.key, "status": status.HTTP_200_OK})
 
         return Response(
-            {"error": self.error_message}, status=status.HTTP_401_UNAUTHORIZED
+            {
+                "error": self.error_message,
+                "status": status.HTTP_401_UNAUTHORIZED,
+            }
         )
 
     def _create_user_auth_token(self, user: User) -> str:
@@ -33,7 +36,7 @@ class LoginView(generics.CreateAPIView):
 class LogoutView(views.APIView):
     def post(self, request):
         self._delete_user_auth_token(request)
-        return Response(status=status.HTTP_200_OK)
+        return Response({"status": status.HTTP_200_OK})
 
     def _delete_user_auth_token(self, request: HttpRequest) -> None:
         Token.objects.filter(user=request.user).delete()
