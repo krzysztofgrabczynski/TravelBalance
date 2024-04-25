@@ -27,61 +27,90 @@ AppPage {
       anchors.horizontalCenter: parent.horizontalCenter
       text: "provided when creating your account"
       fontSize: sp(16)
-      bottomPadding: 60
+      bottomPadding: dp(60)
     }
   }
 
-  Column {
-    id: bottomColumnLayout
+  CustomTextField {
+    id: emailAddressField
     anchors.horizontalCenter: parent.horizontalCenter
-    spacing: dp(5)
     anchors.top: topColumnLayout.bottom
+    inputMode: 2
+    placeholderText: "Email address"
+  }
 
-    CustomTextField {
-      id: emailAddressField
-      anchors.horizontalCenter: parent.horizontalCenter
-      inputMode: 2
-      placeholderText: "Email address"
-    }
-    AppButton {
-      anchors.horizontalCenter: parent.horizontalCenter
-      id: sendEmailButton
-      flat: false
-      backgroundColor: GlobalProperties.leadingColor
-      borderColor: GlobalProperties.leadingColor
-      textColorPressed: GlobalProperties.leadingColor
-      borderColorPressed: GlobalProperties.leadingColor
-      textColor: "white"
-      text: "Send Email"
-      width: dp(320)
-      height: dp(50)
-      radius: dp(15)
-      onClicked: {
-        console.log("Email sent - TBD")
-        emailAddressField.readOnly = !emailAddressField.readOnly
-        emailAddressField.showClearButton = !emailAddressField.showClearButton
-        emailAddressField.clickEnabled = !emailAddressField.clickEnabled
-        if (emailAddressField.readOnly)
-          emailAddressField.textColor = "grey"
-        else
-          emailAddressField.textColor = "black"
-      }
+  Rectangle {
+    id: dummyRec1
+    width: parent
+    height: dp(5)
+    anchors.top: emailAddressField.bottom
+    opacity: 0
+  }
+
+  CustomTextField {
+    id: verifyCodeField
+    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.top: dummyRec1.bottom
+    inputMode: 2
+    placeholderText: "Verify code"
+  }
+
+  AppButton {
+    id: functionalButton
+    anchors.horizontalCenter: parent.horizontalCenter
+    flat: false
+    backgroundColor: GlobalProperties.leadingColor
+    borderColor: GlobalProperties.leadingColor
+    textColorPressed: GlobalProperties.leadingColor
+    borderColorPressed: GlobalProperties.leadingColor
+    textColor: "white"
+    width: dp(320)
+    height: dp(50)
+    radius: dp(15)
+    onClicked: {
+      console.log("Functional Button clicked - TBD")
+      emailAddressField.readOnly = !emailAddressField.readOnly
+      emailAddressField.showClearButton = !emailAddressField.showClearButton
+      emailAddressField.clickEnabled = !emailAddressField.clickEnabled
+      if (emailAddressField.readOnly)
+        emailAddressField.textColor = "grey"
+      else
+        emailAddressField.textColor = "black"
+
+      page.state = page.state === "hideVerifyCode" ? "showVerifyCode" : "hideVerifyCode"
     }
   }
 
+  state: "hideVerifyCode"
   states: [
     State {
       name: "showVerifyCode"
       AnchorChanges {
-        //target: confirmPasswordTextField
-        //anchors.top: dummyRec2.bottom
+        target: functionalButton
+        anchors.top: verifyCodeField.bottom
+      }
+      PropertyChanges {
+        target: verifyCodeField
+        opacity: 1
+      }
+      PropertyChanges {
+        target: functionalButton
+        text: "Verify"
       }
     },
     State {
       name: "hideVerifyCode"
       AnchorChanges {
-        //target: confirmPasswordTextField
-        //anchors.top: dummyRec3.bottom
+        target: functionalButton
+        anchors.top: emailAddressField.bottom
+      }
+      PropertyChanges {
+        target: verifyCodeField
+        opacity: 0
+      }
+      PropertyChanges {
+        target: functionalButton
+        text: "Send Email"
       }
     }
   ]
@@ -90,6 +119,10 @@ AppPage {
     AnchorAnimation {
       duration: 1000
       easing.type: Easing.OutBounce
+    }
+    NumberAnimation {
+      properties: "opacity"
+      duration: 500
     }
   }
 }

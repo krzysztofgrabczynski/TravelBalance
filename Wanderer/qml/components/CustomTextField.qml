@@ -16,6 +16,7 @@ AppPaper {
   property alias textColor: textField.textColor
   property alias showClearButton: textField.showClearButton
   property alias clickEnabled: textField.clickEnabled
+  property alias borderColor: textField.borderColor
   signal focusToggled
 
   shadowSizeDefault: dp(5)
