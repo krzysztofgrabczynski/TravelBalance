@@ -1,15 +1,19 @@
-from rest_framework import views, status, generics
+from rest_framework import views, status, generics, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth.models import User as user_annotation
+from django.contrib.auth import authenticate, get_user_model
 from django.http import HttpRequest
 
-from api.user.serializers import LoginSerializer
+from api.user import serializers
+
+
+User = get_user_model()
 
 
 class LoginView(generics.CreateAPIView):
-    serializer_class = LoginSerializer
+    serializer_class = serializers.LoginSerializer
     error_message = "Invalid credentials"
 
     def post(self, request):
@@ -28,7 +32,7 @@ class LoginView(generics.CreateAPIView):
             }
         )
 
-    def _create_user_auth_token(self, user: User) -> str:
+    def _create_user_auth_token(self, user: user_annotation) -> str:
         token, _ = Token.objects.get_or_create(user=user)
         return token
 
@@ -40,3 +44,20 @@ class LogoutView(views.APIView):
 
     def _delete_user_auth_token(self, request: HttpRequest) -> None:
         Token.objects.filter(user=request.user).delete()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return serializers.UserCreateSerializer
+        elif self.action == "reset_password":
+            return ...
+
+        return self.serializer_class
+
+    @action(methods=["post"], detail=True)
+    def reset_password(self, request):
+        pass
