@@ -38,7 +38,7 @@ AppPage {
       isValid = false
     }
 
-    joinButton.enabled = isValid
+    //joinButton.enabled = isValid
   }
   function changeMatchRequirementsColor(password, confirmationPassword) {
     if (password === confirmationPassword && password.length > 0) {
@@ -81,6 +81,21 @@ AppPage {
   id: page
   navigationBarHidden: false
 
+  signal registerButtonClicked
+
+  Connections {
+    target: g_apiManager
+    onRegisterCorrect: {
+      console.log("Register Correct")
+      nativeUtils.displayMessageBox(
+            qsTr("E-mail sent!"), qsTr(
+              "Please check your email and confirm your account by clicking the provided link."))
+    }
+    onRegisterFailed: {
+
+    }
+  }
+
   Column {
     id: columnLayout
     anchors.horizontalCenter: parent.horizontalCenter
@@ -95,7 +110,7 @@ AppPage {
 
     AppText {
       anchors.horizontalCenter: parent.horizontalCenter
-      text: "Join the adventure!"
+      text: qsTr("Join the adventure!")
       fontSize: sp(24)
       font.bold: true
       bottomPadding: 30
@@ -108,7 +123,7 @@ AppPage {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: columnLayout.bottom
     inputMode: 0
-    placeholderText: "Username"
+    placeholderText: qsTr("Username")
   }
 
   Rectangle {
@@ -149,28 +164,28 @@ AppPage {
     id: passwordRequirement1
     anchors.left: usernameTextField.left
     anchors.top: dummyRec2.bottom
-    text: "Password should be at least 8 characters long."
+    text: qsTr("Password should be at least 8 characters long.")
   }
 
   PasswordRequirement {
     id: passwordRequirement2
     anchors.left: usernameTextField.left
     anchors.top: passwordRequirement1.bottom
-    text: "Password should contain at least one special character."
+    text: qsTr("Password should contain at least one special character.")
   }
 
   PasswordRequirement {
     id: passwordRequirement3
     anchors.left: usernameTextField.left
     anchors.top: passwordRequirement2.bottom
-    text: "Password should contain at least one uppercase letter."
+    text: qsTr("Password should contain at least one uppercase letter.")
   }
 
   PasswordRequirement {
     id: passwordRequirement4
     anchors.left: usernameTextField.left
     anchors.top: passwordRequirement3.bottom
-    text: "Password should contain at least one number."
+    text: qsTr("Password should contain at least one number.")
   }
 
   Rectangle {
@@ -186,7 +201,7 @@ AppPage {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: dummyRec2.bottom
     inputMode: 4
-    placeholderText: "Confirm Password"
+    placeholderText: qsTr("Confirm Password")
     onTextChanged: {
       changeMatchRequirementsColor(passwordTextField.text,
                                    confirmPasswordTextField.text)
@@ -209,7 +224,7 @@ AppPage {
     id: passwordRequirement5
     anchors.left: usernameTextField.left
     anchors.top: dummyRec4.bottom
-    text: "Password should match each other."
+    text: qsTr("Password should match each other.")
   }
 
   Rectangle {
@@ -224,7 +239,7 @@ AppPage {
     anchors.top: dummyRec4.bottom
     anchors.horizontalCenter: parent.horizontalCenter
     inputMode: 2
-    placeholderText: "Email address"
+    placeholderText: qsTr("Email address")
   }
 
   states: [
@@ -323,13 +338,28 @@ AppPage {
     textColor: "white"
     textColorPressed: GlobalProperties.leadingColor
     borderColorPressed: GlobalProperties.leadingColor
-    text: "Join"
-    enabled: false
+    text: qsTr("Join")
+    enabled: true
     width: dp(320)
     height: dp(50)
     radius: dp(15)
     onClicked: {
-      g_apiManager.registerUser(usernameTextField.text, passwordTextField.text)
+
+      //g_apiManager.registerUser(usernameTextField.text, passwordTextField.text,
+      //                          confirmPasswordTextField.text,
+      //                          emailAddressTextField.text)
+      NativeUtils.displayMessageBox(
+            qsTr("E-mail sent!"), qsTr(
+              "Please check your email and confirm your account by clicking the provided link."))
+    }
+  }
+
+  Connections {
+    target: NativeUtils
+    onMessageBoxFinished: {
+      if (accepted) {
+        registerButtonClicked()
+      }
     }
   }
 }

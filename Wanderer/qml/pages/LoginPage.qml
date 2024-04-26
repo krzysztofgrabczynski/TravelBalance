@@ -86,7 +86,7 @@ AppPage {
       textColorPressed: GlobalProperties.leadingColor
       borderColorPressed: GlobalProperties.leadingColor
       textColor: "white"
-      text: "Login"
+      text: qsTr("Login")
       width: dp(320)
       height: dp(50)
       radius: dp(15)
@@ -103,7 +103,7 @@ AppPage {
     flat: true
     textColor: "black"
     textColorPressed: GlobalProperties.leadingColor
-    text: "Sign up"
+    text: qsTr("Sign up")
     minimumWidth: 0
     minimumHeight: 0
     horizontalMargin: dp(6)
@@ -118,7 +118,7 @@ AppPage {
     flat: true
     textColor: "black"
     textColorPressed: GlobalProperties.leadingColor
-    text: "Forgot password?"
+    text: qsTr("Forgot password?")
     minimumWidth: 0
     minimumHeight: 0
     horizontalMargin: dp(6)

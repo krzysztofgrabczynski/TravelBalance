@@ -22,7 +22,7 @@ const QString apiAdressLogin = "https://wanderer-test-fe529f1fdf47.herokuapp.com
 const QString apiAddresLogout = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/logout/";
 const QString apiAddresRegister = "https://bart-kris-api-test-84e163f71bea.herokuapp.com/api/v1/user/";
 
-QByteArray ApiManager::prepareUserData(const QString &login, const QString &password)
+QByteArray ApiManager::prepareLoginData(const QString &login, const QString &password)
 {
     QJsonObject jsonObject;
     jsonObject["username"] = login;
@@ -30,12 +30,23 @@ QByteArray ApiManager::prepareUserData(const QString &login, const QString &pass
     return QJsonDocument(jsonObject).toJson();
 }
 
+QByteArray ApiManager::prepareRegisterData(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress)
+{
+    QJsonObject jsonObject;
+    jsonObject["username"] = login;
+    jsonObject["password"] = password;
+    jsonObject["password2"] = passwordRepeated;
+    jsonObject["email"] = emailAddress;
+    return QJsonDocument(jsonObject).toJson();
+}
+
+
 void ApiManager::loginUser(const QString &login, const QString &password)
 {
     QNetworkRequest request{QUrl(apiAdressLogin)};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QByteArray requestData = prepareUserData(login, password);
+    QByteArray requestData = prepareLoginData(login, password);
     QNetworkReply *reply = networkManager->post(request, requestData);
 
     connect(reply, &QNetworkReply::finished, [=]() mutable {
@@ -73,12 +84,12 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
     }
 }
 
-void ApiManager::registerUser(const QString &login, const QString &password)
+void ApiManager::registerUser(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress)
 {
     QNetworkRequest request{QUrl(apiAddresRegister)};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QByteArray requestData = prepareUserData(login,password);
+    QByteArray requestData = prepareRegisterData(login, password, passwordRepeated, emailAddress);
 
     QNetworkReply *reply = networkManager->post(request, requestData);
     connect(reply, &QNetworkReply::finished, [=]() mutable {
