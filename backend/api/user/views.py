@@ -3,7 +3,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django.http import HttpRequest
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 
@@ -21,29 +20,6 @@ class LoginView(generics.GenericAPIView):
 
         username = serializer.validated_data["username"]
         password = serializer.validated_data["password"]
-
-        # user = authenticate(**serializer.validated_data)
-
-        # if user:
-        #     token = self._create_user_auth_token(user)
-        #     return Response({"token": token.key, "status": status.HTTP_200_OK})
-
-        # if self._check_if_user_is_not_active(
-        #     serializer.validated_data["username"]
-        # ):
-        #     return Response(
-        #         {
-        #             "error": self.user_inactive_message,
-        #             "status": status.HTTP_403_FORBIDDEN,
-        #         }
-        #     )
-
-        # return Response(
-        #     {
-        #         "error": self.invalid_credentials_message,
-        #         "status": status.HTTP_401_UNAUTHORIZED,
-        #     }
-        # )
 
         try:
             user = User.objects.get(username=username)
@@ -77,14 +53,6 @@ class LoginView(generics.GenericAPIView):
     def _create_user_auth_token(self, user: User) -> str:
         token, _ = Token.objects.get_or_create(user=user)
         return token
-
-    # def _check_if_user_is_not_active(self, username: str) -> bool:
-    #     try:
-    #         user = User.objects.get(username=username)
-    #         if not user.is_active:
-    #             return True
-    #     except ObjectDoesNotExist:
-    #         return False
 
 
 class LogoutView(views.APIView):
