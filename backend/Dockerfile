@@ -12,13 +12,7 @@ RUN apk add --no-cache curl \
 
 COPY poetry.lock pyproject.toml /code/
 
-RUN poetry config virtualenvs.create false && poetry install
-
 COPY . /code/
 
-# RUN apk add --no-cache postgresql-dev musl-dev
+RUN poetry config virtualenvs.create false && poetry install
 
-# COPY requirements.txt /code/
-# RUN pip install -r requirements.txt
-
-# COPY . /code/
