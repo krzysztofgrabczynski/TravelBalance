@@ -2,14 +2,11 @@ from rest_framework import views, status, generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User as user_annotation
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.http import HttpRequest
 
 from api.user import serializers
-
-
-User = get_user_model()
 
 
 class LoginView(generics.CreateAPIView):
@@ -32,7 +29,7 @@ class LoginView(generics.CreateAPIView):
             }
         )
 
-    def _create_user_auth_token(self, user: user_annotation) -> str:
+    def _create_user_auth_token(self, user: User) -> str:
         token, _ = Token.objects.get_or_create(user=user)
         return token
 
