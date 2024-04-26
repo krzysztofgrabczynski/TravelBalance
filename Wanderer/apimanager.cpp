@@ -18,9 +18,9 @@ ApiManager::~ApiManager()
     delete networkManager;
 }
 
-const QString apiAdressLogin = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/login/";
-const QString apiAddresLogout = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/logout/";
-const QString apiAddresRegister = "https://bart-kris-api-test-84e163f71bea.herokuapp.com/api/v1/user/";
+static const QString apiAdressLogin = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/login/";
+static const QString apiAddresLogout = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/logout/";
+static const QString apiAddresRegister = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/user/";
 
 QByteArray ApiManager::prepareLoginData(const QString &login, const QString &password)
 {
@@ -65,7 +65,6 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
 
         if (jsonObject.contains("token")) {
             m_token = jsonObject["token"].toString();
-            qDebug() << "Login Correct: " + m_token;
             emit loginCorrect(m_token);
         } else {
             qDebug() << "Token not found in JSON response.";
@@ -73,7 +72,7 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
         }
 
         if(jsonObject.contains("status")){
-            qDebug() << "Status: " << QString::number(jsonObject["status"].toInt());
+            qDebug() << "Status: " << jsonObject["status"].toInt();
         }else{
             qDebug() << "Status not found in JSON response.";
         }

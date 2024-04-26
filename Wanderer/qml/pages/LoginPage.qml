@@ -13,14 +13,10 @@ AppPage {
     loginButton.enabled = isValid
   }
 
-  function loginCorrectHandler(token) {
-    console.log("Token:", token)
-  }
-
   Connections {
     target: g_apiManager
-    onLoginCorrect: {
-      loginCorrectHandler(token)
+    onLoginCorrect: function (token) {
+      console.log("Token:", token)
     }
     onLoginFailed: {
       console.log("Login failed")

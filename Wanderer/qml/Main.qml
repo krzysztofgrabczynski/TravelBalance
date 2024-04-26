@@ -20,7 +20,8 @@ App {
     Component {
       id: signUpPage
       SignUpPage {
-        onRegisterButtonClicked: navigationStackView.popAllExceptFirst()
+        onCorrectRegistrationRequestSent: navigationStackView.popAllExceptFirst(
+                                            )
       }
     }
 

@@ -38,7 +38,7 @@ AppPage {
       isValid = false
     }
 
-    //joinButton.enabled = isValid
+    return isValid
   }
   function changeMatchRequirementsColor(password, confirmationPassword) {
     if (password === confirmationPassword && password.length > 0) {
@@ -78,10 +78,16 @@ AppPage {
       passwordRequirement5.itemsColor = "red"
     }
   }
+  function toggleJoinButton() {
+    joinButton.enabled = validatePassword(passwordTextField.text)
+        && emailAddressTextField.text.length !== 0
+        && usernameTextField.text.length !== 0
+  }
+
   id: page
   navigationBarHidden: false
 
-  signal registerButtonClicked
+  signal correctRegistrationRequestSent
 
   Connections {
     target: g_apiManager
@@ -92,7 +98,7 @@ AppPage {
               "Please check your email and confirm your account by clicking the provided link."))
     }
     onRegisterFailed: {
-
+      console.log("Register Failed")
     }
   }
 
@@ -124,6 +130,9 @@ AppPage {
     anchors.top: columnLayout.bottom
     inputMode: 0
     placeholderText: qsTr("Username")
+    onTextChanged: {
+      toggleJoinButton()
+    }
   }
 
   Rectangle {
@@ -144,6 +153,7 @@ AppPage {
                               confirmPasswordTextField.text)
 
       validatePassword(passwordTextField.text, confirmPasswordTextField.text)
+      toggleJoinButton()
     }
     onFocusToggled: {
       page.state = page.state
@@ -207,6 +217,7 @@ AppPage {
                                    confirmPasswordTextField.text)
 
       validatePassword(passwordTextField.text, confirmPasswordTextField.text)
+      toggleJoinButton()
     }
     onFocusToggled: {
       page.state = page.state === "downEmailAddress" ? "upEmailAddress" : "downEmailAddress"
@@ -240,6 +251,9 @@ AppPage {
     anchors.horizontalCenter: parent.horizontalCenter
     inputMode: 2
     placeholderText: qsTr("Email address")
+    onTextChanged: {
+      toggleJoinButton()
+    }
   }
 
   states: [
@@ -339,26 +353,22 @@ AppPage {
     textColorPressed: GlobalProperties.leadingColor
     borderColorPressed: GlobalProperties.leadingColor
     text: qsTr("Join")
-    enabled: true
+    enabled: false
     width: dp(320)
     height: dp(50)
     radius: dp(15)
     onClicked: {
-
-      //g_apiManager.registerUser(usernameTextField.text, passwordTextField.text,
-      //                          confirmPasswordTextField.text,
-      //                          emailAddressTextField.text)
-      NativeUtils.displayMessageBox(
-            qsTr("E-mail sent!"), qsTr(
-              "Please check your email and confirm your account by clicking the provided link."))
+      g_apiManager.registerUser(usernameTextField.text, passwordTextField.text,
+                                confirmPasswordTextField.text,
+                                emailAddressTextField.text)
     }
   }
 
   Connections {
     target: NativeUtils
-    onMessageBoxFinished: {
+    onMessageBoxFinished: function (accepted) {
       if (accepted) {
-        registerButtonClicked()
+        correctRegistrationRequestSent()
       }
     }
   }
