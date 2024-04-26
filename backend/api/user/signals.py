@@ -5,7 +5,10 @@ from django.db.models import signals
 
 @receiver(signals.post_save, sender=User)
 def send_activation_email_post_save(sender, instance, created, **kwargs):
-    if created:
+    """
+    Signal for sending email with activation code for activate user account (admin accounts not included).
+    """
+    if created and not (instance.is_staff or instance.is_superuser):
         print("Send email to %s" % instance.username)
     else:
         print("%s just saved" % instance.username)
@@ -13,6 +16,9 @@ def send_activation_email_post_save(sender, instance, created, **kwargs):
 
 @receiver(signals.post_save, sender=User)
 def set_user_inactive_post_save(sender, instance, created, **kwargs):
-    if created:
+    """
+    Signal for setting user account as inactive after registration (admin accounts not included).
+    """
+    if created and not (instance.is_staff or instance.is_superuser):
         instance.is_active = False
         instance.save()
