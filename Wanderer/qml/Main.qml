@@ -19,7 +19,9 @@ App {
 
     Component {
       id: signUpPage
-      SignUpPage {}
+      SignUpPage {
+        onRegisterButtonClicked: navigationStackView.popAllExceptFirst()
+      }
     }
 
     Component {
