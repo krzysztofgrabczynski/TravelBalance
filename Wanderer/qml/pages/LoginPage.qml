@@ -16,10 +16,10 @@ AppPage {
   Connections {
     target: g_apiManager
     onLoginCorrect: function (token) {
-      console.log("Token:", token)
+      console.log("Token: ", token)
     }
-    onLoginFailed: {
-      console.log("Login failed")
+    onLoginFailed: function (errorMessage) {
+      console.log("Login failed: ", errorMessage)
     }
   }
   id: page

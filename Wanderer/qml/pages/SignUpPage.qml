@@ -97,8 +97,8 @@ AppPage {
             qsTr("E-mail sent!"), qsTr(
               "Please check your email and confirm your account by clicking the provided link."))
     }
-    onRegisterFailed: {
-      console.log("Register Failed")
+    onRegisterFailed: function (errorMessage) {
+      console.log("Register Failed: ", errorMessage)
     }
   }
 
