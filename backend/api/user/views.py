@@ -36,9 +36,9 @@ class LoginView(generics.GenericAPIView):
                     return Response(
                         {
                             "error": self.user_inactive_message,
-                            "status": status.HTTP_403_FORBIDDEN,
+                            "status": status.HTTP_401_UNAUTHORIZED,
                         },
-                        status=status.HTTP_403_FORBIDDEN,
+                        status=status.HTTP_401_UNAUTHORIZED,
                     )
             raise PermissionDenied
         except (ObjectDoesNotExist, PermissionDenied):
