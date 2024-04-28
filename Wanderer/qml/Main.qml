@@ -14,6 +14,7 @@ App {
         onSignUpClicked: navigationStackView.push(signUpPage)
         onForgotPasswordClicked: navigationStackView.push(
                                    forgotPasswordEmailPage)
+        onSwitchToMainPage: navigationStackView.clearAndPush(mainPage)
       }
     }
 
@@ -28,6 +29,13 @@ App {
     Component {
       id: forgotPasswordEmailPage
       ForgotPasswordEmailPage {}
+    }
+
+    Component {
+      id: mainPage
+      MainPage {
+        onLogout: navigationStackView.clearAndPush(loginPage)
+      }
     }
   }
 }

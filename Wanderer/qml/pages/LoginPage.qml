@@ -5,12 +5,8 @@ import "../components"
 
 AppPage {
   function enableLoginButton(loginField, PasswordField) {
-    var isValid = true
-
-    if (loginField.length === 0 || PasswordField.length === 0)
-      isValid = false
-
-    loginButton.enabled = isValid
+    loginButton.enabled = (loginField.length !== 0
+                           && PasswordField.length !== 0)
   }
 
   Connections {
@@ -18,6 +14,7 @@ AppPage {
     onLoginCorrect: function (token) {
       console.log("Token: ", token)
       activityIndicatorBarItem.visible = false
+      switchToMainPage()
     }
     onLoginFailed: function (errorMessage) {
       console.log("Login failed: ", errorMessage)
@@ -29,6 +26,7 @@ AppPage {
 
   signal signUpClicked
   signal forgotPasswordClicked
+  signal switchToMainPage
 
   rightBarItem: ActivityIndicatorBarItem {
     id: activityIndicatorBarItem
