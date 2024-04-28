@@ -89,6 +89,11 @@ AppPage {
 
   signal correctRegistrationRequestSent
 
+  rightBarItem: ActivityIndicatorBarItem {
+    id: activityIndicatorBarItem
+    visible: false
+  }
+
   Connections {
     target: g_apiManager
     onRegisterCorrect: {
@@ -96,9 +101,11 @@ AppPage {
       nativeUtils.displayMessageBox(
             qsTr("E-mail sent!"), qsTr(
               "Please check your email and confirm your account by clicking the provided link."))
+      activityIndicatorBarItem.visible = false
     }
     onRegisterFailed: function (errorMessage) {
       console.log("Register Failed: ", errorMessage)
+      activityIndicatorBarItem.visible = false
     }
   }
 
@@ -358,6 +365,7 @@ AppPage {
     height: dp(50)
     radius: dp(15)
     onClicked: {
+      activityIndicatorBarItem.visible = true
       g_apiManager.registerUser(usernameTextField.text, passwordTextField.text,
                                 confirmPasswordTextField.text,
                                 emailAddressTextField.text)

@@ -17,9 +17,11 @@ AppPage {
     target: g_apiManager
     onLoginCorrect: function (token) {
       console.log("Token: ", token)
+      activityIndicatorBarItem.visible = false
     }
     onLoginFailed: function (errorMessage) {
       console.log("Login failed: ", errorMessage)
+      activityIndicatorBarItem.visible = false
     }
   }
   id: page
@@ -27,6 +29,11 @@ AppPage {
 
   signal signUpClicked
   signal forgotPasswordClicked
+
+  rightBarItem: ActivityIndicatorBarItem {
+    id: activityIndicatorBarItem
+    visible: false
+  }
 
   Column {
     id: columnLayout
@@ -89,6 +96,7 @@ AppPage {
       enabled: false
       onClicked: {
         console.log("Login Clicked")
+        activityIndicatorBarItem.visible = true
         g_apiManager.loginUser(loginTextField.text, passwordTextField.text)
       }
     }
