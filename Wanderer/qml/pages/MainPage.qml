@@ -11,6 +11,7 @@ AppPage {
   Connections {
     target: g_apiManager
     onLogoutCorrect: {
+      console.log("Logout correct!")
       logout()
     }
     onLogoutFailed: function (errorMessage) {
@@ -25,6 +26,7 @@ AppPage {
     backgroundColor: GlobalProperties.leadingColor
     text: "Logout!"
     onClicked: {
+      console.log("Logout clicked!")
       g_apiManager.logoutUser()
     }
   }

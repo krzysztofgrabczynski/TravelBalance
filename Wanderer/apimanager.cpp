@@ -57,7 +57,6 @@ void ApiManager::loginUser(const QString &login, const QString &password)
 void ApiManager::handleLoginResponse(QNetworkReply *reply)
 {
     QByteArray responseData = reply->readAll();
-    qDebug(responseData);
     QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
     QJsonObject jsonObject = jsonDocument.object();
 
@@ -117,7 +116,7 @@ void ApiManager::logoutUser()
     QNetworkReply *reply = networkManager->post(request, QByteArray());
 
     connect(reply, &QNetworkReply::finished, [=]() {
-
+        handleLogoutResponse(reply);
         reply->deleteLater();
     });
 }
