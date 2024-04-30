@@ -1,11 +1,10 @@
 import QtQuick
 import Felgo
 import "../components"
+import "../pages"
 
 AppPage {
   id: page
-  title: "MainPage"
-
   signal logout
 
   Connections {
@@ -28,6 +27,24 @@ AppPage {
     onClicked: {
       console.log("Logout clicked!")
       g_apiManager.logoutUser()
+    }
+  }
+  Navigation {
+    NavigationItem {
+      iconType: IconType.googlewallet
+      NavigationStack {}
+    }
+    NavigationItem {
+      iconType: IconType.ambulance
+      NavigationStack {}
+    }
+    NavigationItem {
+      iconType: IconType.bomb
+      NavigationStack {}
+    }
+    NavigationItem {
+      iconType: IconType.book
+      NavigationStack {}
     }
   }
 }

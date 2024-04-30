@@ -8,8 +8,10 @@ AppPage {
   id: page
   navigationBarHidden: false
 
+  signal verifyCodeCorrect
+
   function toggleSendEmailButton(email) {
-    return Validator.validateEmail(email)
+    functionalButton.enabled = Validator.validateEmail(email)
   }
 
   Column {
@@ -44,7 +46,7 @@ AppPage {
     inputMode: 2
     placeholderText: "Email address"
     onTextChanged: {
-      functionalButton.enabled = toggleSendEmailButton(emailAddressField.text)
+      toggleSendEmailButton(emailAddressField.text)
     }
   }
 
@@ -88,6 +90,7 @@ AppPage {
         //g_apiManager.sendForgotPasswordEmail(emailAddressField.text);
       } else if (page.state === "showVerifyCode") {
         console.log("Functional Button clicked - VERIFY CODE")
+        verifyCodeCorrect()
         //g_apiManager.sendVerifyCode(emailAddressField.text, verifyCodeField.text);
       } else {
         console.log("Functional Button clicked - elseStatement")

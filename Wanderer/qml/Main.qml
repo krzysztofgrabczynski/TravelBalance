@@ -28,7 +28,14 @@ App {
 
     Component {
       id: forgotPasswordEmailPage
-      ForgotPasswordEmailPage {}
+      ForgotPasswordEmailPage {
+        onVerifyCodeCorrect: navigationStackView.push(resetPasswordPage)
+      }
+    }
+
+    Component {
+      id: resetPasswordPage
+      ResetPasswordPage {}
     }
 
     Component {
