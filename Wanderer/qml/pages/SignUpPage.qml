@@ -2,51 +2,18 @@ import QtQuick
 import Felgo
 import "../components"
 
+import "../js/Validator.js" as Validator
+
 AppPage {
-  function containsSpecialCharacter(text) {
-    var specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-    return specialCharacters.test(text)
-  }
-  function containsNumber(text) {
-    var numberPattern = /[0-9]+/
-    return numberPattern.test(text)
-  }
-  function containsUpperLetter(text) {
-    var upperLetter = /[A-Z]/
-    return upperLetter.test(text)
-  }
-  function validatePassword(password) {
-    var isValid = true
 
-    if (password.length < 8) {
-      isValid = false
-    }
-
-    if (!containsSpecialCharacter(password)) {
-      isValid = false
-    }
-
-    if (!containsUpperLetter(password)) {
-      isValid = false
-    }
-
-    if (!containsNumber(password)) {
-      isValid = false
-    }
-
-    if (password !== confirmPasswordTextField.text || password.length === 0) {
-      isValid = false
-    }
-
-    return isValid
-  }
   function changeMatchRequirementsColor(password, confirmationPassword) {
-    if (password === confirmationPassword && password.length > 0) {
+    if (Validator.passwordsMatch(password, confirmationPassword)) {
       passwordRequirement5.itemsColor = "green"
     } else {
       passwordRequirement5.itemsColor = "red"
     }
   }
+
   function changeRequirementsColor(password, confirmationPassword) {
     if (password.length >= 8) {
       passwordRequirement1.itemsColor = "green"
@@ -54,34 +21,36 @@ AppPage {
       passwordRequirement1.itemsColor = "red"
     }
 
-    if (containsSpecialCharacter(password)) {
+    if (Validator.containsSpecialCharacter(password)) {
       passwordRequirement2.itemsColor = "green"
     } else {
       passwordRequirement2.itemsColor = "red"
     }
 
-    if (containsUpperLetter(password)) {
+    if (Validator.containsUpperLetter(password)) {
       passwordRequirement3.itemsColor = "green"
     } else {
       passwordRequirement3.itemsColor = "red"
     }
 
-    if (containsNumber(password)) {
+    if (Validator.containsNumber(password)) {
       passwordRequirement4.itemsColor = "green"
     } else {
       passwordRequirement4.itemsColor = "red"
     }
 
-    if (password === confirmationPassword && password.length > 0) {
+    if (Validator.passwordsMatch(password, confirmationPassword)) {
       passwordRequirement5.itemsColor = "green"
     } else {
       passwordRequirement5.itemsColor = "red"
     }
   }
+
   function toggleJoinButton() {
-    joinButton.enabled = validatePassword(passwordTextField.text)
-        && emailAddressTextField.text.length !== 0
-        && usernameTextField.text.length !== 0
+    joinButton.enabled = Validator.validatePassword(
+          passwordTextField.text, confirmPasswordTextField.text)
+        && Validator.validateEmail(emailAddressTextField.text)
+        && Validator.validateUsername(usernameTextField.text)
   }
 
   id: page
@@ -135,7 +104,7 @@ AppPage {
     id: usernameTextField
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.top: columnLayout.bottom
-    inputMode: 0
+    inputMode: 2
     placeholderText: qsTr("Username")
     onTextChanged: {
       toggleJoinButton()
@@ -159,7 +128,8 @@ AppPage {
       changeRequirementsColor(passwordTextField.text,
                               confirmPasswordTextField.text)
 
-      validatePassword(passwordTextField.text, confirmPasswordTextField.text)
+      Validator.validatePassword(passwordTextField.text,
+                                 confirmPasswordTextField.text)
       toggleJoinButton()
     }
     onFocusToggled: {
@@ -223,7 +193,8 @@ AppPage {
       changeMatchRequirementsColor(passwordTextField.text,
                                    confirmPasswordTextField.text)
 
-      validatePassword(passwordTextField.text, confirmPasswordTextField.text)
+      Validator.validatePassword(passwordTextField.text,
+                                 confirmPasswordTextField.text)
       toggleJoinButton()
     }
     onFocusToggled: {

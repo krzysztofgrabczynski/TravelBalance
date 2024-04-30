@@ -5,8 +5,7 @@ import "../components"
 
 AppPage {
   function enableLoginButton(loginField, PasswordField) {
-    loginButton.enabled = (loginField.length !== 0
-                           && PasswordField.length !== 0)
+    loginButton.enabled = (loginField.length !== 0 && PasswordField.length >= 6)
   }
 
   Connections {
@@ -61,7 +60,7 @@ AppPage {
     CustomTextField {
       id: loginTextField
       anchors.horizontalCenter: parent.horizontalCenter
-      inputMode: 0
+      inputMode: 2
       placeholderText: "Login"
       onTextChanged: {
         enableLoginButton(loginTextField.text, passwordTextField.text)
