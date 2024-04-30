@@ -29,27 +29,20 @@ function passwordsMatch(password, passwordRepeated) {
 }
 
 function validatePassword(password, passwordRepeated) {
-  var isValid = true
+  if (password.length < 8)
+    return false
 
-  if (password.length < 8) {
-    isValid = false
-  }
+  if (!containsSpecialCharacter(password))
+    return false
 
-  if (!containsSpecialCharacter(password)) {
-    isValid = false
-  }
+  if (!containsUpperLetter(password))
+    return false
 
-  if (!containsUpperLetter(password)) {
-    isValid = false
-  }
+  if (!containsNumber(password))
+    return false
 
-  if (!containsNumber(password)) {
-    isValid = false
-  }
+  if (!passwordsMatch(password, passwordRepeated))
+    return false
 
-  if (!passwordsMatch(password, passwordRepeated)) {
-    isValid = false
-  }
-
-  return isValid
+  return true
 }

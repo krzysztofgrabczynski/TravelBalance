@@ -87,7 +87,7 @@ AppPage {
         page.state = "showVerifyCode"
         //g_apiManager.sendForgotPasswordEmail(emailAddressField.text);
       } else if (page.state === "showVerifyCode") {
-        console.log("Functional Button clicked - VERIFYCODE")
+        console.log("Functional Button clicked - VERIFY CODE")
         //g_apiManager.sendVerifyCode(emailAddressField.text, verifyCodeField.text);
       } else {
         console.log("Functional Button clicked - elseStatement")

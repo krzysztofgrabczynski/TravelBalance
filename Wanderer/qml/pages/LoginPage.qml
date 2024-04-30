@@ -98,6 +98,7 @@ AppPage {
       }
     }
   }
+
   AppButton {
     anchors.top: columnLayout.bottom
     anchors.left: columnLayout.left
@@ -113,6 +114,7 @@ AppPage {
       signUpClicked()
     }
   }
+
   AppButton {
     anchors.top: columnLayout.bottom
     anchors.right: columnLayout.right

@@ -56,9 +56,7 @@ void ApiManager::loginUser(const QString &login, const QString &password)
 
 void ApiManager::handleLoginResponse(QNetworkReply *reply)
 {
-    QByteArray responseData = reply->readAll();
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
-    QJsonObject jsonObject = jsonDocument.object();
+    const auto jsonObject{parseResponseToJson(reply)};
 
     if (reply->error() == QNetworkReply::NoError) {
 
@@ -71,7 +69,8 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
 
     } else {
         const auto error{parseErrorApiResponse(jsonObject)};
-        emit loginFailed(error.second);
+        const QString errorMessages{getErrorMessages(error)};
+        emit loginFailed(errorMessages);
     }
 }
 
@@ -98,7 +97,8 @@ void ApiManager::handleRegisterResponse(QNetworkReply *reply){
         emit registerCorrect();
     } else {
         const auto error{parseErrorApiResponse(jsonObject)};
-        emit registerFailed(error.second);
+        const QString errorMessages{getErrorMessages(error)};
+        emit registerFailed(errorMessages);
     }
 }
 
@@ -130,23 +130,49 @@ void ApiManager::handleLogoutResponse(QNetworkReply *reply)
         emit logoutCorrect();
     } else {
         const auto error{parseErrorApiResponse(jsonObject)};
-        emit logoutFailed(error.second);
+        const QString errorMessages{getErrorMessages(error)};
+        emit logoutFailed(errorMessages);
     }
 }
 
-std::pair<int, QString> ApiManager::parseErrorApiResponse(const QJsonObject &apiJsonResponse)
+std::unordered_map<int, QString> ApiManager::parseErrorApiResponse(const QJsonObject &apiJsonResponse)
 {
-    int error{-1};
-    QString errorMessage{"UndefinedError"};
-    if(apiJsonResponse.contains("status")){
-       error = apiJsonResponse["status"].toInt();
+    std::unordered_map<int, QString> errorMap;
+
+    if(apiJsonResponse.contains("errors"))
+    {
+        QJsonArray errors = apiJsonResponse["errors"].toArray();
+
+        for(const auto& error : errors)
+        {
+            if(!error.isObject())
+                continue;
+
+            int errorCode = -1;
+            QString errorMessage = "UndefinedError";
+
+            if(error.toObject().contains("status"))
+                errorCode = error.toObject()["status"].toInt();
+
+
+            if(error.toObject().contains("error"))
+                errorMessage = error.toObject()["error"].toString();
+
+            errorMap[errorCode] = errorMessage;
+        }
     }
 
-    if(apiJsonResponse.contains("error")){
-       errorMessage = apiJsonResponse["error"].toString();
-    }
+    return errorMap;
+}
 
-    return std::make_pair(error,errorMessage);
+QString ApiManager::getErrorMessages(const std::unordered_map<int, QString> &errorMap)
+{
+    QString errorMessages{};
+
+    for(const auto& [_,errorMessage] : errorMap)
+        errorMessages+=errorMessage+"\n";
+
+    return errorMessages;
 }
 
 QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply){

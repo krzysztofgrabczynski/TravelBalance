@@ -127,9 +127,6 @@ AppPage {
     onTextChanged: {
       changeRequirementsColor(passwordTextField.text,
                               confirmPasswordTextField.text)
-
-      Validator.validatePassword(passwordTextField.text,
-                                 confirmPasswordTextField.text)
       toggleJoinButton()
     }
     onFocusToggled: {
@@ -227,7 +224,7 @@ AppPage {
     id: emailAddressTextField
     anchors.top: dummyRec4.bottom
     anchors.horizontalCenter: parent.horizontalCenter
-    inputMode: 2
+    inputMode: 1
     placeholderText: qsTr("Email address")
     onTextChanged: {
       toggleJoinButton()
