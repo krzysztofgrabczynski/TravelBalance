@@ -66,6 +66,8 @@ class UserCreateSerializer(UserCreateMixin, serializers.ModelSerializer):
                 {"error": error_message, "status": status.HTTP_400_BAD_REQUEST}
             )
 
+        return attrs
+
     def validate_email(self, email: str) -> str:
         print("jestem w validate_email")
         if User.objects.filter(email=email).exists():
