@@ -1,4 +1,4 @@
-from rest_framework import views, status, generics, viewsets
+from rest_framework import views, status, generics, viewsets, exceptions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -21,6 +21,7 @@ class LoginView(generics.GenericAPIView):
         username = serializer.validated_data["username"]
         password = serializer.validated_data["password"]
 
+        errors = {}
         try:
             user = User.objects.get(username=username)
 
@@ -28,27 +29,24 @@ class LoginView(generics.GenericAPIView):
                 if user.is_active:
                     token = self._create_user_auth_token(user)
                     return Response(
-                        {"token": token.key, "status": status.HTTP_200_OK},
+                        {"token": token.key},
                         status=status.HTTP_200_OK,
                     )
 
                 else:
-                    return Response(
-                        {
-                            "error": self.user_inactive_message,
-                            "status": status.HTTP_401_UNAUTHORIZED,
-                        },
-                        status=status.HTTP_401_UNAUTHORIZED,
-                    )
-            raise PermissionDenied
-        except (ObjectDoesNotExist, PermissionDenied):
-            return Response(
-                {
-                    "error": self.invalid_credentials_message,
-                    "status": status.HTTP_401_UNAUTHORIZED,
-                },
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
+                    raise PermissionDenied
+            raise ObjectDoesNotExist
+        except PermissionDenied:
+            errors.setdefault("errors", [])
+            errors["errors"].append({"inactive_user": self.user_inactive_message})
+        
+        except ObjectDoesNotExist:
+            errors.setdefault("errors", [])
+            errors["errors"].append({"invalid_credentials": self.invalid_credentials_message})
+
+        if errors:
+            serializer._errors = errors
+            raise exceptions.ValidationError(serializer.errors)
 
     def _create_user_auth_token(self, user: User) -> str:
         token, _ = Token.objects.get_or_create(user=user)
@@ -59,7 +57,7 @@ class LogoutView(views.APIView):
     def post(self, request):
         self._delete_user_auth_token(request)
         return Response(
-            {"status": status.HTTP_200_OK}, status=status.HTTP_200_OK
+            {}, status=status.HTTP_200_OK
         )
 
     def _delete_user_auth_token(self, request: HttpRequest) -> None:
@@ -81,3 +79,4 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=["post"], detail=True)
     def reset_password(self, request):
         pass
+    
