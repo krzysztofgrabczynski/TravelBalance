@@ -38,11 +38,15 @@ class LoginView(generics.GenericAPIView):
             raise ObjectDoesNotExist
         except PermissionDenied:
             errors.setdefault("errors", [])
-            errors["errors"].append({"inactive_user": self.user_inactive_message})
-        
+            errors["errors"].append(
+                {"inactive_user": self.user_inactive_message}
+            )
+
         except ObjectDoesNotExist:
             errors.setdefault("errors", [])
-            errors["errors"].append({"invalid_credentials": self.invalid_credentials_message})
+            errors["errors"].append(
+                {"invalid_credentials": self.invalid_credentials_message}
+            )
 
         if errors:
             serializer._errors = errors
@@ -56,9 +60,7 @@ class LoginView(generics.GenericAPIView):
 class LogoutView(views.APIView):
     def post(self, request):
         self._delete_user_auth_token(request)
-        return Response(
-            {}, status=status.HTTP_200_OK
-        )
+        return Response({}, status=status.HTTP_200_OK)
 
     def _delete_user_auth_token(self, request: HttpRequest) -> None:
         Token.objects.filter(user=request.user).delete()
@@ -79,4 +81,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=["post"], detail=True)
     def reset_password(self, request):
         pass
-    
+
+    @action(methods=["post"], detail=True)
+    def account_activation(self, request):
+        pass

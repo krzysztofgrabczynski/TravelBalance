@@ -9,7 +9,10 @@ class CustomErrorResponseMixin:
         try:
             return super().is_valid(*args, **kwargs)
         except serializers.ValidationError as exc:
-            errors.setdefault("errors", [{key: value[0]} for key, value in exc.detail.items()])
+            errors.setdefault(
+                "errors",
+                [{key: value[0]} for key, value in exc.detail.items()],
+            )
             self._errors = errors
             raise serializers.ValidationError(self.errors)
 
@@ -18,7 +21,7 @@ class LoginSerializer(CustomErrorResponseMixin, serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
 
-    
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -32,7 +35,9 @@ class UserCreateMixin:
         return user
 
 
-class UserCreateSerializer(CustomErrorResponseMixin, UserCreateMixin, serializers.ModelSerializer):
+class UserCreateSerializer(
+    CustomErrorResponseMixin, UserCreateMixin, serializers.ModelSerializer
+):
     email = serializers.EmailField(required=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -60,7 +65,7 @@ class UserCreateSerializer(CustomErrorResponseMixin, UserCreateMixin, serializer
             raise serializers.ValidationError({"re_password": error_message})
 
         return attrs
-    
+
     # def to_internal_value(self, data):
     #     errors = OrderedDict()
     #     try:
@@ -75,5 +80,3 @@ class UserCreateSerializer(CustomErrorResponseMixin, UserCreateMixin, serializer
     #                 }
     #             errors["errors"].append(error)
     #         raise serializers.ValidationError(errors)
-
-
