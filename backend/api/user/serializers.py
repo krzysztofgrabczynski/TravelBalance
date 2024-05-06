@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 
 
 class CustomErrorResponseMixin:
@@ -17,6 +20,13 @@ class CustomErrorResponseMixin:
             raise serializers.ValidationError(self.errors)
 
 
+class UserCreateMixin:
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+
+        return user
+
+
 class LoginSerializer(CustomErrorResponseMixin, serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
@@ -26,13 +36,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "email")
-
-
-class UserCreateMixin:
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-
-        return user
 
 
 class UserCreateSerializer(
@@ -80,3 +83,31 @@ class UserCreateSerializer(
     #                 }
     #             errors["errors"].append(error)
     #         raise serializers.ValidationError(errors)
+
+
+class AccountActivationSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField()
+    token = serializers.CharField()
+
+    def validate(self, attrs: dict) -> dict:
+        if "uidb64" not in attrs or "token" not in attrs:
+            raise ImproperlyConfigured(
+                "The URL path must contain 'uidb64' and 'token' parameters."
+            )
+
+        self.user = self.get_user(attrs["uidb64"])
+        token = attrs["token"]
+
+        if self.user is not None:
+            if default_token_generator.check_token(self.user, token):
+                return attrs
+
+        raise serializers.ValidationError("Activation link error")
+
+    def get_user(self, uidb64):
+        try:
+            uidb64 = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uidb64)
+        except ObjectDoesNotExist:
+            user = None
+        return user
