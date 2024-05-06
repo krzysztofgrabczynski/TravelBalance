@@ -1,21 +1,14 @@
-from django.dispatch import receiver
-from django.contrib.auth import get_user_model
+from django.dispatch import receiver, Signal
+from django.contrib.auth.models import User
 from django.db.models import signals
-
-
-User = get_user_model()
-
-
-@receiver(signals.post_save, sender=User)
-def send_activation_email_post_save(sender, instance, created, **kwargs):
-    if created:
-        print("Send email to %s" % instance.username)
-    else:
-        print("%s just saved" % instance.username)
+from api.user.email import ActivationEmail
 
 
 @receiver(signals.post_save, sender=User)
 def set_user_inactive_post_save(sender, instance, created, **kwargs):
-    if created:
+    """
+    Signal for setting user account as inactive after registration (admin accounts not included).
+    """
+    if created and not (instance.is_staff or instance.is_superuser):
         instance.is_active = False
         instance.save()

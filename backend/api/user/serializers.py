@@ -1,12 +1,33 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
+from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 
 
-User = get_user_model()
+class CustomErrorResponseMixin:
+    def is_valid(self, *args, **kwargs):
+        errors = {}
+        try:
+            return super().is_valid(*args, **kwargs)
+        except serializers.ValidationError as exc:
+            errors.setdefault(
+                "errors",
+                [{key: value[0]} for key, value in exc.detail.items()],
+            )
+            self._errors = errors
+            raise serializers.ValidationError(self.errors)
 
 
-class LoginSerializer(serializers.Serializer):
+class UserCreateMixin:
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+
+        return user
+
+
+class LoginSerializer(CustomErrorResponseMixin, serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
 
@@ -17,14 +38,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("username", "email")
 
 
-class UserCreateMixin:
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-
-        return user
-
-
-class UserCreateSerializer(UserCreateMixin, serializers.ModelSerializer):
+class UserCreateSerializer(
+    CustomErrorResponseMixin, UserCreateMixin, serializers.ModelSerializer
+):
     email = serializers.EmailField(required=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -36,15 +52,8 @@ class UserCreateSerializer(UserCreateMixin, serializers.ModelSerializer):
                 "required": True,
                 "write_only": True,
                 "validators": [validate_password],
-            }
+            },
         }
-
-    def validate(self, attrs: dict) -> dict:
-        if not attrs["password"] == attrs.pop("password2"):
-            error_message = {"password": "Password fields must be the same"}
-            raise serializers.ValidationError(error_message)
-
-        return super().validate(attrs)
 
     def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
@@ -52,3 +61,53 @@ class UserCreateSerializer(UserCreateMixin, serializers.ModelSerializer):
             raise serializers.ValidationError(error_message)
 
         return email
+
+    def validate(self, attrs: dict) -> dict:
+        if not attrs["password"] == attrs.pop("password2"):
+            error_message = "Password fields must be the same"
+            raise serializers.ValidationError({"re_password": error_message})
+
+        return attrs
+
+    # def to_internal_value(self, data):
+    #     errors = OrderedDict()
+    #     try:
+    #         return super().to_internal_value(data)
+    #     except (serializers.ValidationError, ValidationError) as exc:
+    #         errors.setdefault("errors", [])
+    #         for error in exc.detail.values():
+    #             if not isinstance(error, dict):
+    #                 error = {
+    #                     "error": error[0],
+    #                     "status": status.HTTP_400_BAD_REQUEST,
+    #                 }
+    #             errors["errors"].append(error)
+    #         raise serializers.ValidationError(errors)
+
+
+class AccountActivationSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField()
+    token = serializers.CharField()
+
+    def validate(self, attrs: dict) -> dict:
+        if "uidb64" not in attrs or "token" not in attrs:
+            raise ImproperlyConfigured(
+                "The URL path must contain 'uidb64' and 'token' parameters."
+            )
+
+        self.user = self.get_user(attrs["uidb64"])
+        token = attrs["token"]
+
+        if self.user is not None:
+            if default_token_generator.check_token(self.user, token):
+                return attrs
+
+        raise serializers.ValidationError("Activation link error")
+
+    def get_user(self, uidb64):
+        try:
+            uidb64 = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uidb64)
+        except ObjectDoesNotExist:
+            user = None
+        return user
