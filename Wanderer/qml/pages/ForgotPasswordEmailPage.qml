@@ -2,9 +2,17 @@ import QtQuick
 import Felgo
 import "../components"
 
+import "../js/Validator.js" as Validator
+
 AppPage {
   id: page
   navigationBarHidden: false
+
+  signal verifyCodeCorrect
+
+  function toggleSendEmailButton(email) {
+    functionalButton.enabled = Validator.validateEmail(email)
+  }
 
   Column {
     id: topColumnLayout
@@ -37,6 +45,9 @@ AppPage {
     anchors.top: topColumnLayout.bottom
     inputMode: 2
     placeholderText: "Email address"
+    onTextChanged: {
+      toggleSendEmailButton(emailAddressField.text)
+    }
   }
 
   Rectangle {
@@ -64,20 +75,26 @@ AppPage {
     textColorPressed: GlobalProperties.leadingColor
     borderColorPressed: GlobalProperties.leadingColor
     textColor: "white"
+    enabled: false
     width: dp(320)
     height: dp(50)
     radius: dp(15)
     onClicked: {
-      console.log("Functional Button clicked - TBD")
-      emailAddressField.readOnly = !emailAddressField.readOnly
-      emailAddressField.showClearButton = !emailAddressField.showClearButton
-      emailAddressField.clickEnabled = !emailAddressField.clickEnabled
-      if (emailAddressField.readOnly)
+      if (page.state === "hideVerifyCode") {
+        console.log("Functional Button clicked - SEND EMAIL")
+        emailAddressField.readOnly = !emailAddressField.readOnly
+        emailAddressField.showClearButton = !emailAddressField.showClearButton
+        emailAddressField.clickEnabled = !emailAddressField.clickEnabled
         emailAddressField.textColor = "grey"
-      else
-        emailAddressField.textColor = "black"
-
-      page.state = page.state === "hideVerifyCode" ? "showVerifyCode" : "hideVerifyCode"
+        page.state = "showVerifyCode"
+        //g_apiManager.sendForgotPasswordEmail(emailAddressField.text);
+      } else if (page.state === "showVerifyCode") {
+        console.log("Functional Button clicked - VERIFY CODE")
+        verifyCodeCorrect()
+        //g_apiManager.sendVerifyCode(emailAddressField.text, verifyCodeField.text);
+      } else {
+        console.log("Functional Button clicked - elseStatement")
+      }
     }
   }
 

@@ -26,7 +26,7 @@ set(FELGO_PLUGINS
 )
 
 # Find all QML/JS files for the QML compiler:
-file(GLOB_RECURSE QmlFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} qml/*.qml qml/*.js qml/components/*.qml qml/pages/*.qml)
+file(GLOB_RECURSE QmlFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} qml/*.qml qml/*.js qml/js/*.js qml/components/*.qml qml/pages/*.qml)
 
 # Find all non-QML/JS files in the qml and assets folder to add as resources:
 file(GLOB_RECURSE AssetsFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} assets/* qml/*)

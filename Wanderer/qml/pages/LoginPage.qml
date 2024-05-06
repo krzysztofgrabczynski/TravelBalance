@@ -5,25 +5,19 @@ import "../components"
 
 AppPage {
   function enableLoginButton(loginField, PasswordField) {
-    var isValid = true
-
-    if (loginField.length === 0 || PasswordField.length === 0)
-      isValid = false
-
-    loginButton.enabled = isValid
-  }
-
-  function loginCorrectHandler(token) {
-    console.log("Token:", token)
+    loginButton.enabled = (loginField.length !== 0 && PasswordField.length >= 6)
   }
 
   Connections {
     target: g_apiManager
-    onLoginCorrect: {
-      loginCorrectHandler(token)
+    onLoginCorrect: function (token) {
+      console.log("Token: ", token)
+      activityIndicatorBarItem.visible = false
+      switchToMainPage()
     }
-    onLoginFailed: {
-      console.log("Login failed")
+    onLoginFailed: function (errorMessage) {
+      console.log("Login failed: ", errorMessage)
+      activityIndicatorBarItem.visible = false
     }
   }
   id: page
@@ -31,6 +25,12 @@ AppPage {
 
   signal signUpClicked
   signal forgotPasswordClicked
+  signal switchToMainPage
+
+  rightBarItem: ActivityIndicatorBarItem {
+    id: activityIndicatorBarItem
+    visible: false
+  }
 
   Column {
     id: columnLayout
@@ -60,7 +60,7 @@ AppPage {
     CustomTextField {
       id: loginTextField
       anchors.horizontalCenter: parent.horizontalCenter
-      inputMode: 0
+      inputMode: 2
       placeholderText: "Login"
       onTextChanged: {
         enableLoginButton(loginTextField.text, passwordTextField.text)
@@ -93,10 +93,12 @@ AppPage {
       enabled: false
       onClicked: {
         console.log("Login Clicked")
+        activityIndicatorBarItem.visible = true
         g_apiManager.loginUser(loginTextField.text, passwordTextField.text)
       }
     }
   }
+
   AppButton {
     anchors.top: columnLayout.bottom
     anchors.left: columnLayout.left
@@ -112,6 +114,7 @@ AppPage {
       signUpClicked()
     }
   }
+
   AppButton {
     anchors.top: columnLayout.bottom
     anchors.right: columnLayout.right

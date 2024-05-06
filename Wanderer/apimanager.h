@@ -16,12 +16,12 @@ public slots:
    Q_INVOKABLE void registerUser(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress);
    Q_INVOKABLE void logoutUser();
 signals:
-   Q_INVOKABLE void loginCorrect(const QString& token);
-   Q_INVOKABLE void loginFailed();
-   Q_INVOKABLE void registerCorrect();
-   Q_INVOKABLE void registerFailed();
-   Q_INVOKABLE void logoutCorrect();
-   Q_INVOKABLE void logoutFailed();
+   void loginCorrect(const QString& token);
+   void loginFailed(const QString& errorMessage);
+   void registerCorrect();
+   void registerFailed(const QString& errorMessage);
+   void logoutCorrect();
+   void logoutFailed(const QString& errorMessage);
 
 private:
     QNetworkAccessManager* networkManager;
@@ -32,6 +32,10 @@ private:
     void handleLoginResponse(QNetworkReply *reply);
     void handleRegisterResponse(QNetworkReply *reply);
     void handleLogoutResponse(QNetworkReply *reply);
+
+    QJsonObject parseResponseToJson(QNetworkReply* reply);
+    std::unordered_map<int, QString> parseErrorApiResponse(const QJsonObject& apiJsonResponse);
+    QString getErrorMessages(const std::unordered_map<int, QString>& errorMap );
 };
 
 

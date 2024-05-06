@@ -46,11 +46,9 @@ AppPage {
     }
   }
 
-  function toggleJoinButton() {
-    joinButton.enabled = Validator.validatePassword(
-          passwordTextField.text, confirmPasswordTextField.text)
-        && Validator.validateEmail(emailAddressTextField.text)
-        && Validator.validateUsername(usernameTextField.text)
+  function toggleResetPasswordButton(password, passwordRepeated) {
+    resetPasswordButton.enabled = Validator.validatePassword(password,
+                                                             passwordRepeated)
   }
 
   id: page
@@ -61,21 +59,6 @@ AppPage {
   rightBarItem: ActivityIndicatorBarItem {
     id: activityIndicatorBarItem
     visible: false
-  }
-
-  Connections {
-    target: g_apiManager
-    onRegisterCorrect: {
-      console.log("Register Correct")
-      nativeUtils.displayMessageBox(
-            qsTr("E-mail sent!"), qsTr(
-              "Please check your email and confirm your account by clicking the provided link."))
-      activityIndicatorBarItem.visible = false
-    }
-    onRegisterFailed: function (errorMessage) {
-      console.log("Register Failed: ", errorMessage)
-      activityIndicatorBarItem.visible = false
-    }
   }
 
   Column {
@@ -92,7 +75,7 @@ AppPage {
 
     AppText {
       anchors.horizontalCenter: parent.horizontalCenter
-      text: qsTr("Join the adventure!")
+      text: qsTr("Insert new password!")
       fontSize: sp(24)
       font.bold: true
       bottomPadding: 30
@@ -101,33 +84,16 @@ AppPage {
   }
 
   CustomTextField {
-    id: usernameTextField
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.top: columnLayout.bottom
-    inputMode: 2
-    placeholderText: qsTr("Username")
-    onTextChanged: {
-      toggleJoinButton()
-    }
-  }
-
-  Rectangle {
-    id: dummyRec1
-    width: parent
-    height: dp(10)
-    anchors.top: usernameTextField.bottom
-  }
-
-  CustomTextField {
     id: passwordTextField
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.top: dummyRec1.bottom
+    anchors.top: columnLayout.bottom
     inputMode: 4
-    placeholderText: "Password"
+    placeholderText: "New password"
     onTextChanged: {
       changeRequirementsColor(passwordTextField.text,
                               confirmPasswordTextField.text)
-      toggleJoinButton()
+      toggleResetPasswordButton(passwordTextField.text,
+                                confirmPasswordTextField.text)
     }
     onFocusToggled: {
       page.state = page.state
@@ -136,7 +102,7 @@ AppPage {
   }
 
   Rectangle {
-    id: dummyRec2
+    id: dummyRec1
     width: dp(300)
     height: dp(10)
     visible: false
@@ -146,34 +112,34 @@ AppPage {
 
   PasswordRequirement {
     id: passwordRequirement1
-    anchors.left: usernameTextField.left
-    anchors.top: dummyRec2.bottom
+    anchors.left: passwordTextField.left
+    anchors.top: dummyRec1.bottom
     text: qsTr("Password should be at least 8 characters long.")
   }
 
   PasswordRequirement {
     id: passwordRequirement2
-    anchors.left: usernameTextField.left
+    anchors.left: passwordTextField.left
     anchors.top: passwordRequirement1.bottom
     text: qsTr("Password should contain at least one special character.")
   }
 
   PasswordRequirement {
     id: passwordRequirement3
-    anchors.left: usernameTextField.left
+    anchors.left: passwordTextField.left
     anchors.top: passwordRequirement2.bottom
     text: qsTr("Password should contain at least one uppercase letter.")
   }
 
   PasswordRequirement {
     id: passwordRequirement4
-    anchors.left: usernameTextField.left
+    anchors.left: passwordTextField.left
     anchors.top: passwordRequirement3.bottom
     text: qsTr("Password should contain at least one number.")
   }
 
   Rectangle {
-    id: dummyRec3
+    id: dummyRec2
     width: parent
     visible: false
     height: dp(10)
@@ -183,22 +149,22 @@ AppPage {
   CustomTextField {
     id: confirmPasswordTextField
     anchors.horizontalCenter: parent.horizontalCenter
-    anchors.top: dummyRec2.bottom
+    anchors.top: dummyRec1.bottom
     inputMode: 4
-    placeholderText: qsTr("Confirm Password")
+    placeholderText: qsTr("Confirm new password")
     onTextChanged: {
       changeMatchRequirementsColor(passwordTextField.text,
                                    confirmPasswordTextField.text)
-
-      toggleJoinButton()
+      toggleResetPasswordButton(passwordTextField.text,
+                                confirmPasswordTextField.text)
     }
     onFocusToggled: {
-      page.state = page.state === "downEmailAddress" ? "upEmailAddress" : "downEmailAddress"
+      page.state = page.state === "downPasswordButton" ? "upPasswordButton" : "downPasswordButton"
     }
   }
 
   Rectangle {
-    id: dummyRec4
+    id: dummyRec3
     width: parent
     height: dp(10)
     anchors.top: confirmPasswordTextField.bottom
@@ -206,36 +172,46 @@ AppPage {
 
   PasswordRequirement {
     id: passwordRequirement5
-    anchors.left: usernameTextField.left
-    anchors.top: dummyRec4.bottom
+    anchors.left: passwordTextField.left
+    anchors.top: dummyRec3.bottom
     text: qsTr("Password should match each other.")
   }
 
   Rectangle {
-    id: dummyRec5
+    id: dummyRec4
     width: parent
     height: dp(10)
     anchors.top: passwordRequirement5.bottom
   }
 
-  CustomTextField {
-    id: emailAddressTextField
-    anchors.top: dummyRec4.bottom
+  AppButton {
+    id: resetPasswordButton
+    flat: false
     anchors.horizontalCenter: parent.horizontalCenter
-    inputMode: 1
-    placeholderText: qsTr("Email address")
-    onTextChanged: {
-      toggleJoinButton()
+    anchors.top: dummyRec3.bottom
+    backgroundColor: GlobalProperties.leadingColor
+    borderColor: GlobalProperties.leadingColor
+    textColor: "white"
+    textColorPressed: GlobalProperties.leadingColor
+    borderColorPressed: GlobalProperties.leadingColor
+    text: qsTr("Reset Password")
+    enabled: false
+    width: dp(320)
+    height: dp(50)
+    radius: dp(15)
+    onClicked: {
+      activityIndicatorBarItem.visible = true
     }
   }
 
+  state: "upConfirmPassword"
   states: [
     State {
       name: "upConfirmPassword"
 
       AnchorChanges {
         target: confirmPasswordTextField
-        anchors.top: dummyRec2.bottom
+        anchors.top: dummyRec1.bottom
       }
       PropertyChanges {
         target: passwordRequirement1
@@ -258,7 +234,7 @@ AppPage {
       name: "downConfirmPassword"
       AnchorChanges {
         target: confirmPasswordTextField
-        anchors.top: dummyRec3.bottom
+        anchors.top: dummyRec2.bottom
       }
       PropertyChanges {
         target: passwordRequirement1
@@ -278,11 +254,11 @@ AppPage {
       }
     },
     State {
-      name: "upEmailAddress"
+      name: "upPasswordButton"
 
       AnchorChanges {
-        target: emailAddressTextField
-        anchors.top: dummyRec4.bottom
+        target: resetPasswordButton
+        anchors.top: dummyRec3.bottom
       }
       PropertyChanges {
         target: passwordRequirement5
@@ -290,12 +266,11 @@ AppPage {
       }
     },
     State {
-      name: "downEmailAddress"
+      name: "downPasswordButton"
       AnchorChanges {
-        target: emailAddressTextField
-        anchors.top: dummyRec5.bottom
+        target: resetPasswordButton
+        anchors.top: dummyRec4.bottom
       }
-
       PropertyChanges {
         target: passwordRequirement5
         opacity: 1
@@ -312,38 +287,6 @@ AppPage {
     NumberAnimation {
       properties: "opacity"
       duration: 500
-    }
-  }
-
-  AppButton {
-    id: joinButton
-    flat: false
-    anchors.horizontalCenter: parent.horizontalCenter
-    y: parent.height - nativeUtils.safeAreaInsets.bottom - joinButton.height
-    backgroundColor: GlobalProperties.leadingColor
-    borderColor: GlobalProperties.leadingColor
-    textColor: "white"
-    textColorPressed: GlobalProperties.leadingColor
-    borderColorPressed: GlobalProperties.leadingColor
-    text: qsTr("Join")
-    enabled: false
-    width: dp(320)
-    height: dp(50)
-    radius: dp(15)
-    onClicked: {
-      activityIndicatorBarItem.visible = true
-      g_apiManager.registerUser(usernameTextField.text, passwordTextField.text,
-                                confirmPasswordTextField.text,
-                                emailAddressTextField.text)
-    }
-  }
-
-  Connections {
-    target: NativeUtils
-    onMessageBoxFinished: function (accepted) {
-      if (accepted) {
-        correctRegistrationRequestSent()
-      }
     }
   }
 }

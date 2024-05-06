@@ -18,9 +18,9 @@ ApiManager::~ApiManager()
     delete networkManager;
 }
 
-const QString apiAdressLogin = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/login/";
-const QString apiAddresLogout = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/logout/";
-const QString apiAddresRegister = "https://bart-kris-api-test-84e163f71bea.herokuapp.com/api/v1/user/";
+static const QString apiAdressLogin = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/login/";
+static const QString apiAddresLogout = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/logout/";
+static const QString apiAddresRegister = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/user/";
 
 QByteArray ApiManager::prepareLoginData(const QString &login, const QString &password)
 {
@@ -40,7 +40,6 @@ QByteArray ApiManager::prepareRegisterData(const QString &login, const QString &
     return QJsonDocument(jsonObject).toJson();
 }
 
-
 void ApiManager::loginUser(const QString &login, const QString &password)
 {
     QNetworkRequest request{QUrl(apiAdressLogin)};
@@ -57,30 +56,21 @@ void ApiManager::loginUser(const QString &login, const QString &password)
 
 void ApiManager::handleLoginResponse(QNetworkReply *reply)
 {
+    const auto jsonObject{parseResponseToJson(reply)};
+
     if (reply->error() == QNetworkReply::NoError) {
-        QByteArray responseData = reply->readAll();
-        qDebug(responseData);
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
-        QJsonObject jsonObject = jsonDocument.object();
 
         if (jsonObject.contains("token")) {
             m_token = jsonObject["token"].toString();
-            qDebug() << "Login Correct: " + m_token;
             emit loginCorrect(m_token);
         } else {
-            qDebug() << "Token not found in JSON response.";
-            emit loginFailed();
-        }
-
-        if(jsonObject.contains("status")){
-            qDebug() << "Status: " << QString::number(jsonObject["status"].toInt());
-        }else{
-            qDebug() << "Status not found in JSON response.";
+            emit loginFailed("Token missing");
         }
 
     } else {
-        qDebug() << "Error:" << reply->errorString();
-        emit loginFailed();
+        const auto error{parseErrorApiResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit loginFailed(errorMessages);
     }
 }
 
@@ -100,12 +90,15 @@ void ApiManager::registerUser(const QString &login, const QString &password, con
 }
 
 void ApiManager::handleRegisterResponse(QNetworkReply *reply){
+
+    const auto jsonObject{parseResponseToJson(reply)};
+
     if (reply->error() == QNetworkReply::NoError) {
-        qDebug() << "Response:" << reply->readAll();
         emit registerCorrect();
     } else {
-        qDebug() << "Error:" << reply->errorString();
-        emit registerFailed();
+        const auto error{parseErrorApiResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit registerFailed(errorMessages);
     }
 }
 
@@ -113,7 +106,7 @@ void ApiManager::logoutUser()
 {
     if(m_token.isEmpty())
     {
-        emit logoutFailed();
+        emit logoutFailed("Token missing");
         return;
     }
 
@@ -123,22 +116,70 @@ void ApiManager::logoutUser()
     QNetworkReply *reply = networkManager->post(request, QByteArray());
 
     connect(reply, &QNetworkReply::finished, [=]() {
-
+        handleLogoutResponse(reply);
         reply->deleteLater();
     });
 }
 
 void ApiManager::handleLogoutResponse(QNetworkReply *reply)
 {
+    const auto jsonObject{parseResponseToJson(reply)};
+
     if (reply->error() == QNetworkReply::NoError) {
-        QByteArray responseData = reply->readAll();
-        qDebug() << responseData;
         this->m_token.clear();
         emit logoutCorrect();
     } else {
-        qDebug() << "Error:" << reply->errorString();
-        emit logoutFailed();
+        const auto error{parseErrorApiResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit logoutFailed(errorMessages);
     }
+}
+
+std::unordered_map<int, QString> ApiManager::parseErrorApiResponse(const QJsonObject &apiJsonResponse)
+{
+    std::unordered_map<int, QString> errorMap;
+
+    if(apiJsonResponse.contains("errors"))
+    {
+        QJsonArray errors = apiJsonResponse["errors"].toArray();
+
+        for(const auto& error : errors)
+        {
+            if(!error.isObject())
+                continue;
+
+            int errorCode = -1;
+            QString errorMessage = "UndefinedError";
+
+            if(error.toObject().contains("status"))
+                errorCode = error.toObject()["status"].toInt();
+
+
+            if(error.toObject().contains("error"))
+                errorMessage = error.toObject()["error"].toString();
+
+            errorMap[errorCode] = errorMessage;
+        }
+    }
+
+    return errorMap;
+}
+
+QString ApiManager::getErrorMessages(const std::unordered_map<int, QString> &errorMap)
+{
+    QString errorMessages{};
+
+    for(const auto& [_,errorMessage] : errorMap)
+        errorMessages+=errorMessage+"\n";
+
+    return errorMessages;
+}
+
+QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply){
+    QByteArray responseData = reply->readAll();
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
+    qDebug(responseData);
+    return jsonDocument.object();
 }
 
 

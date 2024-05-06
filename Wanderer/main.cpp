@@ -17,6 +17,9 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
 
+    ApiManager g_apiManager;
+    engine.rootContext()->setContextProperty("g_apiManager", &g_apiManager);
+
     felgo.setLicenseKey(PRODUCT_LICENSE_KEY);
 
     felgo.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
@@ -31,9 +34,6 @@ int main(int argc, char *argv[])
     // to start your project as Live Client, comment (remove) the lines "felgo.setMainQmlFileName ..." & "engine.load ...",
     // and uncomment the line below
     //FelgoLiveClient client (&engine);
-
-    ApiManager g_apiManager;
-    engine.rootContext()->setContextProperty("g_apiManager", &g_apiManager);
 
     return app.exec();
 }

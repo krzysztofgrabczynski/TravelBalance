@@ -14,19 +14,35 @@ App {
         onSignUpClicked: navigationStackView.push(signUpPage)
         onForgotPasswordClicked: navigationStackView.push(
                                    forgotPasswordEmailPage)
+        onSwitchToMainPage: navigationStackView.clearAndPush(mainPage)
       }
     }
 
     Component {
       id: signUpPage
       SignUpPage {
-        onRegisterButtonClicked: navigationStackView.popAllExceptFirst()
+        onCorrectRegistrationRequestSent: navigationStackView.popAllExceptFirst(
+                                            )
       }
     }
 
     Component {
       id: forgotPasswordEmailPage
-      ForgotPasswordEmailPage {}
+      ForgotPasswordEmailPage {
+        onVerifyCodeCorrect: navigationStackView.push(resetPasswordPage)
+      }
+    }
+
+    Component {
+      id: resetPasswordPage
+      ResetPasswordPage {}
+    }
+
+    Component {
+      id: mainPage
+      MainPage {
+        onLogout: navigationStackView.clearAndPush(loginPage)
+      }
     }
   }
 }
