@@ -65,9 +65,10 @@ class BaseEmailMessage(EmailMultiAlternatives):
 
         return super().send(fail_silently)
 
-    def get_template_name(self):
+    def get_template_name(self) -> str:
         if self.template_name is None:
-            raise ImproperlyConfigured
+            error_message = f"The `template_name` attribute in the {self.__class__.__name__} class cannot be None."
+            raise ImproperlyConfigured(error_message)
         return self.template_name
 
 

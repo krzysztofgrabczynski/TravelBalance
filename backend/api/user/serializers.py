@@ -119,7 +119,7 @@ class AccountActivationSerializer(serializers.Serializer):
             {"token": self.error_messages[key_error]}, code=key_error
         )
 
-    def get_user(self, uidb64):
+    def get_user(self, uidb64: str) -> User:
         try:
             uidb64 = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uidb64)
