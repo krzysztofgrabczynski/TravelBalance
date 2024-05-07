@@ -83,22 +83,19 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = serializer.save()
-
         context = {"user": user}
         ActivationEmail(self.request, context).send()
-
         return user
 
-    @action(methods=["post"], detail=True)
+    @action(methods=["post"], detail=False)
     def account_activation(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=kwargs)
         serializer.is_valid(raise_exception=True)
         user = serializer.user
         user.is_active = True
         user.save()
-
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(methods=["post"], detail=True)
+    @action(methods=["post"], detail=False)
     def reset_password(self, request):
         pass
