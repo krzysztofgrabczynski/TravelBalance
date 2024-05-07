@@ -6,18 +6,33 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 
 
-class CustomErrorResponseMixin:
-    def is_valid(self, *args, **kwargs):
-        errors = {}
-        try:
-            return super().is_valid(*args, **kwargs)
-        except serializers.ValidationError as exc:
-            errors.setdefault(
-                "errors",
-                [{key: value[0]} for key, value in exc.detail.items()],
-            )
-            self._errors = errors
-            raise serializers.ValidationError(self.errors)
+# class CustomErrorResponseMixin:
+#     def is_valid(self, *args, **kwargs):
+#         errors = {}
+#         try:
+#             return super().is_valid(*args, **kwargs)
+#         except serializers.ValidationError as exc:
+#             errors.setdefault(
+#                 "errors",
+#                 [{key: value[0]} for key, value in exc.detail.items()],
+#             )
+#             self._errors = errors
+#             raise serializers.ValidationError(self.errors)
+
+#     def to_internal_value(self, data):
+#         errors = OrderedDict()
+#         try:
+#             return super().to_internal_value(data)
+#         except (serializers.ValidationError, ValidationError) as exc:
+#             errors.setdefault("errors", [])
+#             for error in exc.detail.values():
+#                 if not isinstance(error, dict):
+#                     error = {
+#                         "error": error[0],
+#                         "status": status.HTTP_400_BAD_REQUEST,
+#                     }
+#                 errors["errors"].append(error)
+#             raise serializers.ValidationError(errors)
 
 
 class UserCreateMixin:
@@ -27,7 +42,7 @@ class UserCreateMixin:
         return user
 
 
-class LoginSerializer(CustomErrorResponseMixin, serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
 
@@ -38,9 +53,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("username", "email")
 
 
-class UserCreateSerializer(
-    CustomErrorResponseMixin, UserCreateMixin, serializers.ModelSerializer
-):
+class UserCreateSerializer(UserCreateMixin, serializers.ModelSerializer):
+    default_error_messages = {
+        "unique_email": "User with that email already exists",
+        "invalid_re_password": "Password fields must be the same",
+    }
+
     email = serializers.EmailField(required=True)
     password2 = serializers.CharField(required=True, write_only=True)
 
@@ -57,32 +75,21 @@ class UserCreateSerializer(
 
     def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
-            error_message = "User with that email already exists"
-            raise serializers.ValidationError(error_message)
+            key_error = "unique_email"
+            raise serializers.ValidationError(
+                {"email": self.error_messages[key_error]}, code=key_error
+            )
 
         return email
 
     def validate(self, attrs: dict) -> dict:
         if not attrs["password"] == attrs.pop("password2"):
-            error_message = "Password fields must be the same"
-            raise serializers.ValidationError({"re_password": error_message})
+            key_error = "invalid_re_password"
+            raise serializers.ValidationError(
+                {"password2": self.error_messages[key_error]}, code=key_error
+            )
 
         return attrs
-
-    # def to_internal_value(self, data):
-    #     errors = OrderedDict()
-    #     try:
-    #         return super().to_internal_value(data)
-    #     except (serializers.ValidationError, ValidationError) as exc:
-    #         errors.setdefault("errors", [])
-    #         for error in exc.detail.values():
-    #             if not isinstance(error, dict):
-    #                 error = {
-    #                     "error": error[0],
-    #                     "status": status.HTTP_400_BAD_REQUEST,
-    #                 }
-    #             errors["errors"].append(error)
-    #         raise serializers.ValidationError(errors)
 
 
 class AccountActivationSerializer(serializers.Serializer):
