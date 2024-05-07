@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.contrib.auth.tokens import default_token_generator
 
 from api.user import serializers
 from api.user.email import ActivationEmail
@@ -70,6 +71,7 @@ class LogoutView(views.APIView):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
+    token_generator = default_token_generator
 
     def get_serializer_class(self):
         if self.action == "create":
@@ -83,7 +85,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = serializer.save()
-        context = {"user": user}
+        context = {"user": user, "token_generator": self.token_generator}
         ActivationEmail(self.request, context).send()
         return user
 

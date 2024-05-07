@@ -2,7 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.utils.http import urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
 
 
@@ -111,7 +110,9 @@ class AccountActivationSerializer(serializers.Serializer):
         token = attrs["token"]
 
         if self.user is not None:
-            if default_token_generator.check_token(self.user, token):
+            if self.context["view"].token_generator.check_token(
+                self.user, token
+            ):
                 return attrs
 
         key_error = "invalid_token"
@@ -119,12 +120,13 @@ class AccountActivationSerializer(serializers.Serializer):
             {"token": self.error_messages[key_error]}, code=key_error
         )
 
-    def get_user(self, uidb64: str) -> User:
+    def get_user(self, uidb64: str) -> User | None:
         try:
             uidb64 = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uidb64)
         except (ObjectDoesNotExist, ValueError, TypeError, OverflowError):
             key_error = "invalid_uid"
+            user = None
             raise serializers.ValidationError(
                 {"uid": self.error_messages[key_error]}, code=key_error
             )
