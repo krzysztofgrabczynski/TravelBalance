@@ -86,14 +86,19 @@ class UserCreateSerializer(
 
 
 class AccountActivationSerializer(serializers.Serializer):
+    default_error_messages = {
+        "invalid_config": "The URL path must contain 'uidb64' and 'token' parameters.",
+        "invalid_uid": "Invalid user.",
+        "invalid_token": "Invalid activation token.",
+    }
+
     uidb64 = serializers.CharField()
     token = serializers.CharField()
 
     def validate(self, attrs: dict) -> dict:
         if "uidb64" not in attrs or "token" not in attrs:
-            raise ImproperlyConfigured(
-                "The URL path must contain 'uidb64' and 'token' parameters."
-            )
+            key_error = "invalid_config"
+            raise ImproperlyConfigured(self.error_messages[key_error])
 
         self.user = self.get_user(attrs["uidb64"])
         token = attrs["token"]
@@ -102,12 +107,18 @@ class AccountActivationSerializer(serializers.Serializer):
             if default_token_generator.check_token(self.user, token):
                 return attrs
 
-        raise serializers.ValidationError("Activation link error")
+        key_error = "invalid_token"
+        raise serializers.ValidationError(
+            {"token": self.error_messages[key_error]}, code=key_error
+        )
 
     def get_user(self, uidb64):
         try:
             uidb64 = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uidb64)
-        except ObjectDoesNotExist:
-            user = None
+        except (ObjectDoesNotExist, ValueError, TypeError, OverflowError):
+            key_error = "invalid_uid"
+            raise serializers.ValidationError(
+                {"uid": self.error_messages[key_error]}, code=key_error
+            )
         return user
