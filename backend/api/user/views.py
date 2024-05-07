@@ -87,7 +87,12 @@ class UserViewSet(viewsets.ModelViewSet):
         ActivationEmail(self.request, context).send()
         return user
 
-    @action(methods=["post"], detail=False)
+    @action(
+        methods=["get"],
+        detail=False,
+        url_path=r"account-activation/(?P<uidb64>\w+)/(?P<token>[-\w]+)",
+        url_name="account_activation",
+    )
     def account_activation(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=kwargs)
         serializer.is_valid(raise_exception=True)
