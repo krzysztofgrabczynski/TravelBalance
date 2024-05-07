@@ -1,62 +1,30 @@
-from rest_framework import views, status, generics, viewsets, exceptions
+from rest_framework import views, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.http import HttpRequest
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.contrib.auth.tokens import default_token_generator
 
 from api.user import serializers
 from api.user.email import ActivationEmail
 
 
-class LoginView(generics.GenericAPIView):
+class LoginView(views.APIView):
     serializer_class = serializers.LoginSerializer
-    invalid_credentials_message = "Invalid credentials"
-    user_inactive_message = "User is not active"
+    default_error_messages = {
+        "invalid_credentials": "Invalid credentials",
+        "user_inactive": "User is not active",
+    }
 
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        username = serializer.validated_data["username"]
-        password = serializer.validated_data["password"]
-
-        errors = {}
-        try:
-            user = User.objects.get(username=username)
-
-            if user.check_password(password):
-                if user.is_active:
-                    token = self._create_user_auth_token(user)
-                    return Response(
-                        {"token": token.key},
-                        status=status.HTTP_200_OK,
-                    )
-
-                else:
-                    raise PermissionDenied
-            raise ObjectDoesNotExist
-        except PermissionDenied:
-            errors.setdefault("errors", [])
-            errors["errors"].append(
-                {"inactive_user": self.user_inactive_message}
-            )
-
-        except ObjectDoesNotExist:
-            errors.setdefault("errors", [])
-            errors["errors"].append(
-                {"invalid_credentials": self.invalid_credentials_message}
-            )
-
-        if errors:
-            serializer._errors = errors
-            raise exceptions.ValidationError(serializer.errors)
-
-    def _create_user_auth_token(self, user: User) -> str:
-        token, _ = Token.objects.get_or_create(user=user)
-        return token
+        return Response(
+            {"token": serializer.token.key},
+            status=status.HTTP_200_OK,
+        )
 
 
 class LogoutView(views.APIView):

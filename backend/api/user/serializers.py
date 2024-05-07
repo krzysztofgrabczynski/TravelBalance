@@ -1,8 +1,13 @@
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.utils.http import urlsafe_base64_decode
-from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
+from django.core.exceptions import (
+    ObjectDoesNotExist,
+    ImproperlyConfigured,
+    PermissionDenied,
+)
 
 
 # class CustomErrorResponseMixin:
@@ -42,8 +47,48 @@ class UserCreateMixin:
 
 
 class LoginSerializer(serializers.Serializer):
+    default_error_messages = {
+        "invalid_credentials": "Invalid credentials",
+        "user_inactive": "User is not active",
+    }
+
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        validated_data = super().validate(attrs)
+
+        username = validated_data["username"]
+        password = validated_data["password"]
+
+        try:
+            user = User.objects.get(username=username)
+
+            if user.check_password(password):
+                if user.is_active:
+                    self.token = self._create_user_auth_token(user)
+                    return validated_data
+
+                else:
+                    raise PermissionDenied
+            raise ObjectDoesNotExist
+
+        except PermissionDenied:
+            key_error = "user_inactive"
+            raise serializers.ValidationError(
+                {"user_inactive": self.error_messages[key_error]},
+                code=key_error,
+            )
+        except ObjectDoesNotExist:
+            key_error = "invalid_credentials"
+            raise serializers.ValidationError(
+                {"invalid": self.error_messages[key_error]},
+                code=key_error,
+            )
+
+    def _create_user_auth_token(self, user: User) -> str:
+        token, _ = Token.objects.get_or_create(user=user)
+        return token
 
 
 class UserSerializer(serializers.ModelSerializer):
