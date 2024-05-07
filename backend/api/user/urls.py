@@ -11,9 +11,4 @@ urlpatterns = [
     path("", include(router.urls)),
     path("login/", user_views.LoginView.as_view(), name="login"),
     path("logout/", user_views.LogoutView.as_view(), name="logout"),
-    path(
-        "activation/<uidb64>/<token>/",
-        user_views.UserViewSet.as_view({"get": "account_activation"}),
-        name="activation",
-    ),
 ]
