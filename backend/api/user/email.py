@@ -81,7 +81,7 @@ class ActivationEmail(BaseEmailMessage):
         uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
         url = reverse(
-            "activation",
+            "user-account_activation",
             kwargs={"uidb64": uidb64, "token": token},
         )
 
