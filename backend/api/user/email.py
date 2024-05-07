@@ -65,9 +65,10 @@ class BaseEmailMessage(EmailMultiAlternatives):
 
         return super().send(fail_silently)
 
-    def get_template_name(self):
+    def get_template_name(self) -> str:
         if self.template_name is None:
-            raise ImproperlyConfigured
+            error_message = f"The `template_name` attribute in the {self.__class__.__name__} class cannot be None."
+            raise ImproperlyConfigured(error_message)
         return self.template_name
 
 
@@ -79,9 +80,10 @@ class ActivationEmail(BaseEmailMessage):
 
         user = self.context["user"]
         uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
+        token = self.context["token_generator"] or default_token_generator
+        token = token.make_token(user)
         url = reverse(
-            "activation",
+            "user-account_activation",
             kwargs={"uidb64": uidb64, "token": token},
         )
 
