@@ -142,3 +142,4 @@ ACTIVATION_EMAIL_TEMPLATE = "email_activation.html"
 
 # Forgot password settings
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
+FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
