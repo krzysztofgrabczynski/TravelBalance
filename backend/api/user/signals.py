@@ -1,7 +1,6 @@
-from django.dispatch import receiver, Signal
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models import signals
-from api.user.email import ActivationEmail
 
 
 @receiver(signals.post_save, sender=User)
