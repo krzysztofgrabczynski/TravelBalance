@@ -44,6 +44,8 @@ class UserViewSet(viewsets.ModelViewSet):
             return serializers.AccountActivationSerializer
         elif self.action == "forgot_password":
             return serializers.ForgotPasswordSerializer
+        elif self.action == "forgot_password_check_token":
+            return serializers.EmailAndTokenSerializer
         elif self.action == "forgot_password_confirm":
             return serializers.ForgotPasswordConfirmSerializer
 
@@ -74,12 +76,19 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=["post"], detail=False)
-    def forgot_password(self, request):
+    def forgot_password(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         token = serializer.create_token()
         context = {"token": token.token, "to": token.user.email}
         ForgotPasswordEmail(self.request, context).send()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=["post"], detail=False)
+    def forgot_password_check_token(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
