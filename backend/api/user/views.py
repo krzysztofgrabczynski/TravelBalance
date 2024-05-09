@@ -12,10 +12,6 @@ from api.user.email import ActivationEmail, ForgotPasswordEmail
 
 class LoginView(views.APIView):
     serializer_class = serializers.LoginSerializer
-    default_error_messages = {
-        "invalid_credentials": "Invalid credentials",
-        "user_inactive": "User is not active",
-    }
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

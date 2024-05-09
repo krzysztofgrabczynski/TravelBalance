@@ -47,6 +47,31 @@ class UserCreateMixin:
         return user
 
 
+class PasswordRetypeSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        required=True,
+        write_only=True,
+        validators=[validate_password],
+        style={"input_type": "password"},
+    )
+    password2 = serializers.CharField(
+        required=True, write_only=True, style={"input_type": "password"}
+    )
+
+    default_error_messages = {
+        "password_mismatch": "Password fields must be the same"
+    }
+
+    def validate(self, attrs: dict) -> dict:
+        if not attrs["password"] == attrs.pop("password2"):
+            key_error = "password_mismatch"
+            raise serializers.ValidationError(
+                self.error_messages[key_error], code=key_error
+            )
+
+        return super().validate(attrs)
+
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(
@@ -54,8 +79,8 @@ class LoginSerializer(serializers.Serializer):
     )
 
     default_error_messages = {
-        "invalid_credentials": "Invalid credentials",
-        "user_inactive": "User is not active",
+        "invalid_credentials": "Invalid credentials.",
+        "user_inactive": "User is not active.",
     }
 
     def validate(self, attrs):
@@ -79,14 +104,12 @@ class LoginSerializer(serializers.Serializer):
         except PermissionDenied:
             key_error = "user_inactive"
             raise serializers.ValidationError(
-                {"user_inactive": self.error_messages[key_error]},
-                code=key_error,
+                self.error_messages[key_error], code=key_error
             )
         except ObjectDoesNotExist:
             key_error = "invalid_credentials"
             raise serializers.ValidationError(
-                {"invalid": self.error_messages[key_error]},
-                code=key_error,
+                self.error_messages[key_error], code=key_error
             )
 
     def _create_user_auth_token(self, user: User) -> str:
@@ -100,55 +123,36 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("username", "email")
 
 
-class UserCreateSerializer(UserCreateMixin, serializers.ModelSerializer):
+class UserCreateSerializer(
+    PasswordRetypeSerializer, UserCreateMixin, serializers.ModelSerializer
+):
     email = serializers.EmailField(required=True)
-    password2 = serializers.CharField(
-        required=True, write_only=True, style={"input_type": "password"}
-    )
 
     default_error_messages = {
         "unique_email": "User with that email already exists",
-        "invalid_re_password": "Password fields must be the same",
     }
 
     class Meta:
         model = User
         fields = ("username", "email", "password", "password2")
-        extra_kwargs = {
-            "password": {
-                "required": True,
-                "write_only": True,
-                "validators": [validate_password],
-            },
-        }
 
     def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
             key_error = "unique_email"
             raise serializers.ValidationError(
-                {"email": self.error_messages[key_error]}, code=key_error
+                self.error_messages[key_error], code=key_error
             )
 
         return email
 
-    def validate(self, attrs: dict) -> dict:
-        if not attrs["password"] == attrs.pop("password2"):
-            key_error = "invalid_re_password"
-            raise serializers.ValidationError(
-                {"password2": self.error_messages[key_error]}, code=key_error
-            )
-
-        return attrs
-
 
 class AccountActivationSerializer(serializers.Serializer):
-    uidb64 = serializers.CharField()
-    token = serializers.CharField()
+    uidb64 = serializers.CharField(required=True)
+    token = serializers.CharField(required=True)
 
     default_error_messages = {
         "invalid_config": "The URL path must contain 'uidb64' and 'token' parameters.",
-        "invalid_uid": "Invalid user.",
-        "invalid_token": "Invalid activation token.",
+        "user_activation_error": "User activation error.",
     }
 
     def validate(self, attrs: dict) -> dict:
@@ -165,9 +169,9 @@ class AccountActivationSerializer(serializers.Serializer):
             ):
                 return attrs
 
-        key_error = "invalid_token"
+        key_error = "user_activation_error"
         raise serializers.ValidationError(
-            {"token": self.error_messages[key_error]}, code=key_error
+            self.error_messages[key_error], code=key_error
         )
 
     def get_user(self, uidb64: str) -> User | None:
@@ -176,10 +180,6 @@ class AccountActivationSerializer(serializers.Serializer):
             user = User.objects.get(pk=uidb64)
         except (ObjectDoesNotExist, ValueError, TypeError, OverflowError):
             user = None
-            key_error = "invalid_uid"
-            raise serializers.ValidationError(
-                {"uid": self.error_messages[key_error]}, code=key_error
-            )
         return user
 
 
@@ -191,11 +191,10 @@ class ForgotPasswordSerializer(serializers.Serializer):
     }
 
     def validate_email(self, email: str) -> str:
-        print("jestem w validate email")
         if not User.objects.filter(email=email).exists():
             key_error = "email_no_exists"
             raise serializers.ValidationError(
-                {"email": self.error_messages[key_error]}, code=key_error
+                self.error_messages[key_error], code=key_error
             )
 
         return email
@@ -207,34 +206,6 @@ class ForgotPasswordSerializer(serializers.Serializer):
         ForgotPasswordToken.objects.filter(user=user).delete()
         token = ForgotPasswordToken.objects.create(user=user)
         return token
-
-
-class PasswordRetypeSerializer(serializers.Serializer):
-    password = serializers.CharField(
-        required=True,
-        write_only=True,
-        validators=[validate_password],
-        style={"input_type": "password"},
-    )
-    password2 = serializers.CharField(
-        required=True, write_only=True, style={"input_type": "password"}
-    )
-
-    default_error_messages = {
-        "invalid_re_password": "Password fields must be the same"
-    }
-
-    class Meta:
-        fields = ["password2", "password"]
-
-    def validate(self, attrs: dict) -> dict:
-        if not attrs["password"] == attrs.pop("password2"):
-            key_error = "invalid_re_password"
-            raise serializers.ValidationError(
-                {"password2": self.error_messages[key_error]}, code=key_error
-            )
-
-        return super().validate(attrs)
 
 
 class EmailAndTokenSerializer(serializers.Serializer):
@@ -258,7 +229,7 @@ class EmailAndTokenSerializer(serializers.Serializer):
         except (ObjectDoesNotExist, serializers.ValidationError):
             key_error = "invalid"
             raise serializers.ValidationError(
-                {"invalid": self.error_messages[key_error]}, code=key_error
+                self.error_messages[key_error], code=key_error
             )
 
         return attrs
