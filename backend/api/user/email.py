@@ -13,6 +13,7 @@ from core import settings
 
 class BaseEmailMessage(EmailMultiAlternatives):
     template_name = None
+    email_subject = None
 
     def __init__(self, request, context=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,12 +24,9 @@ class BaseEmailMessage(EmailMultiAlternatives):
     def set_context_data(self) -> None:
         current_site = get_current_site(self.request)
 
-        user = self.context.get("user") or self.request.user
-        subject = (
-            self.context.get("subject") or settings.ACTIVATION_EMAIL_SUBJECT
-        )
+        subject = self.context.get("subject") or self.email_subject
         from_email = self.context.get("from_email") or settings.DEFAULT_EMAIL
-        to = self.context.get("to") or user.email
+        to = self.context.get("to") or []
         cc = self.context.get("cc") or []
         bcc = self.context.get("bcc") or []
 
@@ -39,7 +37,6 @@ class BaseEmailMessage(EmailMultiAlternatives):
 
         self.context.update(
             {
-                "user": user,
                 "subject": subject,
                 "from_email": from_email,
                 "to": to if isinstance(to, list) else [to],
@@ -74,6 +71,7 @@ class BaseEmailMessage(EmailMultiAlternatives):
 
 class ActivationEmail(BaseEmailMessage):
     template_name = settings.ACTIVATION_EMAIL_TEMPLATE
+    email_subject = settings.ACTIVATION_EMAIL_SUBJECT
 
     def set_context_data(self) -> None:
         super().set_context_data()
@@ -88,3 +86,14 @@ class ActivationEmail(BaseEmailMessage):
         )
 
         self.context.update({"uidb64": uidb64, "token": token, "url": url})
+
+
+class ForgotPasswordEmail(BaseEmailMessage):
+    template_name = settings.FORGOT_PASSWORD_EMAIL_TEMPLATE
+    email_subject = settings.FORGOT_PASSWORD_EMAIL_SUBJECT
+
+    def set_context_data(self) -> None:
+        super().set_context_data()
+
+        token = self.context["token"]
+        self.context.update({"token": token})
