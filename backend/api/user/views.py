@@ -7,7 +7,7 @@ from django.http import HttpRequest
 from django.contrib.auth.tokens import default_token_generator
 
 from api.user import serializers
-from api.user.email import ActivationEmail
+from api.user.email import ActivationEmail, ForgotPasswordEmail
 
 
 class LoginView(views.APIView):
@@ -46,14 +46,20 @@ class UserViewSet(viewsets.ModelViewSet):
             return serializers.UserCreateSerializer
         elif self.action == "account_activation":
             return serializers.AccountActivationSerializer
-        elif self.action == "reset_password":
-            return ...
+        elif self.action == "forgot_password":
+            return serializers.ForgotPasswordSerializer
+        elif self.action == "forgot_password_confirm":
+            return serializers.ForgotPasswordConfirmSerializer
 
         return self.serializer_class
 
     def perform_create(self, serializer):
         user = serializer.save()
-        context = {"user": user, "token_generator": self.token_generator}
+        context = {
+            "user": user,
+            "token_generator": self.token_generator,
+            "to": user.email,
+        }
         ActivationEmail(self.request, context).send()
         return user
 
@@ -72,5 +78,21 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=["post"], detail=False)
-    def reset_password(self, request):
-        pass
+    def forgot_password(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        token = serializer.create_token()
+        context = {"token": token.token, "to": token.user.email}
+        ForgotPasswordEmail(self.request, context).send()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=["post"], detail=False)
+    def forgot_password_confirm(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.user.set_password(serializer.validated_data["password"])
+        serializer.user.save()
+        serializer.delete_user_tokens(serializer.user)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
