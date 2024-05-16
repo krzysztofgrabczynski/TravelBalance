@@ -34,8 +34,8 @@ private:
     void handleLogoutResponse(QNetworkReply *reply);
 
     QJsonObject parseResponseToJson(QNetworkReply* reply);
-    std::unordered_map<int, QString> parseErrorApiResponse(const QJsonObject& apiJsonResponse);
-    QString getErrorMessages(const std::unordered_map<int, QString>& errorMap );
+    void parseErrorResponse(const QJsonObject& apiJsonResponse, const QString& contain, std::vector<QString>& errors);
+    QString getErrorMessages(const std::vector<QString>& errors);
 };
 
 
