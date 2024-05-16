@@ -40,13 +40,6 @@ from api.user.models import ForgotPasswordToken
 #             raise serializers.ValidationError(errors)
 
 
-class UserCreateMixin:
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-
-        return user
-
-
 class PasswordRetypeSerializer(serializers.Serializer):
     password = serializers.CharField(
         required=True,
@@ -124,7 +117,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(
-    PasswordRetypeSerializer, UserCreateMixin, serializers.ModelSerializer
+    PasswordRetypeSerializer, serializers.ModelSerializer
 ):
     email = serializers.EmailField(required=True)
 
@@ -144,6 +137,11 @@ class UserCreateSerializer(
             )
 
         return email
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+
+        return user
 
 
 class AccountActivationSerializer(serializers.Serializer):
