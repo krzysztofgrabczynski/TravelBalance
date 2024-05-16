@@ -29,12 +29,13 @@ private:
 
     QByteArray prepareLoginData(const QString &login, const QString &password);
     QByteArray prepareRegisterData(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress);
+
     void handleLoginResponse(QNetworkReply *reply);
     void handleRegisterResponse(QNetworkReply *reply);
     void handleLogoutResponse(QNetworkReply *reply);
 
     QJsonObject parseResponseToJson(QNetworkReply* reply);
-    void parseErrorResponse(const QJsonObject& apiJsonResponse, const QString& contain, std::vector<QString>& errors);
+    std::vector<QString> parseErrorResponse(const QJsonObject& apiJsonResponse);
     QString getErrorMessages(const std::vector<QString>& errors);
 };
 
