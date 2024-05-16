@@ -68,8 +68,7 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
         }
 
     } else {
-        std::vector<QString> errors{};
-        parseErrorResponse(jsonObject, "non_field_errors", errors);
+        const auto errors{parseErrorResponse(jsonObject)};
         const QString errorMessages{getErrorMessages(errors)};
         emit loginFailed(errorMessages);
     }
@@ -97,9 +96,7 @@ void ApiManager::handleRegisterResponse(QNetworkReply *reply){
     if (reply->error() == QNetworkReply::NoError) {
         emit registerCorrect();
     } else {
-        std::vector<QString> errors{};
-        parseErrorResponse(jsonObject, "username", errors);
-        parseErrorResponse(jsonObject, "email", errors);
+        const auto errors{parseErrorResponse(jsonObject)};
         const QString errorMessages{getErrorMessages(errors)};
         emit registerFailed(errorMessages);
     }
@@ -132,10 +129,9 @@ void ApiManager::handleLogoutResponse(QNetworkReply *reply)
         this->m_token.clear();
         emit logoutCorrect();
     } else {
-        //const auto error{parseErrorApiResponse(jsonObject)};
-        //const QString errorMessages{getErrorMessages(error)};
-        //emit logoutFailed(errorMessages);
-        emit logoutFailed("LOGOUT MSG TBD");
+        const auto error{parseErrorResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit logoutFailed(errorMessages);
     }
 }
 
@@ -144,23 +140,6 @@ QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply){
     QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
     qDebug(responseData);
     return jsonDocument.object();
-}
-
-void ApiManager::parseErrorResponse(const QJsonObject& apiJsonResponse, const QString& contain, std::vector<QString>& errors){
-    if(apiJsonResponse.contains(contain))
-    {
-        QJsonValue value = apiJsonResponse[contain];
-        if (value.isArray())
-        {
-            QJsonArray jsonErrors = value.toArray();
-
-            for (const auto& error : jsonErrors)
-            {
-                if (error.isString())
-                    errors.emplace_back(error.toString());
-            }
-        }
-    }
 }
 
 QString ApiManager::getErrorMessages(const std::vector<QString>& errors){
@@ -172,3 +151,22 @@ QString ApiManager::getErrorMessages(const std::vector<QString>& errors){
     return errorMsg;
 }
 
+std::vector<QString> ApiManager::parseErrorResponse(const QJsonObject& apiJsonResponse)
+{
+    std::vector<QString> errors{};
+
+    for (const auto& key : apiJsonResponse.keys()) {
+           QJsonValue value = apiJsonResponse[key];
+           if (value.isArray())
+           {
+               QJsonArray jsonErrors = value.toArray();
+               for (const auto& error : jsonErrors)
+               {
+                   if (error.isString())
+                       errors.emplace_back(error.toString());
+               }
+           }
+       }
+
+    return errors;
+}
