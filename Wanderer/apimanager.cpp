@@ -267,10 +267,15 @@ QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply) {
 
 QString ApiManager::getErrorMessages(const std::vector<QString>& errors){
     QString errorMsg{};
-    for(const auto& error : errors)
+    const std::size_t errorsSize{errors.size()};
+
+    for(size_t counter = 0 ; counter < errorsSize ; counter++)
     {
-        errorMsg += error + "\n";
+        errorMsg += errors.at(counter);
+        if(errorsSize - 1 != counter)
+           errorMsg+="\n";
     }
+
     return errorMsg;
 }
 

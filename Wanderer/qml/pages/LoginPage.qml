@@ -5,7 +5,15 @@ import "../components"
 
 AppPage {
   function enableLoginButton(loginField, PasswordField) {
-    loginButton.enabled = (loginField.length !== 0 && PasswordField.length >= 6)
+    loginButton.enabled = (loginField.length !== 0 && PasswordField.length >= 8)
+  }
+
+  function displayErrorText(errorMessage) {
+    showErrorItem.text = errorMessage
+  }
+
+  function clearErrorText() {
+    showErrorItem.text = ""
   }
 
   Connections {
@@ -18,6 +26,7 @@ AppPage {
     onLoginFailed: function (errorMessage) {
       console.log("Login failed: ", errorMessage)
       activityIndicatorBarItem.visible = false
+      displayErrorText(errorMessage)
     }
   }
   id: page
@@ -57,6 +66,22 @@ AppPage {
       bottomPadding: 60
     }
 
+    Rectangle {
+      id: showErrorItem
+      anchors.horizontalCenter: parent.horizontalCenter
+      width: columnLayout.width
+      height: showErrorText.height
+
+      property alias text: showErrorText.text
+
+      AppText {
+        id: showErrorText
+        anchors.horizontalCenter: parent.horizontalCenter
+        fontSize: sp(10)
+        color: "red"
+      }
+    }
+
     CustomTextField {
       id: loginTextField
       anchors.horizontalCenter: parent.horizontalCenter
@@ -64,6 +89,7 @@ AppPage {
       placeholderText: "Login"
       onTextChanged: {
         enableLoginButton(loginTextField.text, passwordTextField.text)
+        clearErrorText()
       }
     }
 
@@ -74,6 +100,7 @@ AppPage {
       placeholderText: "Password"
       onTextChanged: {
         enableLoginButton(loginTextField.text, passwordTextField.text)
+        clearErrorText()
       }
     }
 
@@ -93,6 +120,7 @@ AppPage {
       enabled: false
       onClicked: {
         console.log("Login Clicked")
+        clearErrorText()
         activityIndicatorBarItem.visible = true
         g_apiManager.loginUser(loginTextField.text, passwordTextField.text)
       }
