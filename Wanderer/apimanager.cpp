@@ -22,21 +22,17 @@ static const QString apiAdressLogin = "https://wanderer-test-fe529f1fdf47.heroku
 static const QString apiAddresLogout = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/logout/";
 static const QString apiAddresRegister = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/user/";
 
+//Forgot Password
+static const QString apiAddresForgotPassword = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/user/forgot_password/";
+static const QString apiAddresForgotPasswordCheckToken = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/user/forgot_password_check_token/";
+static const QString apiAddresForgotPasswordConfirm = "https://wanderer-test-fe529f1fdf47.herokuapp.com/api/user/forgot_password_confirm/";
+//Forgot Password
+
 QByteArray ApiManager::prepareLoginData(const QString &login, const QString &password)
 {
     QJsonObject jsonObject;
     jsonObject["username"] = login;
     jsonObject["password"] = password;
-    return QJsonDocument(jsonObject).toJson();
-}
-
-QByteArray ApiManager::prepareRegisterData(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress)
-{
-    QJsonObject jsonObject;
-    jsonObject["username"] = login;
-    jsonObject["password"] = password;
-    jsonObject["password2"] = passwordRepeated;
-    jsonObject["email"] = emailAddress;
     return QJsonDocument(jsonObject).toJson();
 }
 
@@ -72,6 +68,16 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
         const QString errorMessages{getErrorMessages(errors)};
         emit loginFailed(errorMessages);
     }
+}
+
+QByteArray ApiManager::prepareRegisterData(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress)
+{
+    QJsonObject jsonObject;
+    jsonObject["username"] = login;
+    jsonObject["password"] = password;
+    jsonObject["password2"] = passwordRepeated;
+    jsonObject["email"] = emailAddress;
+    return QJsonDocument(jsonObject).toJson();
 }
 
 void ApiManager::registerUser(const QString &login, const QString &password, const QString& passwordRepeated, const QString& emailAddress)
@@ -135,10 +141,90 @@ void ApiManager::handleLogoutResponse(QNetworkReply *reply)
     }
 }
 
-QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply){
+QByteArray ApiManager::prepareForgotPasswordData(const QString &emailAddress)
+{
+    QJsonObject jsonObject;
+    jsonObject["email"] = emailAddress;
+    return QJsonDocument(jsonObject).toJson();
+}
+
+void ApiManager::forgotPassword(const QString &emailAddress)
+{
+    QNetworkRequest request{QUrl(apiAddresForgotPassword)};
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QByteArray requestData = prepareForgotPasswordData(emailAddress);
+    QNetworkReply *reply = networkManager->post(request, requestData);
+
+    connect(reply, &QNetworkReply::finished, [=]() mutable {
+        handleForgotPasswordResponse(reply);;
+        reply->deleteLater();
+    });
+}
+
+void ApiManager::handleForgotPasswordResponse(QNetworkReply *reply)
+{
+    const auto jsonObject{parseResponseToJson(reply)};
+
+    if (reply->error() == QNetworkReply::NoError) {
+        emit forgotPasswordCorrect();
+    } else {
+        const auto error{parseErrorResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit forgotPasswordFailed(errorMessages);
+    }
+}
+
+QByteArray ApiManager::prepareForgotPasswordCheckToken(const QString &emailAddress, const QString &code)
+{
+    QJsonObject jsonObject;
+    jsonObject["email"] = emailAddress;
+    jsonObject["token"] = code;
+    return QJsonDocument(jsonObject).toJson();
+}
+
+void ApiManager::forgotPasswordCheckToken(const QString &emailAddress, const QString &code)
+{
+    QNetworkRequest request{QUrl(apiAddresForgotPasswordCheckToken)};
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QByteArray requestData = prepareForgotPasswordCheckToken(emailAddress, code);
+    QNetworkReply *reply = networkManager->post(request, requestData);
+
+    connect(reply, &QNetworkReply::finished, [=]() mutable {
+        handleForgotPasswordCheckToken(reply);;
+        reply->deleteLater();
+    });
+}
+
+void ApiManager::handleForgotPasswordCheckToken(QNetworkReply *reply)
+{
+    const auto jsonObject{parseResponseToJson(reply)};
+
+    if (reply->error() == QNetworkReply::NoError) {
+        emit forgotPasswordCheckTokenCorrect();
+    } else {
+        const auto error{parseErrorResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit forgotPasswordCheckTokenFailed(errorMessages);
+    }
+}
+
+QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply) {
     QByteArray responseData = reply->readAll();
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData);
-    qDebug(responseData);
+    if (responseData.isEmpty()) {
+        qDebug() << "Response data is empty";
+        return QJsonObject();
+    }
+
+    QJsonParseError parseError;
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(responseData, &parseError);
+    if (parseError.error != QJsonParseError::NoError) {
+        qDebug() << "Failed to parse JSON:" << parseError.errorString();
+        return QJsonObject();
+    }
+
+    qDebug() << responseData;
     return jsonDocument.object();
 }
 

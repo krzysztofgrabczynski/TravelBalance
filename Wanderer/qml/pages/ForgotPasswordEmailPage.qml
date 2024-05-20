@@ -8,6 +8,27 @@ AppPage {
   id: page
   navigationBarHidden: false
 
+  Connections {
+    target: g_apiManager
+    onForgotPasswordCorrect: function () {
+      console.log("Forgot Password correct ")
+      emailAddressField.readOnly = !emailAddressField.readOnly
+      emailAddressField.showClearButton = !emailAddressField.showClearButton
+      emailAddressField.clickEnabled = !emailAddressField.clickEnabled
+      emailAddressField.textColor = "grey"
+      page.state = "showVerifyCode"
+    }
+    onForgotPasswordFailed: function (errorMessage) {
+      console.log("Forgot Password failed: ", errorMessage)
+    }
+    onForgotPasswordCheckTokenCorrect: function () {
+      console.log("Forgot Password Check Token correct ")
+    }
+    onForgotPasswordCheckTokenFailed: function (errorMessage) {
+      console.log("Forgot Password Check Token failed: ", errorMessage)
+    }
+  }
+
   signal verifyCodeCorrect
 
   function toggleSendEmailButton(email) {
@@ -82,16 +103,11 @@ AppPage {
     onClicked: {
       if (page.state === "hideVerifyCode") {
         console.log("Functional Button clicked - SEND EMAIL")
-        emailAddressField.readOnly = !emailAddressField.readOnly
-        emailAddressField.showClearButton = !emailAddressField.showClearButton
-        emailAddressField.clickEnabled = !emailAddressField.clickEnabled
-        emailAddressField.textColor = "grey"
-        page.state = "showVerifyCode"
-        //g_apiManager.sendForgotPasswordEmail(emailAddressField.text);
+        g_apiManager.forgotPassword(emailAddressField.text)
       } else if (page.state === "showVerifyCode") {
         console.log("Functional Button clicked - VERIFY CODE")
         verifyCodeCorrect()
-        //g_apiManager.sendVerifyCode(emailAddressField.text, verifyCodeField.text);
+        g_apiManager.forgotPasswordCheckToken(emailAddressField.text, verifyCodeField.text);
       } else {
         console.log("Functional Button clicked - elseStatement")
       }
