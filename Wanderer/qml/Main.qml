@@ -29,7 +29,14 @@ App {
     Component {
       id: forgotPasswordEmailPage
       ForgotPasswordEmailPage {
-        onVerifyCodeCorrect: navigationStackView.push(resetPasswordPage)
+        onVerifyCodeCorrect: function (email, code) {
+          var resetPage = resetPasswordPage.createObject(navigationStackView, {
+                                                           "email": email,
+                                                           "verifyCode": code
+                                                         })
+          navigationStackView.push(resetPage)
+          console.log(email, code)
+        }
       }
     }
 

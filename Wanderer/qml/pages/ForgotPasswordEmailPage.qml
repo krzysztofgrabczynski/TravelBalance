@@ -7,11 +7,13 @@ import "../js/Validator.js" as Validator
 AppPage {
   id: page
   navigationBarHidden: false
+  signal verifyCodeCorrect(string email, string code)
 
   Connections {
     target: g_apiManager
     onForgotPasswordCorrect: function () {
       console.log("Forgot Password correct ")
+      activityIndicatorBarItem.visible = false
       emailAddressField.readOnly = !emailAddressField.readOnly
       emailAddressField.showClearButton = !emailAddressField.showClearButton
       emailAddressField.clickEnabled = !emailAddressField.clickEnabled
@@ -20,19 +22,26 @@ AppPage {
     }
     onForgotPasswordFailed: function (errorMessage) {
       console.log("Forgot Password failed: ", errorMessage)
+      activityIndicatorBarItem.visible = false
     }
     onForgotPasswordCheckTokenCorrect: function () {
       console.log("Forgot Password Check Token correct ")
+      page.verifyCodeCorrect(emailAddressField.text, verifyCodeField.text)
+      activityIndicatorBarItem.visible = false
     }
     onForgotPasswordCheckTokenFailed: function (errorMessage) {
       console.log("Forgot Password Check Token failed: ", errorMessage)
+      activityIndicatorBarItem.visible = false
     }
   }
 
-  signal verifyCodeCorrect
-
   function toggleSendEmailButton(email) {
     functionalButton.enabled = Validator.validateEmail(email)
+  }
+
+  rightBarItem: ActivityIndicatorBarItem {
+    id: activityIndicatorBarItem
+    visible: false
   }
 
   Column {
@@ -101,13 +110,19 @@ AppPage {
     height: dp(50)
     radius: dp(15)
     onClicked: {
+      activityIndicatorBarItem.visible = true
       if (page.state === "hideVerifyCode") {
         console.log("Functional Button clicked - SEND EMAIL")
-        g_apiManager.forgotPassword(emailAddressField.text)
+        //g_apiManager.forgotPassword(emailAddressField.text)
+        //TEST
+        page.state = "showVerifyCode"
+        //TEST
       } else if (page.state === "showVerifyCode") {
         console.log("Functional Button clicked - VERIFY CODE")
-        verifyCodeCorrect()
-        g_apiManager.forgotPasswordCheckToken(emailAddressField.text, verifyCodeField.text);
+        //g_apiManager.forgotPasswordCheckToken(emailAddressField.text, verifyCodeField.text);
+        //TEST
+        page.verifyCodeCorrect(emailAddressField.text, verifyCodeField.text)
+        //TEST
       } else {
         console.log("Functional Button clicked - elseStatement")
       }

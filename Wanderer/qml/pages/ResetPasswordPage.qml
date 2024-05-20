@@ -54,6 +54,9 @@ AppPage {
   id: page
   navigationBarHidden: false
 
+  property string email
+  property string verifyCode
+
   signal correctRegistrationRequestSent
 
   rightBarItem: ActivityIndicatorBarItem {
