@@ -113,16 +113,11 @@ AppPage {
       activityIndicatorBarItem.visible = true
       if (page.state === "hideVerifyCode") {
         console.log("Functional Button clicked - SEND EMAIL")
-        //g_apiManager.forgotPassword(emailAddressField.text)
-        //TEST
-        page.state = "showVerifyCode"
-        //TEST
+        g_apiManager.forgotPassword(emailAddressField.text)
       } else if (page.state === "showVerifyCode") {
         console.log("Functional Button clicked - VERIFY CODE")
-        //g_apiManager.forgotPasswordCheckToken(emailAddressField.text, verifyCodeField.text);
-        //TEST
-        page.verifyCodeCorrect(emailAddressField.text, verifyCodeField.text)
-        //TEST
+        g_apiManager.forgotPasswordCheckToken(emailAddressField.text,
+                                              verifyCodeField.text)
       } else {
         console.log("Functional Button clicked - elseStatement")
       }

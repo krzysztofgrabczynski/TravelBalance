@@ -35,14 +35,16 @@ App {
                                                            "verifyCode": code
                                                          })
           navigationStackView.push(resetPage)
-          console.log(email, code)
         }
       }
     }
 
     Component {
       id: resetPasswordPage
-      ResetPasswordPage {}
+      ResetPasswordPage {
+        onPasswordSuccesfullyChanged: navigationStackView.clearAndPush(
+                                        loginPage)
+      }
     }
 
     Component {

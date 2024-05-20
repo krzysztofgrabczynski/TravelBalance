@@ -210,6 +210,43 @@ void ApiManager::handleForgotPasswordCheckToken(QNetworkReply *reply)
     }
 }
 
+QByteArray ApiManager::prepareForgotPasswordConfirm(const QString &emailAddress, const QString &code, const QString &password, const QString &passwordRepeated)
+{
+    QJsonObject jsonObject;
+    jsonObject["email"] = emailAddress;
+    jsonObject["token"] = code;
+    jsonObject["password"] = password;
+    jsonObject["password2"] = passwordRepeated;
+    return QJsonDocument(jsonObject).toJson();
+}
+
+void ApiManager::forgotPasswordConfirm(const QString &emailAddress, const QString &code, const QString &password, const QString &passwordRepeated)
+{
+    QNetworkRequest request{QUrl(apiAddresForgotPasswordConfirm)};
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QByteArray requestData = prepareForgotPasswordConfirm(emailAddress, code, password, passwordRepeated);
+    QNetworkReply *reply = networkManager->post(request, requestData);
+
+    connect(reply, &QNetworkReply::finished, [=]() mutable {
+        handleForgotPasswordConfirm(reply);;
+        reply->deleteLater();
+    });
+}
+
+void ApiManager::handleForgotPasswordConfirm(QNetworkReply *reply)
+{
+    const auto jsonObject{parseResponseToJson(reply)};
+
+    if (reply->error() == QNetworkReply::NoError) {
+        emit forgotPasswordConfirmCorrect();
+    } else {
+        const auto error{parseErrorResponse(jsonObject)};
+        const QString errorMessages{getErrorMessages(error)};
+        emit forgotPasswordConfirmFailed(errorMessages);
+    }
+}
+
 QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply) {
     QByteArray responseData = reply->readAll();
     if (responseData.isEmpty()) {
