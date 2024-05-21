@@ -52,6 +52,7 @@ private:
 
     QJsonObject parseResponseToJson(QNetworkReply* reply);
     std::vector<QString> parseErrorResponse(const QJsonObject& apiJsonResponse);
+    QString getErrorResponseInString(const QJsonObject& apiJsonResponse);
     QString getErrorMessages(const std::vector<QString>& errors);
 };
 

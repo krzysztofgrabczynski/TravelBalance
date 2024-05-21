@@ -66,20 +66,9 @@ AppPage {
       bottomPadding: 60
     }
 
-    Rectangle {
+    ErrorDisplay {
       id: showErrorItem
-      anchors.horizontalCenter: parent.horizontalCenter
-      width: columnLayout.width
-      height: showErrorText.height
-
-      property alias text: showErrorText.text
-
-      AppText {
-        id: showErrorText
-        anchors.horizontalCenter: parent.horizontalCenter
-        fontSize: sp(10)
-        color: "red"
-      }
+      anchors.bottom: loginTextField.top
     }
 
     CustomTextField {

@@ -64,9 +64,7 @@ void ApiManager::handleLoginResponse(QNetworkReply *reply)
         }
 
     } else {
-        const auto errors{parseErrorResponse(jsonObject)};
-        const QString errorMessages{getErrorMessages(errors)};
-        emit loginFailed(errorMessages);
+        emit loginFailed(getErrorResponseInString(jsonObject));
     }
 }
 
@@ -96,15 +94,11 @@ void ApiManager::registerUser(const QString &login, const QString &password, con
 }
 
 void ApiManager::handleRegisterResponse(QNetworkReply *reply){
-
-    const auto jsonObject{parseResponseToJson(reply)};
-
     if (reply->error() == QNetworkReply::NoError) {
         emit registerCorrect();
     } else {
-        const auto errors{parseErrorResponse(jsonObject)};
-        const QString errorMessages{getErrorMessages(errors)};
-        emit registerFailed(errorMessages);
+        const auto jsonObject{parseResponseToJson(reply)};
+        emit registerFailed(getErrorResponseInString(jsonObject));
     }
 }
 
@@ -129,15 +123,12 @@ void ApiManager::logoutUser()
 
 void ApiManager::handleLogoutResponse(QNetworkReply *reply)
 {
-    const auto jsonObject{parseResponseToJson(reply)};
-
     if (reply->error() == QNetworkReply::NoError) {
         this->m_token.clear();
         emit logoutCorrect();
     } else {
-        const auto error{parseErrorResponse(jsonObject)};
-        const QString errorMessages{getErrorMessages(error)};
-        emit logoutFailed(errorMessages);
+        const auto jsonObject{parseResponseToJson(reply)};
+        emit logoutFailed(getErrorResponseInString(jsonObject));
     }
 }
 
@@ -164,14 +155,11 @@ void ApiManager::forgotPassword(const QString &emailAddress)
 
 void ApiManager::handleForgotPasswordResponse(QNetworkReply *reply)
 {
-    const auto jsonObject{parseResponseToJson(reply)};
-
     if (reply->error() == QNetworkReply::NoError) {
         emit forgotPasswordCorrect();
     } else {
-        const auto error{parseErrorResponse(jsonObject)};
-        const QString errorMessages{getErrorMessages(error)};
-        emit forgotPasswordFailed(errorMessages);
+        const auto jsonObject{parseResponseToJson(reply)};
+        emit forgotPasswordFailed(getErrorResponseInString(jsonObject));
     }
 }
 
@@ -199,14 +187,11 @@ void ApiManager::forgotPasswordCheckToken(const QString &emailAddress, const QSt
 
 void ApiManager::handleForgotPasswordCheckToken(QNetworkReply *reply)
 {
-    const auto jsonObject{parseResponseToJson(reply)};
-
     if (reply->error() == QNetworkReply::NoError) {
         emit forgotPasswordCheckTokenCorrect();
     } else {
-        const auto error{parseErrorResponse(jsonObject)};
-        const QString errorMessages{getErrorMessages(error)};
-        emit forgotPasswordCheckTokenFailed(errorMessages);
+        const auto jsonObject{parseResponseToJson(reply)};
+        emit forgotPasswordCheckTokenFailed(getErrorResponseInString(jsonObject));
     }
 }
 
@@ -236,14 +221,11 @@ void ApiManager::forgotPasswordConfirm(const QString &emailAddress, const QStrin
 
 void ApiManager::handleForgotPasswordConfirm(QNetworkReply *reply)
 {
-    const auto jsonObject{parseResponseToJson(reply)};
-
     if (reply->error() == QNetworkReply::NoError) {
         emit forgotPasswordConfirmCorrect();
     } else {
-        const auto error{parseErrorResponse(jsonObject)};
-        const QString errorMessages{getErrorMessages(error)};
-        emit forgotPasswordConfirmFailed(errorMessages);
+        const auto jsonObject{parseResponseToJson(reply)};
+        emit forgotPasswordConfirmFailed(getErrorResponseInString(jsonObject));
     }
 }
 
@@ -261,7 +243,6 @@ QJsonObject ApiManager::parseResponseToJson(QNetworkReply* reply) {
         return QJsonObject();
     }
 
-    qDebug() << responseData;
     return jsonDocument.object();
 }
 
@@ -297,4 +278,15 @@ std::vector<QString> ApiManager::parseErrorResponse(const QJsonObject& apiJsonRe
        }
 
     return errors;
+}
+
+QString ApiManager::getErrorResponseInString(const QJsonObject& apiJsonResponse)
+{
+    const auto error{parseErrorResponse(apiJsonResponse)};
+    const QString errorMessages{getErrorMessages(error)};
+
+    if(!errorMessages.isEmpty())
+        return errorMessages;
+
+    return "Check internet connection or restart the app";
 }

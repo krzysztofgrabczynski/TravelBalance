@@ -51,6 +51,14 @@ AppPage {
                                                              passwordRepeated)
   }
 
+  function displayErrorText(errorMessage) {
+    showErrorItem.text = errorMessage
+  }
+
+  function clearErrorText() {
+    showErrorItem.text = ""
+  }
+
   signal passwordSuccesfullyChanged
 
   Connections {
@@ -58,6 +66,7 @@ AppPage {
     onForgotPasswordConfirmCorrect: function () {
       console.log("Forgot Password Confirm correct ")
       activityIndicatorBarItem.visible = false
+      clearErrorText()
       nativeUtils.displayMessageBox(
             qsTr("Password Changed!"),
             qsTr("Please log in with your new credentials"))
@@ -66,6 +75,7 @@ AppPage {
     onForgotPasswordConfirmFailed: function (errorMessage) {
       console.log("Forgot Password Confirm failed: ", errorMessage)
       activityIndicatorBarItem.visible = false
+      displayErrorText(errorMessage)
     }
   }
 
@@ -104,6 +114,11 @@ AppPage {
     bottomPadding: dp(10)
   }
 
+  ErrorDisplay {
+    id: showErrorItem
+    anchors.bottom: passwordTextField.top
+  }
+
   CustomTextField {
     id: passwordTextField
     anchors.horizontalCenter: parent.horizontalCenter
@@ -119,6 +134,7 @@ AppPage {
     onFocusToggled: {
       page.state = page.state
           === "downConfirmPassword" ? "upConfirmPassword" : "downConfirmPassword"
+      clearErrorText()
     }
   }
 
@@ -181,6 +197,7 @@ AppPage {
     }
     onFocusToggled: {
       page.state = page.state === "downPasswordButton" ? "upPasswordButton" : "downPasswordButton"
+      clearErrorText()
     }
   }
 

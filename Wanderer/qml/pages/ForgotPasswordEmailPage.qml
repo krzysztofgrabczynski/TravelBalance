@@ -5,6 +5,14 @@ import "../components"
 import "../js/Validator.js" as Validator
 
 AppPage {
+  function displayErrorText(errorMessage) {
+    showErrorItem.text = errorMessage
+  }
+
+  function clearErrorText() {
+    showErrorItem.text = ""
+  }
+
   id: page
   navigationBarHidden: false
   signal verifyCodeCorrect(string email, string code)
@@ -19,19 +27,23 @@ AppPage {
       emailAddressField.clickEnabled = !emailAddressField.clickEnabled
       emailAddressField.textColor = "grey"
       page.state = "showVerifyCode"
+      clearErrorText()
     }
     onForgotPasswordFailed: function (errorMessage) {
       console.log("Forgot Password failed: ", errorMessage)
       activityIndicatorBarItem.visible = false
+      displayErrorText(errorMessage)
     }
     onForgotPasswordCheckTokenCorrect: function () {
       console.log("Forgot Password Check Token correct ")
       page.verifyCodeCorrect(emailAddressField.text, verifyCodeField.text)
       activityIndicatorBarItem.visible = false
+      clearErrorText()
     }
     onForgotPasswordCheckTokenFailed: function (errorMessage) {
       console.log("Forgot Password Check Token failed: ", errorMessage)
       activityIndicatorBarItem.visible = false
+      displayErrorText(errorMessage)
     }
   }
 
@@ -69,6 +81,11 @@ AppPage {
     }
   }
 
+  ErrorDisplay {
+    id: showErrorItem
+    anchors.bottom: emailAddressField.top
+  }
+
   CustomTextField {
     id: emailAddressField
     anchors.horizontalCenter: parent.horizontalCenter
@@ -77,6 +94,7 @@ AppPage {
     placeholderText: "Email address"
     onTextChanged: {
       toggleSendEmailButton(emailAddressField.text)
+      clearErrorText()
     }
   }
 
@@ -94,6 +112,9 @@ AppPage {
     anchors.top: dummyRec1.bottom
     inputMode: 2
     placeholderText: "Verify code"
+    onTextChanged: {
+      clearErrorText()
+    }
   }
 
   AppButton {
