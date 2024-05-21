@@ -18,6 +18,7 @@ public slots:
    Q_INVOKABLE void forgotPassword(const QString& emailAddress);
    Q_INVOKABLE void forgotPasswordCheckToken(const QString& emailAddress, const QString& code);
    Q_INVOKABLE void forgotPasswordConfirm(const QString& emailAddress, const QString& code, const QString &password, const QString& passwordRepeated);
+
 signals:
    void loginCorrect(const QString& token);
    void loginFailed(const QString& errorMessage);

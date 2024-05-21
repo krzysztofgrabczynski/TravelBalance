@@ -57,8 +57,10 @@ AppPage {
     target: g_apiManager
     onForgotPasswordConfirmCorrect: function () {
       console.log("Forgot Password Confirm correct ")
-      console.log("Maybe display dialog window (???????) ")
       activityIndicatorBarItem.visible = false
+      nativeUtils.displayMessageBox(
+            qsTr("Password Changed!"),
+            qsTr("Please log in with your new credentials"))
       passwordSuccesfullyChanged()
     }
     onForgotPasswordConfirmFailed: function (errorMessage) {
