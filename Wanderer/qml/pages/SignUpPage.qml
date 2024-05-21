@@ -53,6 +53,14 @@ AppPage {
         && Validator.validateUsername(usernameTextField.text)
   }
 
+  function displayErrorText(errorMessage) {
+    showErrorItem.text = errorMessage
+  }
+
+  function clearErrorText() {
+    showErrorItem.text = ""
+  }
+
   id: page
   navigationBarHidden: false
 
@@ -75,6 +83,7 @@ AppPage {
     onRegisterFailed: function (errorMessage) {
       console.log("Register Failed: ", errorMessage)
       activityIndicatorBarItem.visible = false
+      displayErrorText(errorMessage)
     }
   }
 
@@ -100,6 +109,11 @@ AppPage {
     bottomPadding: dp(10)
   }
 
+  ErrorDisplay {
+    id: showErrorItem
+    anchors.bottom: usernameTextField.top
+  }
+
   CustomTextField {
     id: usernameTextField
     anchors.horizontalCenter: parent.horizontalCenter
@@ -108,6 +122,7 @@ AppPage {
     placeholderText: qsTr("Username")
     onTextChanged: {
       toggleJoinButton()
+      clearErrorText()
     }
   }
 
@@ -128,6 +143,7 @@ AppPage {
       changeRequirementsColor(passwordTextField.text,
                               confirmPasswordTextField.text)
       toggleJoinButton()
+      clearErrorText()
     }
     onFocusToggled: {
       page.state = page.state
@@ -191,6 +207,7 @@ AppPage {
                                    confirmPasswordTextField.text)
 
       toggleJoinButton()
+      clearErrorText()
     }
     onFocusToggled: {
       page.state = page.state === "downEmailAddress" ? "upEmailAddress" : "downEmailAddress"
@@ -226,6 +243,7 @@ AppPage {
     placeholderText: qsTr("Email address")
     onTextChanged: {
       toggleJoinButton()
+      clearErrorText()
     }
   }
 
