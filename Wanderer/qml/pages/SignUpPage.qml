@@ -67,10 +67,10 @@ AppPage {
     target: g_apiManager
     onRegisterCorrect: {
       console.log("Register Correct")
+      activityIndicatorBarItem.visible = false
       nativeUtils.displayMessageBox(
             qsTr("E-mail sent!"), qsTr(
               "Please check your email and confirm your account by clicking the provided link."))
-      activityIndicatorBarItem.visible = false
     }
     onRegisterFailed: function (errorMessage) {
       console.log("Register Failed: ", errorMessage)

@@ -51,8 +51,27 @@ AppPage {
                                                              passwordRepeated)
   }
 
+  signal passwordSuccesfullyChanged
+
+  Connections {
+    target: g_apiManager
+    onForgotPasswordConfirmCorrect: function () {
+      console.log("Forgot Password Confirm correct ")
+      console.log("Maybe display dialog window (???????) ")
+      activityIndicatorBarItem.visible = false
+      passwordSuccesfullyChanged()
+    }
+    onForgotPasswordConfirmFailed: function (errorMessage) {
+      console.log("Forgot Password Confirm failed: ", errorMessage)
+      activityIndicatorBarItem.visible = false
+    }
+  }
+
   id: page
   navigationBarHidden: false
+
+  property string email
+  property string verifyCode
 
   signal correctRegistrationRequestSent
 
@@ -200,7 +219,11 @@ AppPage {
     height: dp(50)
     radius: dp(15)
     onClicked: {
+      console.log("Reset password button clicked")
       activityIndicatorBarItem.visible = true
+      g_apiManager.forgotPasswordConfirm(page.email, page.verifyCode,
+                                         passwordTextField.text,
+                                         confirmPasswordTextField.text)
     }
   }
 
