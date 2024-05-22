@@ -45,6 +45,11 @@ REST_FRAMEWORK = {
     ],
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://wanderer-test-fe529f1fdf47.herokuapp.com',
+]
+
+
 ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
