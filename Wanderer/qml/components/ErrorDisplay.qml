@@ -5,7 +5,7 @@ Rectangle {
   property alias text: showErrorText.text
 
   anchors.horizontalCenter: parent.horizontalCenter
-  height: showErrorText.height
+  height: showErrorText.height + dp(10)
   AppText {
     id: showErrorText
     anchors.horizontalCenter: parent.horizontalCenter
