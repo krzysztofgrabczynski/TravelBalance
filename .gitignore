@@ -2,6 +2,7 @@
 build*
 Wanderer/*.user
 *.autosave
+~$Doc.docx
 
 # Backend
 *.log
