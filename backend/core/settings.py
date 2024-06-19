@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "api.user",
+    "api.trip",
 ]
 
 MIDDLEWARE = [
@@ -46,7 +47,7 @@ REST_FRAMEWORK = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://wanderer-test-fe529f1fdf47.herokuapp.com',
+    "https://wanderer-test-fe529f1fdf47.herokuapp.com",
 ]
 
 
