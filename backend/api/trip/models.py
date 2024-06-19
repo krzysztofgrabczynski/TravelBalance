@@ -11,12 +11,12 @@ class Trip(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     @property
-    def trip_cost(self):
+    def trip_cost(self) -> int:
         aggregate_dict = self.expenses.aggregate(total_cost=models.Sum("cost"))
         return aggregate_dict.get("total_cost", 0)
 
     @property
-    def expenses_amount(self):
+    def expenses_amount(self) -> int:
         return self.expenses.count()
 
     class Meta:
