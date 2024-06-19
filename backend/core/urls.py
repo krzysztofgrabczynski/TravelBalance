@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from api.user import urls as user_urls
+from api import urls as api_urls
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include(user_urls)),
+    path("api/v1/", include(api_urls)),
 ]
