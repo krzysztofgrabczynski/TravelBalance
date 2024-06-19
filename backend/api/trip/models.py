@@ -7,7 +7,7 @@ class Trip(models.Model):
         User, on_delete=models.CASCADE, related_name="trips"
     )
     name = models.CharField(max_length=64, blank=False)
-    image = models.ImageField(upload_to="trip_images/")
+    image = models.ImageField(upload_to="trip_images/", blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
     @property
