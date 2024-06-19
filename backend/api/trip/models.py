@@ -21,3 +21,6 @@ class Trip(models.Model):
 
     class Meta:
         ordering = ["-date"]
+
+    def __str__(self) -> str:
+        return self.name
