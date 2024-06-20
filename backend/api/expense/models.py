@@ -24,7 +24,7 @@ class Expense(models.Model):
     data = models.DateField(default=timezone.now().date())
 
     @property
-    def get_user(self) -> User:
+    def user(self) -> User:
         return self.trip.user
 
     def __str__(self) -> str:
