@@ -9,7 +9,11 @@ from api.expense import views as expense_views
 router = DefaultRouter()
 router.register(r"user", user_views.UserViewSet, basename="user")
 router.register(r"trip", trip_views.TripViewSet, basename="trip")
-router.register(r"expense", expense_views.ExpenseViewSet, basename="expense")
+router.register(
+    r"trip/(?P<trip_pk>\d+)/expense",
+    expense_views.ExpenseViewSet,
+    basename="expense",
+)
 
 
 urlpatterns = [
