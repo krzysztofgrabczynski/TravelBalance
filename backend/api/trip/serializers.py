@@ -8,4 +8,5 @@ class TripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ["user", "name", "image"]
+        fields = ["id", "user", "name", "image"]
+        extra_kwargs = {"id": {"read_only": True}}

@@ -6,4 +6,5 @@ from api.expense.models import Expense
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = ["trip", "title", "cost", "category", "data"]
+        fields = ["id", "trip", "title", "cost", "category", "data"]
+        extra_kwargs = {"id": {"read_only": True}}
