@@ -13,14 +13,16 @@ class Trip(models.Model):
     @property
     def trip_cost(self) -> int:
         aggregate_dict = self.expenses.aggregate(total_cost=models.Sum("cost"))
-        return aggregate_dict.get("total_cost", 0)
+        if aggregate_dict.get("total_cost"):
+            return round(aggregate_dict.get("total_cost"), 2)
+        return 0
 
     @property
     def expenses_amount(self) -> int:
         return self.expenses.count()
 
-    class Meta:
-        ordering = ["-date"]
-
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        ordering = ["-date"]
