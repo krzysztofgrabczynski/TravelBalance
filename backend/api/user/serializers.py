@@ -11,34 +11,6 @@ from django.core.exceptions import (
 
 from api.user.models import ForgotPasswordToken
 
-# class CustomErrorResponseMixin:
-#     def is_valid(self, *args, **kwargs):
-#         errors = {}
-#         try:
-#             return super().is_valid(*args, **kwargs)
-#         except serializers.ValidationError as exc:
-#             errors.setdefault(
-#                 "errors",
-#                 [{key: value[0]} for key, value in exc.detail.items()],
-#             )
-#             self._errors = errors
-#             raise serializers.ValidationError(self.errors)
-
-#     def to_internal_value(self, data):
-#         errors = OrderedDict()
-#         try:
-#             return super().to_internal_value(data)
-#         except (serializers.ValidationError, ValidationError) as exc:
-#             errors.setdefault("errors", [])
-#             for error in exc.detail.values():
-#                 if not isinstance(error, dict):
-#                     error = {
-#                         "error": error[0],
-#                         "status": status.HTTP_400_BAD_REQUEST,
-#                     }
-#                 errors["errors"].append(error)
-#             raise serializers.ValidationError(errors)
-
 
 class PasswordRetypeSerializer(serializers.Serializer):
     password = serializers.CharField(
