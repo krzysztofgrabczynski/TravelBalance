@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.utils.http import urlsafe_base64_decode
@@ -86,6 +87,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "email")
+        extra_kwargs = {
+            "email": {"validators": [UniqueValidator(User.objects.all())]},
+        }
 
 
 class UserCreateSerializer(
