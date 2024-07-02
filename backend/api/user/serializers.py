@@ -157,6 +157,27 @@ class AccountActivationSerializer(serializers.Serializer):
         return user
 
 
+class PasswordResetSerializer(PasswordRetypeSerializer):
+    old_password = serializers.CharField(
+        required=True,
+        write_only=True,
+        style={"input_type": "password"},
+    )
+
+    default_error_messages = {
+        "wrong_old_password": "Old password is incorrect."
+    }
+
+    def validate_old_password(self, old_password: str) -> str:
+        self.user = self.context["request"].user
+        if self.user.check_password(old_password):
+            return old_password
+        key_error = "wrong_old_password"
+        raise serializers.ValidationError( 
+                self.error_messages[key_error], code=key_error
+            )
+        
+
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 
