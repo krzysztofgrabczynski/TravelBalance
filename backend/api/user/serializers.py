@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
+from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.utils.http import urlsafe_base64_decode
@@ -10,34 +11,6 @@ from django.core.exceptions import (
 )
 
 from api.user.models import ForgotPasswordToken
-
-# class CustomErrorResponseMixin:
-#     def is_valid(self, *args, **kwargs):
-#         errors = {}
-#         try:
-#             return super().is_valid(*args, **kwargs)
-#         except serializers.ValidationError as exc:
-#             errors.setdefault(
-#                 "errors",
-#                 [{key: value[0]} for key, value in exc.detail.items()],
-#             )
-#             self._errors = errors
-#             raise serializers.ValidationError(self.errors)
-
-#     def to_internal_value(self, data):
-#         errors = OrderedDict()
-#         try:
-#             return super().to_internal_value(data)
-#         except (serializers.ValidationError, ValidationError) as exc:
-#             errors.setdefault("errors", [])
-#             for error in exc.detail.values():
-#                 if not isinstance(error, dict):
-#                     error = {
-#                         "error": error[0],
-#                         "status": status.HTTP_400_BAD_REQUEST,
-#                     }
-#                 errors["errors"].append(error)
-#             raise serializers.ValidationError(errors)
 
 
 class PasswordRetypeSerializer(serializers.Serializer):
@@ -114,6 +87,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "email")
+        extra_kwargs = {
+            "email": {"validators": [UniqueValidator(User.objects.all())]},
+        }
 
 
 class UserCreateSerializer(
@@ -180,6 +156,27 @@ class AccountActivationSerializer(serializers.Serializer):
             user = None
         return user
 
+
+class PasswordResetSerializer(PasswordRetypeSerializer):
+    old_password = serializers.CharField(
+        required=True,
+        write_only=True,
+        style={"input_type": "password"},
+    )
+
+    default_error_messages = {
+        "wrong_old_password": "Old password is incorrect."
+    }
+
+    def validate_old_password(self, old_password: str) -> str:
+        self.user = self.context["request"].user
+        if self.user.check_password(old_password):
+            return old_password
+        key_error = "wrong_old_password"
+        raise serializers.ValidationError( 
+                self.error_messages[key_error], code=key_error
+            )
+        
 
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
