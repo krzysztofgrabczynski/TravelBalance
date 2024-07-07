@@ -41,5 +41,14 @@ class Expense {
         dateTime: dateTime);
   }
 
+  void printDetails() {
+    print('   Expense Details:');
+    print('   ID: $_id');
+    print('   Title: $_title');
+    print('   Cost: $_cost');
+    print('   Category: $_category');
+    print('   DateTime: $_dateTime');
+  }
+
   //No setters - no editable.
 }
