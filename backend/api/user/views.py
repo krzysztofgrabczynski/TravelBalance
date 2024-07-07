@@ -46,6 +46,7 @@ class UserViewSet(
     permission_classes = [permissions.IsAuthenticated, ObjectOwnerPermission]
 
     SAFE_ACTIONS = [
+        "create",
         "account_activation",
         "forgot_password",
         "forgot_password_check_token",
@@ -70,7 +71,7 @@ class UserViewSet(
 
     def get_permissions(self):
         if self.action in self.SAFE_ACTIONS:
-            return permissions.AllowAny
+            return [permissions.AllowAny()]
         return super().get_permissions()
 
     def perform_create(self, serializer):
