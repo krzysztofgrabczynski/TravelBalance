@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:wanderer/models/expense.dart';
 
 class Trip {
@@ -42,12 +43,12 @@ class Trip {
   }
 
   void printDetails() {
-    print('Trip Details:');
-    print('ID: $_id');
-    print('Name: $_name');
-    print('Image: $_image');
-    print('Trip Cost: $_tripCost');
-    print('Expenses:');
+    debugPrint('Trip Details:');
+    debugPrint('ID: $_id');
+    debugPrint('Name: $_name');
+    debugPrint('Image: $_image');
+    debugPrint('Trip Cost: $_tripCost');
+    debugPrint('Expenses:');
     for (var expense in _expenses!) {
       expense.printDetails();
     }

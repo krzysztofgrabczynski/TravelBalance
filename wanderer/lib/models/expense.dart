@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum Category { accommodation, food, health, transport, activities, others }
 
 class Expense {
@@ -5,14 +7,14 @@ class Expense {
   String? _title;
   double? _cost;
   Category? _category;
-  DateTime? _dateTime;
+  String? _dateTime;
 
   Expense({
     required int id,
     required String title,
     required double cost,
     required Category category,
-    required DateTime dateTime,
+    required String dateTime,
   })  : _id = id,
         _title = title,
         _cost = cost,
@@ -23,7 +25,7 @@ class Expense {
   String? get title => _title;
   double? get cost => _cost;
   Category? get category => _category;
-  DateTime? get dateTime => _dateTime;
+  String? get dateTime => _dateTime;
 
   factory Expense.fromJson(Map<String, dynamic> data) {
     //Add validations.
@@ -32,7 +34,7 @@ class Expense {
     final double cost = data['cost'];
     //Might result in problems. Contact Krzysztof abt Categories.
     final Category category = Category.values[data['category']];
-    final DateTime dateTime = data['data'];
+    final String dateTime = data['data'];
     return Expense(
         id: id,
         title: title,
@@ -42,12 +44,12 @@ class Expense {
   }
 
   void printDetails() {
-    print('   Expense Details:');
-    print('   ID: $_id');
-    print('   Title: $_title');
-    print('   Cost: $_cost');
-    print('   Category: $_category');
-    print('   DateTime: $_dateTime');
+    debugPrint('   Expense Details:');
+    debugPrint('   ID: $_id');
+    debugPrint('   Title: $_title');
+    debugPrint('   Cost: $_cost');
+    debugPrint('   Category: $_category');
+    debugPrint('   DateTime: $_dateTime');
   }
 
   //No setters - no editable.
