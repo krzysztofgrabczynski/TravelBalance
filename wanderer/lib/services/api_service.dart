@@ -37,4 +37,34 @@ class ApiService {
       return null;
     }
   }
+
+  Future<bool> login(String username, String password) async {
+    try {
+      Map<String, dynamic> body = {
+        'username': 'testowy_user',
+        'password': 'testowehaslo123!',
+      };
+      var endpoint = 'login/';
+      var response = await http.post(
+        Uri.parse('$_baseUrl$endpoint'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        var responseBody = jsonDecode(response.body);
+        setUserToken(responseBody['token']);
+        debugPrint('Login successful: $responseBody');
+        return true;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      debugPrint("Error in login: $e");
+      return false;
+    }
+  }
 }
