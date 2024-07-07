@@ -5,7 +5,7 @@ import 'package:wanderer/pages/expense_list_page.dart';
 import 'package:wanderer/providers/user_provider.dart';
 
 class TripListPage extends StatefulWidget {
-  const TripListPage({Key? key}) : super(key: key);
+  const TripListPage({super.key});
 
   @override
   _TripListPageState createState() => _TripListPageState();
@@ -15,7 +15,6 @@ class _TripListPageState extends State<TripListPage> {
   @override
   void initState() {
     super.initState();
-    // Pobierz dane użytkownika po załadowaniu strony
     Provider.of<UserProvider>(context, listen: false).fetchWholeUserData();
   }
 
@@ -23,14 +22,14 @@ class _TripListPageState extends State<TripListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Trip List Page"),
+        title: const Text("Trip List Page"),
         backgroundColor: Colors.green[100],
       ),
       backgroundColor: Colors.grey[100],
       body: Consumer<UserProvider>(
         builder: (context, userProvider, child) {
           if (userProvider.user == null) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(color: Colors.green),
             );
           } else {
@@ -60,7 +59,7 @@ class _TripListPageState extends State<TripListPage> {
                   onPressed: () {
                     userProvider.addTrip();
                   },
-                  child: Text("Add Trip"),
+                  child: const Text("Add Trip"),
                 ),
               ],
             );
@@ -72,8 +71,8 @@ class _TripListPageState extends State<TripListPage> {
           Provider.of<UserProvider>(context, listen: false)
               .fetchWholeUserData();
         },
-        child: Icon(Icons.refresh),
         backgroundColor: Colors.green,
+        child: const Icon(Icons.refresh),
       ),
     );
   }

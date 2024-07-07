@@ -5,9 +5,9 @@ class TripComponent extends StatelessWidget {
   final Trip trip;
 
   const TripComponent({
-    Key? key,
+    super.key,
     required this.trip,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

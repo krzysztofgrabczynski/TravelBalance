@@ -5,9 +5,9 @@ class ExpenseComponent extends StatelessWidget {
   final Expense expense;
 
   const ExpenseComponent({
-    Key? key,
+    super.key,
     required this.expense,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ExpenseComponent extends StatelessWidget {
       child: Container(
         color: Colors.grey[300],
         child: ListTile(
-          leading: Icon(
+          leading: const Icon(
               Icons.abc_sharp), // Dodaj ikonę jako wiodący element listTile
           title: Text(expense.title ?? ''),
           subtitle: Text('Cost: ${expense.cost!.toStringAsFixed(2)}'),

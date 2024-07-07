@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wanderer/components/expense_component.dart';
 import 'package:wanderer/models/trip.dart';
@@ -6,10 +5,10 @@ import 'package:wanderer/models/trip.dart';
 class ExpenseListPage extends StatelessWidget {
   final Trip trip;
 
-  ExpenseListPage({
-    Key? key,
+  const ExpenseListPage({
+    super.key,
     required this.trip,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:wanderer/pages/trip_list_page.dart';
 import 'package:wanderer/services/api_service.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login Page"),
+        title: const Text("Login Page"),
         backgroundColor: Colors.green[100],
       ),
       backgroundColor: Colors.grey[100],
@@ -24,21 +24,21 @@ class LoginPage extends StatelessWidget {
           children: [
             TextField(
               controller: usernameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Username',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
                 // Tu umieść logikę do logowania
@@ -51,20 +51,20 @@ class LoginPage extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TripListPage(),
+                      builder: (context) => const TripListPage(),
                     ),
                   );
                 } else {
                   // Tutaj wyświetl komunikat błędu logowania
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Invalid username or password'),
                       duration: Duration(seconds: 3),
                     ),
                   );
                 }
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
           ],
         ),
