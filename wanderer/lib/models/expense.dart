@@ -31,7 +31,7 @@ class Expense {
     //Add validations.
     final int id = data['id'];
     final String title = data['title'];
-    final double cost = data['cost'];
+    final double cost = data['cost'].toDouble();
     //Might result in problems. Contact Krzysztof abt Categories.
     final Category category = Category.values[data['category']];
     final String dateTime = data['data'];
@@ -44,12 +44,13 @@ class Expense {
   }
 
   void printDetails() {
-    debugPrint('   Expense Details:');
-    debugPrint('   ID: $_id');
-    debugPrint('   Title: $_title');
-    debugPrint('   Cost: $_cost');
-    debugPrint('   Category: $_category');
-    debugPrint('   DateTime: $_dateTime');
+    debugPrint('      Expense Details:');
+    debugPrint('      ID: $_id');
+    debugPrint('      Title: $_title');
+    debugPrint('      Cost: $_cost');
+    debugPrint('      Category: $_category');
+    debugPrint('      DateTime: $_dateTime');
+    debugPrint('      --------------------------');
   }
 
   //No setters - no editable.

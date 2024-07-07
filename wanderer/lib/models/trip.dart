@@ -11,7 +11,7 @@ class Trip {
   Trip(
       {required int id,
       required String name,
-      required String image,
+      required String? image,
       required double tripCost,
       required List<Expense> expenses})
       : _id = id,
@@ -29,8 +29,8 @@ class Trip {
   factory Trip.fromJson(Map<String, dynamic> data) {
     final int id = data['id'];
     final String name = data['name'];
-    final String image = data['image'];
-    final double tripCost = data['trip_cost'];
+    final String? image = data['image'];
+    final double tripCost = data['trip_cost'].toDouble();
     final List<Expense> expenses = (data['expenses'] as List)
         .map((expenseData) => Expense.fromJson(expenseData))
         .toList();
@@ -43,12 +43,12 @@ class Trip {
   }
 
   void printDetails() {
-    debugPrint('Trip Details:');
-    debugPrint('ID: $_id');
-    debugPrint('Name: $_name');
-    debugPrint('Image: $_image');
-    debugPrint('Trip Cost: $_tripCost');
-    debugPrint('Expenses:');
+    debugPrint('  Trip Details:');
+    debugPrint('  ID: $_id');
+    debugPrint('  Name: $_name');
+    debugPrint(_image != null ? '  Image: $_image' : '  Image: Not Specified');
+    debugPrint('  Trip Cost: $_tripCost');
+    debugPrint('  Expenses:');
     for (var expense in _expenses!) {
       expense.printDetails();
     }

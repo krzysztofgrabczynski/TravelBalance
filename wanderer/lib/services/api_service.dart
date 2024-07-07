@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:wanderer/models/trip.dart';
 import 'package:wanderer/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,9 +7,9 @@ class ApiService {
   static final ApiService _instance = ApiService._internal();
 
   ApiService._internal();
-
-  String? _token = "dcb18eaa602e7296c9921ab5b618d64047e148b6";
-  static const String baseUrl =
+  static const String _baseToken = "Token ";
+  static String? _token = "dcb18eaa602e7296c9921ab5b618d64047e148b6";
+  static const String _baseUrl =
       "http://wanderer-test-fe529f1fdf47.herokuapp.com/api/v1/";
 
   factory ApiService() {
@@ -24,16 +23,18 @@ class ApiService {
   Future<User?> fetchWholeUserData() async {
     try {
       var endpoint = 'trip/get_trip_with_expenses/';
-      var response = await http.get(Uri.parse('$baseUrl$endpoint'),
-          headers: {'Authorization': _token!});
+      var response = await http.get(Uri.parse('$_baseUrl$endpoint'),
+          headers: {'Authorization': '$_baseToken$_token'});
 
       if (response.statusCode == 200) {
-        var jsonData = jsonDecode(response.body);
-        return User.fromJson(jsonData);
+        return User.fromJson(jsonDecode(response.body));
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}');
+        return null;
       }
     } catch (e) {
-      print("Error in fetchWholeUserData: $e");
-      rethrow;
+      debugPrint("Error in fetchWholeUserData: $e");
+      return null;
     }
   }
 }
