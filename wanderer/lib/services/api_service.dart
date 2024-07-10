@@ -8,7 +8,7 @@ class ApiService {
 
   ApiService._internal();
   static const String _baseToken = "Token ";
-  static String? _token = "dcb18eaa602e7296c9921ab5b618d64047e148b6";
+  String? _token = "dcb18eaa602e7296c9921ab5b618d64047e148b6";
   static const String _baseUrl =
       "http://wanderer-test-fe529f1fdf47.herokuapp.com/api/v1/";
 

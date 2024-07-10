@@ -12,12 +12,14 @@ class CustomTextField extends StatelessWidget {
   final double shadowBlurRadius;
   final double shadowSpreadRadius;
   final Offset shadowOffset;
+  final double horizontalPadding;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     required this.controller,
     required this.obscureText,
+    required this.horizontalPadding,
     this.cursorColor = leadingColor,
     this.borderColor = Colors.grey,
     this.borderRadius = 24.0,
@@ -30,8 +32,8 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: horizontalPadding, vertical: 4.0),
+      padding:
+          EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 4.0),
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [

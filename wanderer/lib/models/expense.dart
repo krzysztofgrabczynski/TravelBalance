@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 enum Category { accommodation, food, health, transport, activities, others }
 
 class Expense {
-  int? _id;
-  String? _title;
-  double? _cost;
-  Category? _category;
-  String? _dateTime;
+  int _id;
+  String _title;
+  double _cost;
+  Category _category;
+  String _dateTime;
 
   Expense({
     required int id,

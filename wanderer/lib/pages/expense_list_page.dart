@@ -14,14 +14,14 @@ class ExpenseListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(trip.name!),
+        title: Text(trip.name),
         backgroundColor: Colors.green[100],
       ),
       backgroundColor: Colors.grey[100],
       body: ListView.builder(
-        itemCount: trip.expenses!.length,
+        itemCount: trip.expenses.length,
         itemBuilder: (context, index) {
-          final expense = trip.expenses![index];
+          final expense = trip.expenses[index];
           return ExpenseComponent(expense: expense);
         },
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wanderer/components/globals.dart';
 import 'package:wanderer/components/trip_component.dart';
+import 'package:wanderer/models/trip.dart';
 import 'package:wanderer/pages/expense_list_page.dart';
 import 'package:wanderer/providers/user_provider.dart';
 
@@ -12,6 +14,15 @@ class TripListPage extends StatefulWidget {
 }
 
 class _TripListPageState extends State<TripListPage> {
+  void moveToDetails(Trip currentTrip) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ExpenseListPage(trip: currentTrip),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -22,8 +33,12 @@ class _TripListPageState extends State<TripListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Trip List Page"),
-        backgroundColor: Colors.green[100],
+        title: const Text(
+          "List of trips",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: leadingColor,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       backgroundColor: Colors.grey[100],
       body: Consumer<UserProvider>(
@@ -40,27 +55,19 @@ class _TripListPageState extends State<TripListPage> {
                     itemCount: userProvider.user!.trips!.length,
                     itemBuilder: (context, index) {
                       final currentTrip = userProvider.user!.trips![index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ExpenseListPage(trip: currentTrip),
-                            ),
-                          );
-                        },
-                        child: TripComponent(trip: currentTrip),
+                      return TripComponent(
+                        trip: currentTrip,
+                        moveToDetails: () => moveToDetails(currentTrip),
                       );
                     },
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    userProvider.addTrip();
-                  },
-                  child: const Text("Add Trip"),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     userProvider.addTrip();
+                //   },
+                //   child: const Text("Add Trip"),
+                // ),
               ],
             );
           }
@@ -72,7 +79,10 @@ class _TripListPageState extends State<TripListPage> {
               .fetchWholeUserData();
         },
         backgroundColor: Colors.green,
-        child: const Icon(Icons.refresh),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
