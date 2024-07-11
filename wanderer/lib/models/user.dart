@@ -24,6 +24,10 @@ class User {
     _trips!.insert(0, newTrip);
   }
 
+  void deleteTrip(int index) {
+    _trips?.removeAt(index);
+  }
+
   printDetails() {
     debugPrint('User Trips:');
     for (var trip in _trips!) {

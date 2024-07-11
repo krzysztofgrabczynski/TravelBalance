@@ -17,6 +17,11 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteTrip(int index) {
+    _user!.deleteTrip(index);
+    notifyListeners();
+  }
+
   void logout() async {
     _user = null;
     notifyListeners();

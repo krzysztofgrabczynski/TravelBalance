@@ -5,7 +5,7 @@ import 'package:wanderer/components/trip_component.dart';
 import 'package:wanderer/models/trip.dart';
 import 'package:wanderer/pages/expense_list_page.dart';
 import 'package:wanderer/providers/user_provider.dart';
-import 'package:wanderer/components/app_drawer.dart'; 
+import 'package:wanderer/components/app_drawer.dart';
 
 class TripListPage extends StatefulWidget {
   const TripListPage({super.key});
@@ -42,7 +42,7 @@ class _TripListPageState extends State<TripListPage> {
         backgroundColor: leadingColor,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      endDrawer: const AppDrawer(), 
+      endDrawer: const AppDrawer(),
       backgroundColor: Colors.grey[100],
       body: Consumer<UserProvider>(
         builder: (context, userProvider, child) {
@@ -64,6 +64,10 @@ class _TripListPageState extends State<TripListPage> {
                   return TripComponent(
                     trip: currentTrip,
                     moveToDetails: () => moveToDetails(currentTrip),
+                    deleteFunction: (context) {
+                      Provider.of<UserProvider>(context, listen: false)
+                          .deleteTrip(index);
+                    },
                   );
                 },
               ),
