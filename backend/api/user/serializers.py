@@ -173,10 +173,10 @@ class PasswordResetSerializer(PasswordRetypeSerializer):
         if self.user.check_password(old_password):
             return old_password
         key_error = "wrong_old_password"
-        raise serializers.ValidationError( 
-                self.error_messages[key_error], code=key_error
-            )
-        
+        raise serializers.ValidationError(
+            self.error_messages[key_error], code=key_error
+        )
+
 
 class ForgotPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
