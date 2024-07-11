@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wanderer/components/globals.dart';
 import 'package:wanderer/providers/user_provider.dart';
 import 'package:wanderer/pages/login_page.dart'; // Import the LoginPage
 
 class AppDrawer extends StatelessWidget {
+  const AppDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -13,20 +16,20 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           Container(
             width: double.infinity,
-            height: 100,
-            decoration: BoxDecoration(color: leadingColor),
+            height: 180.h,
+            decoration: const BoxDecoration(color: leadingColor),
             child: Center(
               child: Text(
                 "Menu",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: 24),
+                    fontSize: 26.sp),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Divider(
               color: Colors.grey[400],
             ),
@@ -52,18 +55,18 @@ class AppDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          Spacer(),
+          const Spacer(),
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
+              padding: EdgeInsets.symmetric(vertical: 24.h),
               child: ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Logout'),
                 onTap: () {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                     (Route<dynamic> route) => false,
                   );
                   Provider.of<UserProvider>(context, listen: false).logout();

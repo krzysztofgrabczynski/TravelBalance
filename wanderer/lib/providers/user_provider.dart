@@ -19,6 +19,7 @@ class UserProvider with ChangeNotifier {
 
   void logout() async {
     _user = null;
+    notifyListeners();
     await ApiService().logout();
   }
 }

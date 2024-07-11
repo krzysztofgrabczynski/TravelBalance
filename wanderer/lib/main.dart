@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wanderer/pages/login_page.dart';
 import 'package:wanderer/providers/auth_provider.dart';
@@ -18,9 +19,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: LoginPage(),
+      child: ScreenUtilInit(
+        designSize: const Size(432, 960),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: child,
+        ),
+        child: const LoginPage(),
       ),
     );
   }

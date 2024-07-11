@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanderer/components/custom_text_field.dart';
 import 'package:wanderer/components/login_button_component.dart';
 import 'package:wanderer/pages/forgot_password_page.dart';
@@ -14,66 +14,59 @@ class LoginPage extends StatelessWidget {
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    final horizontalPadding = screenWidth * 0.05;
-    final heightTextPadding = screenHeight * 0.02;
-    final heightSpacerPadding = screenHeight * 0.01;
-    final heightSpacerPaddingBtw = screenHeight * 0.08;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            padding: EdgeInsets.symmetric(horizontal: 22.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: Icon(
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20.h),
+                  child: const Icon(
                     Icons.houseboat_sharp,
                     color: leadingColor,
                     size: 40,
                   ),
                 ),
-                const Text(
+                Text(
                   "Welcome back wanderer!",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: heightTextPadding),
-                  child: const Text(
+                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  child: Text(
                     "Create your next journey here.",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18.sp),
                   ),
                 ),
                 SizedBox(
-                  height: heightSpacerPaddingBtw,
+                  height: 80.h,
                 ),
                 CustomTextField(
                   hintText: "Username",
                   controller: usernameController,
                   obscureText: false,
-                  horizontalPadding: horizontalPadding,
+                  horizontalPadding: 22.w,
                 ),
                 CustomTextField(
                   hintText: "Password",
                   controller: passwordController,
                   obscureText: true,
-                  horizontalPadding: horizontalPadding,
+                  horizontalPadding: 22.w,
                 ),
-                SizedBox(height: heightSpacerPadding),
+                SizedBox(height: 10.h),
                 LoginButtonComponent(
                   usernameController: usernameController,
                   passwordController: passwordController,
-                  horizontalPadding: horizontalPadding,
+                  horizontalPadding: 22.w,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: horizontalPadding,
-                      vertical: heightSpacerPadding),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 22.w, vertical: 10.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -82,7 +75,8 @@ class LoginPage extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const ForgotPasswordPage()));
+                                  builder: (context) =>
+                                      const ForgotPasswordPage()));
                         },
                         child: const Text(
                           "Forgot password?",

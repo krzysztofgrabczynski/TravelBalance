@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanderer/models/expense.dart';
 
 class ExpenseComponent extends StatelessWidget {
@@ -12,7 +13,7 @@ class ExpenseComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0.w),
       child: Container(
         color: Colors.grey[300],
         child: ListTile(

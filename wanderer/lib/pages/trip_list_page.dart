@@ -42,7 +42,7 @@ class _TripListPageState extends State<TripListPage> {
         backgroundColor: leadingColor,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      endDrawer: AppDrawer(), // Use the drawer component
+      endDrawer: const AppDrawer(), 
       backgroundColor: Colors.grey[100],
       body: Consumer<UserProvider>(
         builder: (context, userProvider, child) {

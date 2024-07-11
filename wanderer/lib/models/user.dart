@@ -21,7 +21,7 @@ class User {
         image: "hakis Path",
         tripCost: 23.23,
         expenses: []);
-    _trips!.add(newTrip);
+    _trips!.insert(0, newTrip);
   }
 
   printDetails() {
