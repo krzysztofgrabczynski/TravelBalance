@@ -30,7 +30,7 @@ class TripViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
     @action(methods=["GET"], detail=False)
-    def get_trip_with_expenses(self, request, *args, **kwargs):
+    def get_trips_with_expenses(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
