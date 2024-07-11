@@ -33,9 +33,10 @@ class LoginButtonComponent extends StatelessWidget {
                       passwordController.text,
                     );
                     if (success) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const TripListPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const TripListPage()),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

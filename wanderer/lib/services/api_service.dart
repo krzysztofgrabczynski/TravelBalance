@@ -8,7 +8,7 @@ class ApiService {
 
   ApiService._internal();
   static const String _baseToken = "Token ";
-  String? _token = "dcb18eaa602e7296c9921ab5b618d64047e148b6";
+  String? _token;
   static const String _baseUrl =
       "http://wanderer-test-fe529f1fdf47.herokuapp.com/api/v1/";
 
@@ -65,6 +65,25 @@ class ApiService {
     } catch (e) {
       debugPrint("Error in login: $e");
       return false;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      var endpoint = 'logout/';
+      var response = await http.post(
+        Uri.parse('$_baseUrl$endpoint'),
+        headers: {'Authorization': '$_baseToken$_token'},
+      );
+
+      if (response.statusCode == 204) {
+        setUserToken("");
+        debugPrint('Logout successful');
+      } else {
+        debugPrint('Logout Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint("Error in Logout: $e");
     }
   }
 }

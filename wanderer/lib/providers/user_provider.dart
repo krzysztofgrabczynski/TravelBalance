@@ -7,7 +7,7 @@ class UserProvider with ChangeNotifier {
 
   User? get user => _user;
 
-  void fetchWholeUserData() async {
+  Future<void> fetchWholeUserData() async {
     _user = await ApiService().fetchWholeUserData();
     notifyListeners();
   }
@@ -15,5 +15,10 @@ class UserProvider with ChangeNotifier {
   void addTrip() {
     _user!.addTrip();
     notifyListeners();
+  }
+
+  void logout() async {
+    _user = null;
+    await ApiService().logout();
   }
 }

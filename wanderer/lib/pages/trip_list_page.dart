@@ -5,6 +5,7 @@ import 'package:wanderer/components/trip_component.dart';
 import 'package:wanderer/models/trip.dart';
 import 'package:wanderer/pages/expense_list_page.dart';
 import 'package:wanderer/providers/user_provider.dart';
+import 'package:wanderer/components/app_drawer.dart'; 
 
 class TripListPage extends StatefulWidget {
   const TripListPage({super.key});
@@ -37,9 +38,11 @@ class _TripListPageState extends State<TripListPage> {
           "List of trips",
           style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
         backgroundColor: leadingColor,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
+      endDrawer: AppDrawer(), // Use the drawer component
       backgroundColor: Colors.grey[100],
       body: Consumer<UserProvider>(
         builder: (context, userProvider, child) {
@@ -48,35 +51,29 @@ class _TripListPageState extends State<TripListPage> {
               child: CircularProgressIndicator(color: Colors.green),
             );
           } else {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: userProvider.user!.trips!.length,
-                    itemBuilder: (context, index) {
-                      final currentTrip = userProvider.user!.trips![index];
-                      return TripComponent(
-                        trip: currentTrip,
-                        moveToDetails: () => moveToDetails(currentTrip),
-                      );
-                    },
-                  ),
-                ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     userProvider.addTrip();
-                //   },
-                //   child: const Text("Add Trip"),
-                // ),
-              ],
+            return RefreshIndicator(
+              color: leadingColor,
+              onRefresh: () async {
+                await Provider.of<UserProvider>(context, listen: false)
+                    .fetchWholeUserData();
+              },
+              child: ListView.builder(
+                itemCount: userProvider.user!.trips!.length,
+                itemBuilder: (context, index) {
+                  final currentTrip = userProvider.user!.trips![index];
+                  return TripComponent(
+                    trip: currentTrip,
+                    moveToDetails: () => moveToDetails(currentTrip),
+                  );
+                },
+              ),
             );
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Provider.of<UserProvider>(context, listen: false)
-              .fetchWholeUserData();
+          Provider.of<UserProvider>(context, listen: false).addTrip();
         },
         backgroundColor: Colors.green,
         child: const Icon(
