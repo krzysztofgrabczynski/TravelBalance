@@ -20,12 +20,12 @@ class TripViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if self.action == "list" or self.action == "get_trip_with_expenses":
+        if self.action == "list" or self.action == "get_trips_with_expenses":
             return queryset.filter(user=self.request.user)
         return queryset
 
     def get_serializer_class(self, *args, **kwargs):
-        if self.action == "get_trip_with_expenses":
+        if self.action == "get_trips_with_expenses":
             return TripWithExpensesSerializer
         return self.serializer_class
 
