@@ -7,14 +7,14 @@ class ExpenseComponent extends StatelessWidget {
 
   Widget categoryIcon(Category category) {
     Map<Category, MapEntry<IconData, Color>> categoryIcon = {
-      Category.accommodation: MapEntry(Icons.hotel, const Color(0xFFfedab3)),
-      Category.food: MapEntry(Icons.restaurant, const Color(0xFFc4f3c8)),
-      Category.health: MapEntry(Icons.local_hospital, const Color(0xFFfbc1b9)),
+      Category.accommodation: const MapEntry(Icons.hotel, Color(0xFFfedab3)),
+      Category.food: const MapEntry(Icons.restaurant, Color(0xFFc4f3c8)),
+      Category.health: const MapEntry(Icons.local_hospital, Color(0xFFfbc1b9)),
       Category.transport:
-          MapEntry(Icons.directions_car, const Color(0xFFaad3fe)),
+          const MapEntry(Icons.directions_car, Color(0xFFaad3fe)),
       Category.activities:
-          MapEntry(Icons.local_activity, const Color(0xFFc8c7f1)),
-      Category.others: MapEntry(Icons.category, const Color(0xFFffeea4)),
+          const MapEntry(Icons.local_activity, Color(0xFFc8c7f1)),
+      Category.others: const MapEntry(Icons.category, Color(0xFFffeea4)),
     };
 
     IconData icon = categoryIcon[category]?.key ?? Icons.error;
@@ -50,9 +50,9 @@ class ExpenseComponent extends StatelessWidget {
       padding: EdgeInsets.all(4.0.w),
       child: ListTile(
         leading: categoryIcon(expense.category),
-        title: Text(expense.title ?? ''),
+        title: Text(expense.title),
         trailing: Text(
-          '\$${expense.cost!.toStringAsFixed(2)}',
+          '\$${expense.cost.toStringAsFixed(2)}',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
         ),
         subtitle: Text(expense.categoryToString()),

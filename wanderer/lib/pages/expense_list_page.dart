@@ -8,9 +8,9 @@ class ExpenseListPage extends StatelessWidget {
   final Trip trip;
 
   const ExpenseListPage({
-    Key? key,
+    super.key,
     required this.trip,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ExpenseListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           trip.name,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: leadingColor,
