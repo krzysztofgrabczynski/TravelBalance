@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 
@@ -21,7 +20,7 @@ class Expense(models.Model):
     title = models.CharField(max_length=32)
     cost = models.FloatField(validators=[MinValueValidator(0)])
     category = models.IntegerField(blank=True, choices=ExpenseCategory.choices)
-    data = models.DateField(default=timezone.now().date())
+    date = models.DateTimeField(auto_now_add=True)
 
     @property
     def user(self) -> User:
@@ -29,3 +28,7 @@ class Expense(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    class Meta:
+        ordering = ["-date"]
+        indexes = [models.Index(fields=["-date"])]
