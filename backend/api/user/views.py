@@ -46,6 +46,7 @@ class UserViewSet(
     permission_classes = [permissions.IsAuthenticated, ObjectOwnerPermission]
 
     SAFE_ACTIONS = [
+        "create",
         "account_activation",
         "forgot_password",
         "forgot_password_check_token",
@@ -70,7 +71,7 @@ class UserViewSet(
 
     def get_permissions(self):
         if self.action in self.SAFE_ACTIONS:
-            return permissions.AllowAny
+            return [permissions.AllowAny()]
         return super().get_permissions()
 
     def perform_create(self, serializer):
@@ -123,12 +124,12 @@ class UserViewSet(
         serializer.delete_user_tokens(serializer.user)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
     @action(methods=["POST"], detail=False)
     def reset_password(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.user.set_password(serializer.validated_data["password"])
         serializer.user.save()
-        
+
         return Response(status=status.HTTP_204_NO_CONTENT)

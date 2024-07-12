@@ -75,7 +75,6 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 if DATABASE_URL:
@@ -91,6 +90,15 @@ else:
             "PORT": 5432,
         }
     }
+
+# Storage
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL")
+AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 
 
 # Password validation
