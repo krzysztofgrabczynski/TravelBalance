@@ -1,5 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
+
+
+def _user_directory_path(instance, filename):
+    return f"trip_images/user_{instance.user.id}/{uuid.uuid4()}_{filename}"
 
 
 class Trip(models.Model):
@@ -7,7 +12,10 @@ class Trip(models.Model):
         User, on_delete=models.CASCADE, related_name="trips"
     )
     name = models.CharField(max_length=64, blank=False)
-    image = models.ImageField(upload_to="trip_images/", blank=True)
+    image = models.ImageField(
+        upload_to=_user_directory_path,
+        default="trip_images/default/default_trip_image.png",
+    )
     date = models.DateTimeField(auto_now_add=True)
 
     @property
