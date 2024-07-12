@@ -22,11 +22,12 @@ class ApiService {
 
   Future<User?> fetchWholeUserData() async {
     try {
-      var endpoint = 'trip/get_trip_with_expenses/';
+      var endpoint = 'trip/get_trips_with_expenses/';
       var response = await http.get(Uri.parse('$_baseUrl$endpoint'),
           headers: {'Authorization': '$_baseToken$_token'});
 
       if (response.statusCode == 200) {
+        debugPrint(jsonDecode(response.body).toString());
         return User.fromJson(jsonDecode(response.body));
       } else {
         debugPrint('Request failed with status: ${response.statusCode}');

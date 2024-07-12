@@ -9,6 +9,7 @@ class UserProvider with ChangeNotifier {
 
   Future<void> fetchWholeUserData() async {
     _user = await ApiService().fetchWholeUserData();
+    _user != null ? _user!.printDetails() : "COS TUTAJ JEST NULL KURW";
     notifyListeners();
   }
 
