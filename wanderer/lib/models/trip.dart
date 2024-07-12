@@ -7,6 +7,7 @@ class Trip {
   String? _image;
   double _tripCost;
   List<Expense> _expenses;
+  Map<DateTime, List<Expense>> _expensesByDate = {};
 
   Trip(
       {required int id,
@@ -18,13 +19,15 @@ class Trip {
         _name = name,
         _image = image,
         _tripCost = tripCost,
-        _expenses = expenses;
+        _expenses = expenses,
+        _expensesByDate = _groupExpensesByDate(expenses);
 
   int get id => _id;
   String get name => _name;
   String? get image => _image;
   double get tripCost => _tripCost;
   List<Expense> get expenses => _expenses;
+  Map<DateTime, List<Expense>> get expensesByDate => _expensesByDate;
 
   factory Trip.fromJson(Map<String, dynamic> data) {
     final int id = data['id'];
@@ -40,6 +43,30 @@ class Trip {
         image: image,
         tripCost: tripCost,
         expenses: expenses);
+  }
+
+  static Map<DateTime, List<Expense>> _groupExpensesByDate(
+      List<Expense> expenses) {
+    Map<DateTime, List<Expense>> expensesByDate = {};
+
+    for (var expense in expenses) {
+      DateTime date = DateTime(
+          expense.dateTime.year, expense.dateTime.month, expense.dateTime.day);
+      if (expensesByDate.containsKey(date)) {
+        expensesByDate[date]!.add(expense);
+      } else {
+        expensesByDate[date] = [expense];
+      }
+    }
+    var sortedKeys = expensesByDate.keys.toList()
+      ..sort((a, b) => b.compareTo(a));
+
+    Map<DateTime, List<Expense>> sortedExpensesByDate = {};
+    for (var key in sortedKeys) {
+      sortedExpensesByDate[key] = expensesByDate[key]!;
+    }
+
+    return sortedExpensesByDate;
   }
 
   void printDetails() {

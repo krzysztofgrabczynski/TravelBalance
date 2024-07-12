@@ -27,7 +27,6 @@ class ApiService {
           headers: {'Authorization': '$_baseToken$_token'});
 
       if (response.statusCode == 200) {
-        debugPrint(jsonDecode(response.body).toString());
         return User.fromJson(jsonDecode(response.body));
       } else {
         debugPrint('Request failed with status: ${response.statusCode}');
