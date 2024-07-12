@@ -7,34 +7,34 @@ class Expense {
   String _title;
   double _cost;
   Category _category;
-  String _dateTime;
+  DateTime _dateTime;
 
   Expense({
     required int id,
     required String title,
     required double cost,
     required Category category,
-    required String dateTime,
+    required DateTime dateTime,
   })  : _id = id,
         _title = title,
         _cost = cost,
         _category = category,
         _dateTime = dateTime;
 
-  int? get id => _id;
-  String? get title => _title;
-  double? get cost => _cost;
-  Category? get category => _category;
-  String? get dateTime => _dateTime;
+  int get id => _id;
+  String get title => _title;
+  double get cost => _cost;
+  Category get category => _category;
+  DateTime get dateTime => _dateTime;
 
   factory Expense.fromJson(Map<String, dynamic> data) {
-    //Add validations.
     final int id = data['id'];
     final String title = data['title'];
     final double cost = data['cost'].toDouble();
-    //Might result in problems. Contact Krzysztof abt Categories.
     final Category category = Category.values[data['category']];
-    final String dateTime = data['data'];
+    //Might cause problems.
+    DateTime? dateTime = data['data'];
+    dateTime = dateTime ?? DateTime(0);
     return Expense(
         id: id,
         title: title,

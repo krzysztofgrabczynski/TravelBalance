@@ -56,7 +56,8 @@ class TripComponent extends StatelessWidget {
                     topRight: Radius.circular(12.r),
                   ),
                   child: Image.network(
-                    'https://cdn.dribbble.com/users/476251/screenshots/2619255/attachments/523315/placeholder.png',
+                    trip.image ??
+                        'https://cdn.dribbble.com/users/476251/screenshots/2619255/attachments/523315/placeholder.png',
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),

@@ -18,11 +18,11 @@ class ExpenseComponent extends StatelessWidget {
         color: Colors.grey[300],
         child: ListTile(
           leading: const Icon(
-              Icons.abc_sharp), // Dodaj ikonę jako wiodący element listTile
+              Icons.abc_sharp), 
           title: Text(expense.title ?? ''),
           subtitle: Text('Cost: ${expense.cost!.toStringAsFixed(2)}'),
           trailing: Text(
-              'Category: ${expense.category.toString()}'), // Użyj metody categoryToString do wyświetlenia kategorii
+              'Category: ${expense.category.toString()}'), 
         ),
       ),
     );
