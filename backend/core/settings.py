@@ -101,6 +101,18 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = os.environ.get("AWS_S3_ENDPOINT_URL")
 AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME")
 
+# Swagger
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Token authentication",
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
