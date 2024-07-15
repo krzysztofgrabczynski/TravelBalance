@@ -10,12 +10,13 @@ from django.contrib.auth.models import User
 @require_POST
 @csrf_exempt
 def stripe_webhook(request: WSGIRequest) -> HttpResponse:
+    print("start webhook")
     payload = request.body
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None
     try:
         event = stripe.Webhook.construct_event(
-            payload, sig_header, settings.TEST_STRIPE_ENDPOINT_SECRET
+            payload, sig_header, settings.STRIPE_ENDPOINT_SECRET
         )
     except ValueError:
         return HttpResponse(status=400)
