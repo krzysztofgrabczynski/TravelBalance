@@ -27,7 +27,7 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
         print("payment created")
     if event.type == "payment_intent.succeeded":
         print("payment succeeded")
-        webhook_event_payment_succeeded(payment_intent)
+        event_payment_succeeded(payment_intent)
     if event.type == "payment_intent.payment_failed":
         print("payment failed")
     if event.type == "payment_intent.canceled":
@@ -36,7 +36,8 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
     return HttpResponse(status=200)
 
 
-def webhook_event_payment_succeeded(payment_intent) -> None:
-    print(type(payment_intent))
+def event_payment_succeeded(
+    payment_intent: stripe._payment_intent.PaymentIntent,
+) -> None:
     print(payment_intent)
     # need implement - add user to subscribers group
