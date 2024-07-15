@@ -23,14 +23,20 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
     except stripe.errors.SignatureVerificationError:
         return HttpResponse(status=400)
 
-    session = event.data.object
-    print(session)
+    payment_intent = event.data.object
+    if event.type == "payment_intent.created":
+        print("payment created")
     if event.type == "payment_intent.succeeded":
-        webhook_event_completed(session)
+        print("payment succeeded")
+        webhook_event_payment_succeeded(payment_intent)
+    if event.type == "payment_intent.payment_failed":
+        print("payment failed")
+    if event.type == "payment_intent.canceled":
+        print("payment canceled")
 
     return HttpResponse(status=200)
 
 
-def webhook_event_completed(session: stripe.checkout._session.Session) -> None:
-    if session.mode == "payment" and session.payment_status == "paid":
-        print(session)
+def webhook_event_payment_succeeded(payment_intent) -> None:
+    print(type(payment_intent))
+    print(payment_intent)
