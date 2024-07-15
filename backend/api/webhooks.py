@@ -4,7 +4,6 @@ from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.contrib.auth.models import User
 
 
 @require_POST
@@ -40,3 +39,4 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
 def webhook_event_payment_succeeded(payment_intent) -> None:
     print(type(payment_intent))
     print(payment_intent)
+    # need implement - add user to subscribers group
