@@ -24,7 +24,8 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
         return HttpResponse(status=400)
 
     session = event.data.object
-    if event.type == "checkout.session.completed":
+    print(session)
+    if event.type == "payment_intent.succeeded":
         webhook_event_completed(session)
 
     return HttpResponse(status=200)
