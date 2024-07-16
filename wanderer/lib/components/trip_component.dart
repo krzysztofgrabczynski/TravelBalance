@@ -10,11 +10,11 @@ class TripComponent extends StatelessWidget {
   final Function(BuildContext)? deleteFunction;
 
   const TripComponent({
-    Key? key,
+    super.key,
     required this.trip,
     required this.moveToDetails,
     required this.deleteFunction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,11 @@ class TripComponent extends StatelessWidget {
       padding: EdgeInsets.only(left: 12.0.w, right: 12.0.w, top: 12.0.h),
       child: Slidable(
         endActionPane: ActionPane(
-          motion: StretchMotion(),
+          motion: const StretchMotion(),
           children: [
             SlidableAction(
               onPressed: deleteFunction,
-              backgroundColor: Color(0xFFFE4A49),
+              backgroundColor: const Color(0xFFFE4A49),
               foregroundColor: Colors.white,
               icon: Icons.delete,
               label: 'Delete',

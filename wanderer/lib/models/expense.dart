@@ -27,20 +27,40 @@ class Expense {
   Category get category => _category;
   DateTime get dateTime => _dateTime;
 
+  void setTitle(String name) {
+    _title = name;
+  }
+
   factory Expense.fromJson(Map<String, dynamic> data) {
     final int id = data['id'];
     final String title = data['title'];
     final double cost = data['cost'].toDouble();
     final Category category = Category.values[data['category']];
     //Might cause problems.
-    DateTime? dateTime = data['data'];
-    dateTime = dateTime ?? DateTime(0);
+    DateTime dateTime = DateTime.parse(data['date']);
     return Expense(
         id: id,
         title: title,
         cost: cost,
         category: category,
         dateTime: dateTime);
+  }
+
+  String categoryToString() {
+    switch (_category) {
+      case Category.accommodation:
+        return 'Accommodation';
+      case Category.food:
+        return 'Food';
+      case Category.health:
+        return 'health';
+      case Category.transport:
+        return 'transport';
+      case Category.activities:
+        return 'activities';
+      default:
+        return 'Unknown';
+    }
   }
 
   void printDetails() {

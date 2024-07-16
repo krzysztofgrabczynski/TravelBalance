@@ -54,8 +54,7 @@ class _TripListPageState extends State<TripListPage> {
             return RefreshIndicator(
               color: leadingColor,
               onRefresh: () async {
-                await Provider.of<UserProvider>(context, listen: false)
-                    .fetchWholeUserData();
+                await userProvider.fetchWholeUserData();
               },
               child: ListView.builder(
                 itemCount: userProvider.user!.trips!.length,
