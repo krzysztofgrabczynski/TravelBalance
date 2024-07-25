@@ -12,7 +12,7 @@
       }
     ],
     "env": {
-      "ALLOWED_HOSTS": "@allowed_hosts",
+      "ALLOWED_HOSTS": "@ALLOWED_HOSTS",
       "DEBUG": "@DEBUG",
       "SECRET_KEY": "@SECRET_KEY",
       "AWS_ACCESS_KEY_ID": "@AWS_ACCESS_KEY_ID",
