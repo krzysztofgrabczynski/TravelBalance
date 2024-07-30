@@ -2,6 +2,8 @@ import stripe
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
@@ -23,9 +25,7 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
         return HttpResponse(status=400)
 
     payment_intent = event.data.object
-    print("1: ", event.data.object)
-    print("2: ", event.data)
-    print("3: ", event)
+    print("User ID: ", payment_intent["metadata"]["user_id"])
     if event.type == "payment_intent.created":
         print("payment created")
     if event.type == "payment_intent.succeeded":
@@ -42,5 +42,11 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
 def event_payment_succeeded(
     payment_intent: stripe._payment_intent.PaymentIntent,
 ) -> None:
-    print(payment_intent)
+    user_id = payment_intent["metadata"]["user_id"]
+    try:
+        User.objects.get(pk=user_id)
+    except (ObjectDoesNotExist, MultipleObjectsReturned) as e:
+        print("event_payment_succeeded - user not found")
+    finally:
+        print("User ID: ", user_id)
     # need implement - add user to subscribers group
