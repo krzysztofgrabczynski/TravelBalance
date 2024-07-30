@@ -23,6 +23,9 @@ def stripe_webhook(request: WSGIRequest) -> HttpResponse:
         return HttpResponse(status=400)
 
     payment_intent = event.data.object
+    print("1: ", event.data.object)
+    print("2: ", event.data)
+    print("3: ", event)
     if event.type == "payment_intent.created":
         print("payment created")
     if event.type == "payment_intent.succeeded":
