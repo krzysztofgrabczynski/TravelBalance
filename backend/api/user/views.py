@@ -76,6 +76,7 @@ class UserViewSet(
 
     def perform_create(self, serializer):
         user = serializer.save()
+        self._set_user_inactive(user)
         context = {
             "user": user,
             "token_generator": self.token_generator,
@@ -83,6 +84,14 @@ class UserViewSet(
         }
         ActivationEmail(self.request, context).send()
         return user
+
+    def _set_user_inactive(self, user: User) -> None:
+        """
+        Setting user account as inactive after registration (admin accounts and authenticated by google not included).
+        """
+        if not (user.is_staff or user.is_superuser):
+            user.is_active = False
+            user.save()
 
     @action(
         methods=["get"],
