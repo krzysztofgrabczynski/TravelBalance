@@ -26,10 +26,17 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "storages",
+
+    #apps
     "drf_yasg",
     "api.user",
     "api.trip",
     "api.expense",
+
+    #social_auth
+    "oauth2_provider",
+    "social_django",
+    "drf_social_oauth2",
 ]
 
 MIDDLEWARE = [
@@ -45,14 +52,24 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "rest_framework.authentication.TokenAuthentication",
     ],
 }
 
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.google.GoogleOAuth2",
+    "drf_social_oauth2.backends.DjangoOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    "https://www.googleapis.com/auth/userinfo.email",
+]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://wanderer-test-fe529f1fdf47.herokuapp.com",
 ]
-
 
 ROOT_URLCONF = "core.urls"
 
@@ -67,6 +84,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -168,3 +187,7 @@ ACTIVATION_EMAIL_TEMPLATE = "email_activation.html"
 # Forgot password settings
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
 FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
+
+# Google authentication 
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
