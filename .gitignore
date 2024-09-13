@@ -8,6 +8,7 @@ Wanderer/*.user
 *.log
 *.pot
 *.pyc
+*.pem
 __pycache__
 db.sqlite3
 media
