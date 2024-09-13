@@ -26,14 +26,12 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "storages",
-
-    #apps
+    # apps
     "drf_yasg",
     "api.user",
     "api.trip",
     "api.expense",
-
-    #social_auth
+    # social_auth
     "oauth2_provider",
     "social_django",
     "drf_social_oauth2",
@@ -188,6 +186,6 @@ ACTIVATION_EMAIL_TEMPLATE = "email_activation.html"
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
 FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
 
-# Google authentication 
+# Google authentication
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
