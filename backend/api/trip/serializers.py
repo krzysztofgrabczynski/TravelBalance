@@ -1,13 +1,33 @@
 from rest_framework import serializers
 
-from api.trip.models import Trip
+from api.trip.models import Trip, Country
 from api.expense.serializers import ExpenseSerializerWithoutDetails
 
 
-class TripBaseSerializer(serializers.Serializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ["id", "name"]
+
+
+class TripReadSerializer(serializers.ModelSerializer):
     user_detail = serializers.SerializerMethodField()
     trip_cost = serializers.SerializerMethodField()
+    expenses = ExpenseSerializerWithoutDetails(many=True)
+    countries = CountrySerializer(many=True)
+
+    class Meta:
+        model = Trip
+        fields = [
+            "id",
+            "user_detail",
+            "name",
+            "image",
+            "countries",
+            "trip_cost",
+            "expenses",
+        ]
+        extra_kwargs = {"id": {"read_only": True}}
 
     def get_user_detail(self, obj: Trip) -> dict:
         return {"user_id": obj.user.id, "username": obj.user.username}
@@ -16,27 +36,9 @@ class TripBaseSerializer(serializers.Serializer):
         return obj.trip_cost
 
 
-class TripSerializer(TripBaseSerializer, serializers.ModelSerializer):
-    class Meta:
-        model = Trip
-        fields = ["id", "user", "user_detail", "name", "image", "trip_cost"]
-        extra_kwargs = {"id": {"read_only": True}}
-
-
-class TripWithExpensesSerializer(
-    TripBaseSerializer, serializers.ModelSerializer
-):
-    expenses = ExpenseSerializerWithoutDetails(many=True)
+class TripWriteSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Trip
-        fields = [
-            "id",
-            "user",
-            "user_detail",
-            "name",
-            "image",
-            "trip_cost",
-            "expenses",
-        ]
-        extra_kwargs = {"id": {"read_only": True}}
+        fields = ["user", "name", "image", "countries"]
