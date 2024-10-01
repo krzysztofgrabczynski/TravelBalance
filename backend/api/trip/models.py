@@ -3,6 +3,16 @@ from django.contrib.auth.models import User
 import uuid
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Countries"
+
+
 def _user_directory_path(instance, filename):
     return f"trip_images/user_{instance.user.id}/{uuid.uuid4()}_{filename}"
 
@@ -16,6 +26,7 @@ class Trip(models.Model):
         upload_to=_user_directory_path,
         default="trip_images/default/default_trip_image.png",
     )
+    countries = models.ManyToManyField(Country, blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
     @property
