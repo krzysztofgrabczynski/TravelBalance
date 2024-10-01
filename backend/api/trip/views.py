@@ -21,7 +21,11 @@ class TripViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = super().get_queryset()
         if self.action == "list":
-            return queryset.filter(user=self.request.user)
+            return (
+                queryset.filter(user=self.request.user)
+                .select_related("user")
+                .prefetch_related("countries")
+            )
         return queryset
 
     def get_serializer_class(self, *args, **kwargs):
@@ -35,21 +39,28 @@ class TripViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
     def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
+        user_trips = self.get_queryset()
 
-        user_trips = Trip.objects.filter(user=request.user)
         total_trips_amount = user_trips.count()
-        visited_countries_amount = sum(
-            [t.countries.count() for t in user_trips]
+        visited_countries_amount = self._get_visited_countries_amount(
+            user_trips
         )
-        spendings = sum([c.trip_cost for c in user_trips])
+        spendings = (
+            user_trips.aggregate(total=Sum("expenses__cost"))["total"] or 0
+        )
+
         extra_content = {
             "total_trips_amount": total_trips_amount,
             "visited_countries_amount": visited_countries_amount,
             "spendings": spendings,
         }
 
+        response = super().list(request, *args, **kwargs)
         return Response({"statistics": extra_content, "trips": response.data})
+
+    def _get_visited_countries_amount(self, trips: Trip) -> int:
+        user_trip_countries = {c for t in trips for c in t.countries.all()}
+        return len(user_trip_countries)
 
     @action(methods=["GET"], detail=True)
     def get_cost_per_category(self, request, *args, **kwargs):
