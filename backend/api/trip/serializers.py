@@ -33,7 +33,14 @@ class TripReadSerializer(serializers.ModelSerializer):
         return {"user_id": obj.user.id, "username": obj.user.username}
 
     def get_trip_cost(self, obj: Trip) -> float | int:
-        return obj.trip_cost
+        try:
+            return (
+                obj.total_cost
+            )  # total cost from `TripViewSet.get_queryset` annotate for list action
+        except:
+            return (
+                obj.trip_cost
+            )  # trip cost from Trip model property `Trip.trip_cost` for retrieve action
 
 
 class TripWriteSerializer(serializers.ModelSerializer):
