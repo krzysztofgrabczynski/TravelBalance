@@ -43,6 +43,9 @@ class TripViewSet(viewsets.ModelViewSet):
         return self.serializer_class
 
     def list(self, request, *args, **kwargs):
+        from api.load_countries import populate_countries
+
+        populate_countries()
         user_trips = self.get_queryset()
 
         total_trips_amount = user_trips.count()
