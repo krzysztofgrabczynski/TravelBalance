@@ -2,7 +2,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
-from django.db.models import Sum
+from django.db.models import Sum, Value
+from django.db.models.functions import Coalesce
 from django.utils.decorators import method_decorator
 
 from api.trip.models import Trip
@@ -24,7 +25,10 @@ class TripViewSet(viewsets.ModelViewSet):
             return (
                 queryset.filter(user=self.request.user)
                 .select_related("user")
-                .prefetch_related("countries")
+                .prefetch_related("countries", "expenses")
+                .annotate(
+                    total_cost=Coalesce(Sum("expenses__cost"), Value(0.0))
+                )
             )
         return queryset
 
@@ -46,7 +50,7 @@ class TripViewSet(viewsets.ModelViewSet):
             user_trips
         )
         spendings = (
-            user_trips.aggregate(total=Sum("expenses__cost"))["total"] or 0
+            user_trips.aggregate(total=Sum("expenses__cost"))["total"] or 0.0
         )
 
         extra_content = {
