@@ -12,6 +12,7 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class TripReadSerializer(serializers.ModelSerializer):
     user_detail = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
     trip_cost = serializers.SerializerMethodField()
     expenses = ExpenseSerializerWithoutDetails(many=True)
     countries = CountrySerializer(many=True)
@@ -31,6 +32,9 @@ class TripReadSerializer(serializers.ModelSerializer):
 
     def get_user_detail(self, obj: Trip) -> dict:
         return {"user_id": obj.user.id, "username": obj.user.username}
+
+    def get_image(self, obj: Trip) -> str:
+        return obj.image.image.url
 
     def get_trip_cost(self, obj: Trip) -> float | int:
         try:
