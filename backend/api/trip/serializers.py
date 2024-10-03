@@ -34,7 +34,10 @@ class TripReadSerializer(serializers.ModelSerializer):
         return {"user_id": obj.user.id, "username": obj.user.username}
 
     def get_image(self, obj: Trip) -> str:
-        return obj.image.image.url
+        try:
+            return obj.image.image.url
+        except:
+            return None
 
     def get_trip_cost(self, obj: Trip) -> float | int:
         try:
