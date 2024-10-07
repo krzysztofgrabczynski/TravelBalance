@@ -55,4 +55,5 @@ class TripWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ["user", "name", "image", "countries"]
+        fields = ["id", "user", "name", "image", "countries"]
+        extra_kwargs = {"id": {"read_only": True}}
