@@ -7,12 +7,14 @@ from api.trip.models import Trip
 
 class Expense(models.Model):
     class ExpenseCategory(models.IntegerChoices):
-        ACCOMODATION = 0
-        FOOD = 1
-        HEALTH = 2
-        TRANSPORT = 3
-        ACTIVITIES = 4
-        OTHERS = 5
+        ACTIVITIES = 0
+        ACCOMODATION = 1
+        FOOD = 2
+        HEALTH = 3
+        SHOPPING = 4
+        TRANSPORT = 5
+        SOUVENIRS = 6
+        OTHERS = 7
 
     trip = models.ForeignKey(
         Trip, on_delete=models.CASCADE, related_name="expenses"
