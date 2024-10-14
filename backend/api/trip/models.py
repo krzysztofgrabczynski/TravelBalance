@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 import uuid
 
@@ -17,24 +18,13 @@ class Country(models.Model):
         verbose_name_plural = "Countries"
 
 
-class Image(models.Model):
-    image = models.ImageField(upload_to="trip_images/")
-    name = models.CharField(max_length=64)
-
-    def __str__(self) -> str:
-        return self.name
-
-    class Meta:
-        ordering = ["id"]
-
-
 class Trip(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="trips"
     )
     name = models.CharField(max_length=64, blank=False)
-    image = models.ForeignKey(
-        Image, on_delete=models.SET_NULL, null=True, blank=True
+    image_id = models.SmallIntegerField(
+        default=0, validators=[MinValueValidator(0), MaxValueValidator(9)]
     )
     countries = models.ManyToManyField(Country, blank=True)
     date = models.DateTimeField(auto_now_add=True)

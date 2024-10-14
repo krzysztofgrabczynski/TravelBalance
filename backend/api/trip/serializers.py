@@ -12,7 +12,6 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class TripReadSerializer(serializers.ModelSerializer):
     user_detail = serializers.SerializerMethodField()
-    image = serializers.SerializerMethodField()
     trip_cost = serializers.SerializerMethodField()
     expenses = ExpenseSerializerWithoutDetails(many=True)
     countries = CountrySerializer(many=True)
@@ -23,7 +22,7 @@ class TripReadSerializer(serializers.ModelSerializer):
             "id",
             "user_detail",
             "name",
-            "image",
+            "image_id",
             "countries",
             "trip_cost",
             "expenses",
@@ -32,12 +31,6 @@ class TripReadSerializer(serializers.ModelSerializer):
 
     def get_user_detail(self, obj: Trip) -> dict:
         return {"user_id": obj.user.id, "username": obj.user.username}
-
-    def get_image(self, obj: Trip) -> str:
-        try:
-            return obj.image.image.url
-        except:
-            return None
 
     def get_trip_cost(self, obj: Trip) -> float | int:
         try:
@@ -55,5 +48,5 @@ class TripWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ["id", "user", "name", "image", "countries"]
+        fields = ["id", "user", "name", "image_id", "countries"]
         extra_kwargs = {"id": {"read_only": True}}
