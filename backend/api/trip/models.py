@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.utils import timezone
 import uuid
 
 
@@ -27,7 +28,7 @@ class Trip(models.Model):
         default=0, validators=[MinValueValidator(0), MaxValueValidator(9)]
     )
     countries = models.ManyToManyField(Country, blank=True)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
 
     @property
     def trip_cost(self) -> int:

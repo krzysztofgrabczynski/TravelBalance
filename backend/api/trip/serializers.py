@@ -24,6 +24,7 @@ class TripReadSerializer(serializers.ModelSerializer):
             "name",
             "image_id",
             "countries",
+            "date",
             "trip_cost",
             "expenses",
         ]
@@ -48,5 +49,5 @@ class TripWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ["id", "user", "name", "image_id", "countries"]
+        fields = ["id", "user", "name", "image_id", "countries", "date"]
         extra_kwargs = {"id": {"read_only": True}}
