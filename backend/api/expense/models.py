@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from api.trip.models import Trip
 
@@ -22,7 +23,7 @@ class Expense(models.Model):
     title = models.CharField(max_length=32)
     cost = models.FloatField(validators=[MinValueValidator(0)])
     category = models.IntegerField(blank=True, choices=ExpenseCategory.choices)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
 
     @property
     def user(self) -> User:
