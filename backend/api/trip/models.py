@@ -23,7 +23,7 @@ class Trip(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="trips"
     )
-    name = models.CharField(max_length=64, blank=False)
+    name = models.CharField(max_length=32, blank=False)
     image_id = models.SmallIntegerField(
         default=0, validators=[MinValueValidator(0), MaxValueValidator(9)]
     )
