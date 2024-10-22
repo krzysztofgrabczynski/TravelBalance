@@ -20,7 +20,7 @@ class Expense(models.Model):
     trip = models.ForeignKey(
         Trip, on_delete=models.CASCADE, related_name="expenses"
     )
-    title = models.CharField(max_length=32)
+    title = models.CharField(max_length=32, default="")
     cost = models.FloatField(validators=[MinValueValidator(0.01)])
     category = models.IntegerField(blank=True, choices=ExpenseCategory.choices)
     date = models.DateTimeField(default=timezone.now)
