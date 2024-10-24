@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "storages",
+    "drf_recaptcha",
     # apps
     "drf_yasg",
     "api.user",
@@ -65,6 +66,15 @@ REST_FRAMEWORK = {
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "rest_framework.authentication.TokenAuthentication",
     ],
+    # "DEFAULT_THROTTLE_CLASSES": [
+    #     "rest_framework.throttling.AnonRateThrottle",
+    #     "rest_framework.throttling.UserRateThrottle",
+    # ],
+    # "DEFAULT_THROTTLE_RATES": {
+    #     "anon": "500/minute",
+    #     "user": "1000/minute",
+    #     "loginAttempts": "3/hr",
+    # },
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -98,7 +108,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "core.wsgi.application"
-
 
 # Database
 
@@ -143,6 +152,12 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+# ReCaptcha
+
+DRF_RECAPTCHA_SECRET_KEY = os.environ.get("DRF_RECAPTCHA_SECRET_KEY")
+DRF_RECAPTCHA_DEFAULT_V3_SCORE = 0.3
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
