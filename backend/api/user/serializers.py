@@ -44,7 +44,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(
         required=True, style={"input_type": "password"}
     )
-    recaptcha = ReCaptchaV3Field(action="login")
+    recaptcha = ReCaptchaV3Field(action="LOGIN")
 
     default_error_messages = {
         "invalid_credentials": "Invalid credentials.",
@@ -98,7 +98,7 @@ class UserCreateSerializer(
     PasswordRetypeSerializer, serializers.ModelSerializer
 ):
     email = serializers.EmailField(required=True)
-    recaptcha = ReCaptchaV3Field(action="register")
+    recaptcha = ReCaptchaV3Field(action="REGISTER")
 
     default_error_messages = {
         "unique_email": "User with that email already exists",
