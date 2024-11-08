@@ -68,6 +68,8 @@ class UserViewSet(
             return serializers.ForgotPasswordConfirmSerializer
         elif self.action == "reset_password":
             return serializers.PasswordResetSerializer
+        elif self.action == "feedback":
+            return serializers.FeedbackFromUserSerializer
 
         return self.serializer_class
 
@@ -144,3 +146,11 @@ class UserViewSet(
         serializer.user.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=["POST"], detail=False)
+    def feedback(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_201_CREATED)
