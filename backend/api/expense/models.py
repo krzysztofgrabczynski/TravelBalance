@@ -28,6 +28,7 @@ class Expense(models.Model):
     cost = models.FloatField(validators=[MinValueValidator(0.01)])
     category = models.IntegerField(blank=True, choices=ExpenseCategory.choices)
     date = models.DateTimeField(default=timezone.now)
+    currency = models.CharField(max_length=3)
 
     @property
     def user(self) -> MyUser:

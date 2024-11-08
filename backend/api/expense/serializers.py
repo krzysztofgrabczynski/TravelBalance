@@ -16,6 +16,7 @@ class ExpenseSerializer(serializers.ModelSerializer):
             "cost",
             "category",
             "date",
+            "currency",
             "trip_detail",
             "user_detail",
         ]
@@ -34,5 +35,5 @@ class ExpenseSerializer(serializers.ModelSerializer):
 class ExpenseSerializerWithoutDetails(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = ["id", "title", "cost", "category", "date"]
+        fields = ["id", "title", "cost", "category", "date", "currency"]
         extra_kwargs = {"id": {"read_only": True}}
