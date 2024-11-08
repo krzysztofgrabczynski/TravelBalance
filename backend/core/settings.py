@@ -87,6 +87,10 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     "https://www.googleapis.com/auth/userinfo.email",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://travelbalance.pl",
+]
+
 ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
