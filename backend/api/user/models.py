@@ -17,3 +17,21 @@ class ForgotPasswordToken(models.Model):
         if not self.token:
             self.token = "".join([str(randint(0, 9)) for _ in range(5)])
         return super().save(*args, **kwargs)
+
+
+class FeedbackFromUser(models.Model):
+    class FeedbackType(models.TextChoices):
+        ISSUE = "Issue"
+        SUGGESTION = "Suggestion"
+        OTHER = "Other"
+
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    message = models.TextField(max_length=200, blank=False)
+    type = models.CharField(
+        max_length=10, choices=FeedbackType.choices, blank=False
+    )
+    created_date = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"User: {self.user.username} - {self.type}"
