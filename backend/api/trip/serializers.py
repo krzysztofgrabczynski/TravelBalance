@@ -31,7 +31,7 @@ class TripReadSerializer(serializers.ModelSerializer):
         extra_kwargs = {"id": {"read_only": True}}
 
     def get_user_detail(self, obj: Trip) -> dict:
-        return {"user_id": obj.user.id, "username": obj.user.username}
+        return {"user_id": obj.user.id, "username": obj.user.username, "base_currency": obj.user.base_currency}
 
     def get_trip_cost(self, obj: Trip) -> float | int:
         try:

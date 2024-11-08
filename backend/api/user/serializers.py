@@ -60,11 +60,11 @@ class LoginSerializer(serializers.Serializer):
         password = validated_data["password"]
 
         try:
-            user = User.objects.get(username=username)
+            self.user = User.objects.get(username=username)
 
-            if user.check_password(password):
-                if user.is_active:
-                    self.token = self._create_user_auth_token(user)
+            if self.user.check_password(password):
+                if self.user.is_active:
+                    self.token = self._create_user_auth_token(self.user)
                     return validated_data
 
                 else:

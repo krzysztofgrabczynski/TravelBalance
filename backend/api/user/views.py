@@ -24,9 +24,10 @@ class LoginView(views.APIView):
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
+        user_id = serializer.user.id
 
         return Response(
-            {"token": serializer.token.key},
+            {"token": serializer.token.key, "user_id": user_id},
             status=status.HTTP_200_OK,
         )
 
