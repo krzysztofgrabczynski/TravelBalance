@@ -3,13 +3,17 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import permissions
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from api.user.models import MyUser
 from django.http import HttpRequest
 from django.contrib.auth.tokens import default_token_generator
 
 from api.user import serializers
 from api.user.email import ActivationEmail, ForgotPasswordEmail
 from api.permissions import ObjectOwnerPermission
+
+
+User = get_user_model()
 
 
 class LoginView(views.APIView):
@@ -89,7 +93,7 @@ class UserViewSet(
         ActivationEmail(self.request, context).send()
         return user
 
-    def _set_user_inactive(self, user: User) -> None:
+    def _set_user_inactive(self, user: MyUser) -> None:
         """
         Setting user account as inactive after registration (admin accounts and authenticated by google not included).
         """

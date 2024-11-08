@@ -1,9 +1,13 @@
 from functools import wraps
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from api.user.models import MyUser
 from rest_framework.exceptions import PermissionDenied
 
 
-def check_if_subscriber(user: User) -> bool:
+User = get_user_model()
+
+
+def check_if_subscriber(user: MyUser) -> bool:
     return user.groups.filter(name="subscriber").exists()
 
 

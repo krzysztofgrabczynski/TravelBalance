@@ -48,6 +48,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# Custome user model
+AUTH_USER_MODEL = "users.MyUser"
+
 # Security
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True

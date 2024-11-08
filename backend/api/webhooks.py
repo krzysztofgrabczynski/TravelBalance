@@ -2,10 +2,13 @@ import stripe
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+
+
+User = get_user_model()
 
 
 @require_POST

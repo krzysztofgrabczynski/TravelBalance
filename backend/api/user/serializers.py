@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from api.user.models import MyUser
 from django.contrib.auth.password_validation import validate_password
 from django.utils.http import urlsafe_base64_decode
 from django.core.exceptions import (
@@ -11,6 +12,9 @@ from django.core.exceptions import (
 )
 
 from api.user.models import ForgotPasswordToken, FeedbackFromUser
+
+
+User = get_user_model()
 
 
 class PasswordRetypeSerializer(serializers.Serializer):
@@ -78,7 +82,7 @@ class LoginSerializer(serializers.Serializer):
                 self.error_messages[key_error], code=key_error
             )
 
-    def _create_user_auth_token(self, user: User) -> str:
+    def _create_user_auth_token(self, user: MyUser) -> str:
         token, _ = Token.objects.get_or_create(user=user)
         return token
 
@@ -148,7 +152,7 @@ class AccountActivationSerializer(serializers.Serializer):
             self.error_messages[key_error], code=key_error
         )
 
-    def get_user(self, uidb64: str) -> User | None:
+    def get_user(self, uidb64: str) -> MyUser | None:
         try:
             uidb64 = urlsafe_base64_decode(uidb64).decode()
             user = User.objects.get(pk=uidb64)
@@ -229,7 +233,7 @@ class EmailAndTokenSerializer(serializers.Serializer):
 
         return attrs
 
-    def delete_user_tokens(self, user: User) -> None:
+    def delete_user_tokens(self, user: MyUser) -> None:
         ForgotPasswordToken.objects.filter(user=user).delete()
 
 

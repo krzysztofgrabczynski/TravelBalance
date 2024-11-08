@@ -1,9 +1,13 @@
 from django.db import models
 from django.core.validators import MinValueValidator
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from api.user.models import MyUser
 from django.utils import timezone
 
 from api.trip.models import Trip
+
+
+User = get_user_model()
 
 
 class Expense(models.Model):
@@ -26,7 +30,7 @@ class Expense(models.Model):
     date = models.DateTimeField(default=timezone.now)
 
     @property
-    def user(self) -> User:
+    def user(self) -> MyUser:
         return self.trip.user
 
     def __str__(self) -> str:
