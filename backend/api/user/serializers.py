@@ -9,9 +9,10 @@ from django.core.exceptions import (
     ImproperlyConfigured,
     PermissionDenied,
 )
+
 from drf_recaptcha.fields import ReCaptchaV3Field
 
-from api.user.models import ForgotPasswordToken
+from api.user.models import ForgotPasswordToken, FeedbackFromUser
 
 
 class PasswordRetypeSerializer(serializers.Serializer):
@@ -241,3 +242,11 @@ class ForgotPasswordConfirmSerializer(
     EmailAndTokenSerializer, PasswordRetypeSerializer
 ):
     pass
+
+
+class FeedbackFromUserSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = FeedbackFromUser
+        fields = ("user", "message", "type")
