@@ -10,8 +10,6 @@ from django.core.exceptions import (
     PermissionDenied,
 )
 
-from drf_recaptcha.fields import ReCaptchaV3Field
-
 from api.user.models import ForgotPasswordToken, FeedbackFromUser
 
 
@@ -45,7 +43,6 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(
         required=True, style={"input_type": "password"}
     )
-    recaptcha = ReCaptchaV3Field(action="login")
 
     default_error_messages = {
         "invalid_credentials": "Invalid credentials.",
@@ -99,7 +96,6 @@ class UserCreateSerializer(
     PasswordRetypeSerializer, serializers.ModelSerializer
 ):
     email = serializers.EmailField(required=True)
-    recaptcha = ReCaptchaV3Field(action="signup")
 
     default_error_messages = {
         "unique_email": "User with that email already exists",
@@ -107,7 +103,7 @@ class UserCreateSerializer(
 
     class Meta:
         model = User
-        fields = ("username", "email", "password", "password2", "recaptcha")
+        fields = ("username", "email", "password", "password2")
 
     def validate_email(self, email: str) -> str:
         if User.objects.filter(email=email).exists():
@@ -119,7 +115,6 @@ class UserCreateSerializer(
         return email
 
     def create(self, validated_data):
-        validated_data.pop("recaptcha", None)
         user = User.objects.create_user(**validated_data)
 
         return user
