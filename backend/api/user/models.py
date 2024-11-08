@@ -7,6 +7,7 @@ from uuid import uuid4
 
 class MyUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    base_currency = models.CharField(max_length=3, default="USD")
 
 
 User = get_user_model()

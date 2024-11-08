@@ -90,7 +90,7 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ("username", "email", "base_currency")
         extra_kwargs = {
             "email": {"validators": [UniqueValidator(User.objects.all())]},
         }
