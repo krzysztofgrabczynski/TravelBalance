@@ -161,7 +161,7 @@ class AccountActivationSerializer(serializers.Serializer):
         return user
 
 
-class PasswordResetSerializer(PasswordRetypeSerializer):
+class PasswordChangeSerializer(PasswordRetypeSerializer):
     old_password = serializers.CharField(
         required=True,
         write_only=True,
