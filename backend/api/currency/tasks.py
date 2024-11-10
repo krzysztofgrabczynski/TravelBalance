@@ -1,6 +1,6 @@
 from celery import shared_task
 
-from currency.services import save_currencies_rates
+from api.currency.services import save_currencies_rates
 
 
 @shared_task(name="save_currencies_rates_task")
