@@ -222,10 +222,6 @@ FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
 
-# Google authentication
-# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
-# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
-
 # LOGGING = {
 #     "version": 1,
 #     "disable_existing_loggers": False,
