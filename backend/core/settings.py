@@ -218,6 +218,10 @@ ACTIVATION_EMAIL_TEMPLATE = "email_activation.html"
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
 FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
 
+# Celery and Redis
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+
 # Google authentication
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")
