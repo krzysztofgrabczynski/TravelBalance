@@ -32,10 +32,13 @@ INSTALLED_APPS = [
     "api.user",
     "api.trip",
     "api.expense",
+    "api.currency",
     # social_auth
     "oauth2_provider",
     "social_django",
     "drf_social_oauth2",
+    # scheduling
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
