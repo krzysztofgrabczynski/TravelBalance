@@ -27,7 +27,7 @@ class LoginView(views.APIView):
         user_id = serializer.user.id
 
         return Response(
-            {"token": serializer.token.key, "user_id": user_id},
+            {"token": serializer.token.key},
             status=status.HTTP_200_OK,
         )
 
@@ -71,8 +71,8 @@ class UserViewSet(
             return serializers.EmailAndTokenSerializer
         elif self.action == "forgot_password_confirm":
             return serializers.ForgotPasswordConfirmSerializer
-        elif self.action == "reset_password":
-            return serializers.PasswordResetSerializer
+        elif self.action == "change_password":
+            return serializers.PasswordChangeSerializer
         elif self.action == "feedback":
             return serializers.FeedbackFromUserSerializer
 
@@ -82,6 +82,11 @@ class UserViewSet(
         if self.action in self.SAFE_ACTIONS:
             return [permissions.AllowAny()]
         return super().get_permissions()
+
+    def get_object(self):
+        if self.action == "me":
+            return self.request.user
+        return super().get_object()
 
     def perform_create(self, serializer):
         user = serializer.save()
@@ -101,6 +106,15 @@ class UserViewSet(
         if not (user.is_staff or user.is_superuser):
             user.is_active = False
             user.save()
+
+    @action(["get", "put", "patch"], detail=False)
+    def me(self, request, *args, **kwargs):
+        if request.method == "GET":
+            return self.retrieve(request, *args, **kwargs)
+        elif request.method == "PUT":
+            return self.update(request, *args, **kwargs)
+        elif request.method == "PATCH":
+            return self.partial_update(request, *args, **kwargs)
 
     @action(
         methods=["get"],
@@ -144,7 +158,7 @@ class UserViewSet(
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=["POST"], detail=False)
-    def reset_password(self, request, *args, **kwargs):
+    def change_password(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.user.set_password(serializer.validated_data["password"])
