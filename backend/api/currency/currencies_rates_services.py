@@ -1,14 +1,15 @@
 import requests
 from dotenv import load_dotenv
-
 import os
+from datetime import date, timedelta
+
 from api.currency.models import CurrencyRates
 
 
 load_dotenv()
 
 
-def save_currencies_rates():
+def save_currencies_rates() -> None:
     url = os.environ.get("CURRENCY_RATES_API_URL")
     headers = {"apikey": os.environ.get("CURRENCY_RATES_API_KEY")}
     response = requests.request("GET", url, headers=headers)
@@ -20,3 +21,13 @@ def save_currencies_rates():
     except:
         pass
         # not implemented
+
+
+def currency_rates_per_date(date: date) -> CurrencyRates:
+    for _ in range(2):
+        try:
+            return CurrencyRates.objects.get(date=date)
+        except:
+            date -= timedelta(days=1)
+
+    return 0  # change to default rates
