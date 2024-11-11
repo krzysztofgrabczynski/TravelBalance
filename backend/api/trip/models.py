@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 import uuid
 
+from api.currency.models import CurrencyRates
+
 
 User = get_user_model()
 
@@ -32,6 +34,10 @@ class Trip(models.Model):
     )
     countries = models.ManyToManyField(Country, blank=True)
     date = models.DateTimeField(default=timezone.now)
+    created_at = models.DateField(auto_now_add=True)
+    currencies_rates = models.ForeignKey(
+        CurrencyRates, on_delete=models.DO_NOTHING
+    )
 
     @property
     def trip_cost(self) -> int:
