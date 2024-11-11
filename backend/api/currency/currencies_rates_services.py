@@ -30,4 +30,5 @@ def currency_rates_per_date(date: date) -> CurrencyRates:
         except:
             date -= timedelta(days=1)
 
-    return 0  # change to default rates
+    default_rates = CurrencyRates.objects.first()
+    return default_rates
