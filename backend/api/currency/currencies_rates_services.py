@@ -23,7 +23,7 @@ def save_currencies_rates() -> None:
         # not implemented
 
 
-def currency_rates_per_date(date: date) -> CurrencyRates:
+def get_currency_rates_per_date(date: date) -> CurrencyRates:
     for _ in range(2):
         try:
             return CurrencyRates.objects.get(date=date)
@@ -32,3 +32,11 @@ def currency_rates_per_date(date: date) -> CurrencyRates:
 
     default_rates = CurrencyRates.objects.first()
     return default_rates
+
+
+def convert_currency(
+    amount_source_currency: float,
+    rate_source_to_USD: float,
+    rate_targed_to_USD: float,
+) -> float:
+    return (amount_source_currency / rate_source_to_USD) * rate_targed_to_USD
