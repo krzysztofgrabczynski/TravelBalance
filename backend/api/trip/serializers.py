@@ -3,7 +3,7 @@ from datetime import date as datetime_date
 
 from api.trip.models import Trip, Country
 from api.expense.serializers import ExpenseSerializerWithoutDetails
-from api.currency.currencies_rates_services import currency_rates_per_date
+from api.currency.currencies_rates_services import get_currency_rates_per_date
 from api.currency.serializers import CurrencyRatesSerializer
 
 
@@ -63,6 +63,6 @@ class TripWriteSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         date = datetime_date.today()
-        currencies_rates = currency_rates_per_date(date)
+        currencies_rates = get_currency_rates_per_date(date)
         validated_data["currencies_rates"] = currencies_rates
         return super().create(validated_data)
