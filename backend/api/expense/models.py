@@ -26,7 +26,6 @@ class Expense(models.Model):
     )
     title = models.CharField(max_length=32, default="")
     cost = models.FloatField(validators=[MinValueValidator(0.01)])
-    cost_per_base_currency = models.FloatField()
     category = models.IntegerField(blank=True, choices=ExpenseCategory.choices)
     date = models.DateTimeField(default=timezone.now)
     currency = models.CharField(max_length=3)

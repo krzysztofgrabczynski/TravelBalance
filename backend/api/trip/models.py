@@ -41,9 +41,7 @@ class Trip(models.Model):
 
     @property
     def trip_cost(self) -> int:
-        aggregate_dict = self.expenses.aggregate(
-            total_cost=models.Sum("cost_per_base_currency")
-        )
+        aggregate_dict = self.expenses.aggregate(total_cost=models.Sum("cost"))
         if aggregate_dict.get("total_cost"):
             return round(aggregate_dict.get("total_cost"), 2)
         return 0

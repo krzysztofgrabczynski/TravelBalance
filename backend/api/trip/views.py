@@ -27,9 +27,7 @@ class TripViewSet(viewsets.ModelViewSet):
                 .select_related("user")
                 .prefetch_related("countries", "expenses")
                 .annotate(
-                    total_cost=Coalesce(
-                        Sum("expenses__cost_per_base_currency"), Value(0.0)
-                    )
+                    total_cost=Coalesce(Sum("expenses__cost"), Value(0.0))
                 )
             )
         return queryset
