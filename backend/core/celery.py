@@ -15,7 +15,6 @@ app.autodiscover_tasks(["api.currency"])
 app.conf.beat_schedule = {
     "fetch-currencies-rates-at-midnight": {
         "task": "save_currencies_rates_task",
-        "schedule": 5.0,  # development only
-        # "schedule": crontab(hour=0, minute=0),
+        "schedule": crontab(hour=23, minute=0),
     }
 }
