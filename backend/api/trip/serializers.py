@@ -15,7 +15,6 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class TripReadSerializer(serializers.ModelSerializer):
     user_detail = serializers.SerializerMethodField()
-    trip_cost = serializers.SerializerMethodField()
     expenses = ExpenseSerializerWithoutDetails(many=True)
     countries = CountrySerializer(many=True)
     currencies_rates = CurrencyRatesSerializer()
@@ -29,7 +28,6 @@ class TripReadSerializer(serializers.ModelSerializer):
             "image_id",
             "countries",
             "date",
-            "trip_cost",
             "expenses",
             "currencies_rates",
         ]
@@ -41,16 +39,6 @@ class TripReadSerializer(serializers.ModelSerializer):
             "username": obj.user.username,
             "base_currency": obj.user.base_currency,
         }
-
-    def get_trip_cost(self, obj: Trip) -> float | int:
-        try:
-            return (
-                obj.total_cost
-            )  # total cost from `TripViewSet.get_queryset` annotate for list action
-        except:
-            return (
-                obj.trip_cost
-            )  # trip cost from Trip model property `Trip.trip_cost` for retrieve action
 
 
 class TripWriteSerializer(serializers.ModelSerializer):
