@@ -18,6 +18,10 @@ services:
     env_file:
       - .env
 
+  redis:  
+    image : "redis:alpine"
+    restart: always
+
   nginx:
     image: nginx
     restart: always
@@ -26,6 +30,27 @@ services:
       - static_volume:/code/static
     ports:
       - "80:80"
-      
+
+  celery:
+    build: .
+    restart: always
+    command: poetry run celery -A core worker --loglevel=info
+    depends_on:
+      - redis
+    env_file:
+      - .env
+
+  celery_beat:
+    build: .
+    restart: always
+    command: poetry run celery -A core beat --loglevel=info
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - beat_schedule:/celery-beat-schedule
+
 volumes:
  static_volume:
+ beat_schedule:
