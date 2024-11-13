@@ -15,25 +15,26 @@ class BaseEmailMessage(EmailMultiAlternatives):
     template_name = None
     email_subject = None
 
-    def __init__(self, request, context=None, *args, **kwargs):
+    def __init__(self, request=None, context=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.request = request
         self.context = {} if context is None else context
 
     def set_context_data(self) -> None:
-        current_site = get_current_site(self.request)
+        if self.request:
+            current_site = get_current_site(self.request)
+            protocol = self.context.get("protocol") or (
+                "https" if self.request.is_secure() else "http"
+            )
+            domain = self.context.get("domain") or current_site.domain
+            self.context.update({"protocol": protocol, "domain": domain})
 
         subject = self.context.get("subject") or self.email_subject
         from_email = self.context.get("from_email") or settings.DEFAULT_EMAIL
         to = self.context.get("to") or []
         cc = self.context.get("cc") or []
         bcc = self.context.get("bcc") or []
-
-        protocol = self.context.get("protocol") or (
-            "https" if self.request.is_secure() else "http"
-        )
-        domain = self.context.get("domain") or current_site.domain
 
         self.context.update(
             {
@@ -42,8 +43,6 @@ class BaseEmailMessage(EmailMultiAlternatives):
                 "to": to if isinstance(to, list) else [to],
                 "cc": cc if isinstance(cc, list) else [cc],
                 "bcc": bcc if isinstance(bcc, list) else [bcc],
-                "protocol": protocol,
-                "domain": domain,
             }
         )
 
