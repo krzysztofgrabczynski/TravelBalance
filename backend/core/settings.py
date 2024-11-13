@@ -218,6 +218,10 @@ ACTIVATION_EMAIL_TEMPLATE = "email_activation.html"
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
 FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
 
+# Currency fetch Email settings
+FETCH_CURRENCY_FAILED_EMAIL_TEMPLATE = "fetch_currency_failed_email.html"
+FETCH_CURRENCY_FAILED_EMAIL_SUBJECT = "TrabelBalance - Ferch currency failed"
+
 # Celery and Redis
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
