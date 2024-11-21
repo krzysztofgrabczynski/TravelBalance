@@ -85,10 +85,17 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = (
     "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.apple.AppleIdAuth",
     "drf_social_oauth2.backends.DjangoOAuth2",
     "django.contrib.auth.backends.ModelBackend",
 )
 
+# Apple auth
+SOCIAL_AUTH_APPLE_ID_CLIENT = os.environ.get("SOCIAL_AUTH_APPLE_ID_CLIENT")
+SOCIAL_AUTH_APPLE_ID_SCOPE = ["email", "name"]
+SOCIAL_AUTH_APPLE_ID_EMAIL_AS_USERNAME = True
+
+# Google auth
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     "https://www.googleapis.com/auth/userinfo.email",
 ]
