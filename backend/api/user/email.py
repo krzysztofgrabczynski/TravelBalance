@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpRequest
 
 from core import settings
 
@@ -15,20 +16,15 @@ class BaseEmailMessage(EmailMultiAlternatives):
     template_name = None
     email_subject = None
 
-    def __init__(self, request=None, context=None, *args, **kwargs):
+    def __init__(self, context: dict = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.request = request
         self.context = {} if context is None else context
 
     def set_context_data(self) -> None:
-        if self.request:
-            current_site = get_current_site(self.request)
-            protocol = self.context.get("protocol") or (
-                "https" if self.request.is_secure() else "http"
-            )
-            domain = self.context.get("domain") or current_site.domain
-            self.context.update({"protocol": protocol, "domain": domain})
+        protocol = self.context.get("protocol") or "https"
+        domain = self.context.get("domain") or settings.DOMAIN_NAME
+        self.context.update({"protocol": protocol, "domain": domain})
 
         subject = self.context.get("subject") or self.email_subject
         from_email = self.context.get("from_email") or settings.DEFAULT_EMAIL
@@ -77,8 +73,9 @@ class ActivationEmail(BaseEmailMessage):
 
         user = self.context["user"]
         uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
-        token = self.context["token_generator"] or default_token_generator
-        token = token.make_token(user)
+        token = self.context.get(
+            "token"
+        ) or default_token_generator.make_token(user)
         url = reverse(
             "user-account_activation",
             kwargs={"uidb64": uidb64, "token": token},
