@@ -1,4 +1,87 @@
-<h1>Hi {{ user }} !</h1>
-<p>Click the link below to reset your password:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
 
-<p><a href="{{ protocol }}://{{ domain }}{{ url|safe }}">{{ protocol }}://{{ domain }}{{ url|safe }}</a></p>
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hi {{ user }}!</h1>
+        <p>We're excited to have you on board. To activate your account, please click the button below:</p>
+        
+        <p style="text-align: center;">
+            <a href="{{ protocol }}://{{ domain }}{{ url|safe }}" class="button">
+                Activate Your Account
+            </a>
+        </p>
+
+        <p>If you did not sign up for this account, please ignore this message.</p>
+
+        <div class="footer">
+            <p>Thank you for using our service!</p>
+            <p><a href="{{ protocol }}://{{ domain }}">Visit our website</a></p>
+        </div>
+    </div>
+</body>
+</html>
