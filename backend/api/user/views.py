@@ -9,8 +9,11 @@ from django.http import HttpRequest
 from django.contrib.auth.tokens import default_token_generator
 
 from api.user import serializers
-from api.user.email import ActivationEmail, ForgotPasswordEmail
 from api.permissions import ObjectOwnerPermission
+from api.user.tasks import (
+    send_activation_user_email_task,
+    send_forgot_password_email_task,
+)
 
 
 User = get_user_model()
@@ -91,12 +94,12 @@ class UserViewSet(
     def perform_create(self, serializer):
         user = serializer.save()
         self._set_user_inactive(user)
-        context = {
-            "user": user,
-            "token_generator": self.token_generator,
+        email_context = {
+            "user_id": user.id,
+            "token": self.token_generator.make_token(user),
             "to": user.email,
         }
-        ActivationEmail(self.request, context).send()
+        send_activation_user_email_task.delay(email_context)
         return user
 
     def _set_user_inactive(self, user: MyUser) -> None:
@@ -135,8 +138,11 @@ class UserViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         token = serializer.create_token()
-        context = {"token": token.token, "to": token.user.email}
-        ForgotPasswordEmail(self.request, context).send()
+        email_context = {
+            "token": token.token,
+            "to": token.user.email,
+        }
+        send_forgot_password_email_task.delay(email_context)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
