@@ -215,6 +215,8 @@ DEFAULT_EMAIL = os.environ.get("EMAIL_HOST_USER")
 ACTIVATION_EMAIL_SUBJECT = "Activation Email"
 ACTIVATION_EMAIL_TEMPLATE = "email_activation.html"
 
+DOMAIN_NAME = "www.travelbalance.pl"
+
 # Forgot password settings
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
 FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
