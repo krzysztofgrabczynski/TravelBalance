@@ -10,7 +10,7 @@ app = Celery("core")
 
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.autodiscover_tasks(["api.currency"])
+app.autodiscover_tasks(["api.user", "api.currency"])
 
 app.conf.beat_schedule = {
     "fetch-currencies-rates-at-midnight": {
