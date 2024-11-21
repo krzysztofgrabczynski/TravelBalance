@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "storages",
-    "drf_recaptcha",
     # apps
     "drf_yasg",
     "api.user",
@@ -169,11 +168,6 @@ SWAGGER_SETTINGS = {
         }
     }
 }
-
-# ReCaptcha
-
-DRF_RECAPTCHA_SECRET_KEY = os.environ.get("DRF_RECAPTCHA_SECRET_KEY")
-DRF_RECAPTCHA_DEFAULT_V3_SCORE = 0.7
 
 
 # Password validation
