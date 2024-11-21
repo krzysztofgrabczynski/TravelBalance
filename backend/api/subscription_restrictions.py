@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 def check_if_subscriber(user: MyUser) -> bool:
-    return user.groups.filter(name="subscriber").exists()
+    return user.is_premium
 
 
 def add_trip_limit(func):
