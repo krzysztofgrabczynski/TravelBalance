@@ -27,7 +27,6 @@ class LoginView(views.APIView):
             data=request.data, context={"request": request}
         )
         serializer.is_valid(raise_exception=True)
-        user_id = serializer.user.id
 
         return Response(
             {"token": serializer.token.key},
@@ -48,6 +47,7 @@ class UserViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
 ):
     queryset = User.objects.all()
@@ -110,7 +110,7 @@ class UserViewSet(
             user.is_active = False
             user.save()
 
-    @action(["get", "put", "patch"], detail=False)
+    @action(["get", "put", "patch", "delete"], detail=False)
     def me(self, request, *args, **kwargs):
         if request.method == "GET":
             return self.retrieve(request, *args, **kwargs)
@@ -118,6 +118,8 @@ class UserViewSet(
             return self.update(request, *args, **kwargs)
         elif request.method == "PATCH":
             return self.partial_update(request, *args, **kwargs)
+        elif request.method == "DELETE":
+            return self.destroy(request, *args, **kwargs)
 
     @action(
         methods=["get"],
