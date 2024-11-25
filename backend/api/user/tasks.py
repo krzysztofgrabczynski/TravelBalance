@@ -1,7 +1,11 @@
 from celery import shared_task
 from django.contrib.auth import get_user_model
 
-from api.user.email import ActivationEmail, ForgotPasswordEmail
+from api.user.email import (
+    ActivationEmail,
+    ForgotPasswordEmail,
+    FeedbackSendNotification,
+)
 
 
 User = get_user_model()
@@ -16,7 +20,13 @@ def send_activation_user_email_task(context: dict):
     email.send()
 
 
-@shared_task(name="forgot_passworduser_email_task")
+@shared_task(name="send_forgot_password_email_task")
 def send_forgot_password_email_task(context: dict):
     email = ForgotPasswordEmail(context=context)
+    email.send()
+
+
+@shared_task(name="send_feedback_notification")
+def send_feedback_notification(context: dict):
+    email = FeedbackSendNotification(context=context)
     email.send()

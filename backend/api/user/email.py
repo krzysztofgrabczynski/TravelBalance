@@ -7,7 +7,6 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpRequest
 
 from core import settings
 
@@ -88,8 +87,13 @@ class ForgotPasswordEmail(BaseEmailMessage):
     template_name = settings.FORGOT_PASSWORD_EMAIL_TEMPLATE
     email_subject = settings.FORGOT_PASSWORD_EMAIL_SUBJECT
 
-    def set_context_data(self) -> None:
-        super().set_context_data()
 
-        token = self.context["token"]
-        self.context.update({"token": token})
+class FeedbackSendNotification(BaseEmailMessage):
+    template_name = settings.FEEDBACK_SEND_NOTIFICATION_EMAIL_TEMPLATE
+    email_subject = settings.FEEDBACK_SEND_NOTIFICATION_EMAIL_SUBJECT
+
+    def __init__(self, context=None, *args, **kwargs):
+        super().__init__(context, *args, **kwargs)
+        feedback_type = self.context.get("feedback_type")
+        if "feedback_type":
+            self.email_subject = f"Feedback semd from TravelBalance application - {feedback_type}"
