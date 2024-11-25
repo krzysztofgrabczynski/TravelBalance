@@ -4,6 +4,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from api import urls as api_urls
+from web import urls as web_urls
 from api.webhooks import stripe_webhook
 
 
@@ -22,6 +23,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include(web_urls)),
     path("api/v1/", include(api_urls)),
     path("payment/stripe_webhook/", stripe_webhook, name="stripe-webhook"),
     path(
