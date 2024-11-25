@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "storages",
     # apps
+    "web",
     "drf_yasg",
     "api.user",
     "api.trip",
