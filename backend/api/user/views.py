@@ -7,15 +7,19 @@ from django.contrib.auth import get_user_model
 from api.user.models import MyUser
 from django.http import HttpRequest
 from django.contrib.auth.tokens import default_token_generator
+from dotenv import load_dotenv
+import os
 
 from api.user import serializers
 from api.permissions import ObjectOwnerPermission
 from api.user.tasks import (
     send_activation_user_email_task,
     send_forgot_password_email_task,
+    send_feedback_notification,
 )
 
 
+load_dotenv()
 User = get_user_model()
 
 
@@ -179,5 +183,11 @@ class UserViewSet(
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        email_context = {
+            "message": serializer.data["message"],
+            "feedback_type": serializer.data["type"],
+            "to": os.environ.get("EMAIL_HOST_USER"),
+        }
+        send_feedback_notification.delay(email_context)
 
         return Response(status=status.HTTP_201_CREATED)
