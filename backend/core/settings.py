@@ -221,9 +221,15 @@ DOMAIN_NAME = "www.travelbalance.pl"
 FORGOT_PASSWORD_EMAIL_TEMPLATE = "forgot_password.html"
 FORGOT_PASSWORD_EMAIL_SUBJECT = "Forgot Password Email"
 
-# Currency fetch Email settings
+# Currency fetch email settings
 FETCH_CURRENCY_FAILED_EMAIL_TEMPLATE = "fetch_currency_failed_email.html"
 FETCH_CURRENCY_FAILED_EMAIL_SUBJECT = "TrabelBalance - Ferch currency failed"
+
+# Feedback send notification email settings
+FEEDBACK_SEND_NOTIFICATION_EMAIL_TEMPLATE = (
+    "feedback_send_notification_email.html"
+)
+FEEDBACK_SEND_NOTIFICATION_EMAIL_SUBJECT = None
 
 # Celery and Redis
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
