@@ -1,0 +1,55 @@
+@import url("base.css");
+
+/* Header section */
+header {
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd; 
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+header .logo-content{
+    transition: all 0.3s ease;
+}
+
+header .logo-content:hover{
+    font-size: 21px;
+    transform: scale(1.05);
+    font-weight: 700; 
+}
+
+header .logo-content a{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    color: var(--primary-font-color);
+    font-size: 20px;
+}
+
+header .logo-content .logo {
+    padding-left: 10px;
+    width: 55px;
+    height: 40px;
+}
+
+header .navigation a{
+    padding-right: 10px;
+    text-decoration: none;
+    color: var(--secondary-font-color);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+header .navigation a:hover{
+    font-size: 17px;
+    transform: scale(1.05);
+    font-weight: 700; 
+}

@@ -1,0 +1,71 @@
+@import url("base.css");
+
+.download-button{
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    border-radius: 30px;
+    padding: 5px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s ease; 
+    padding: 12px 16px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.download-button img {
+    margin-right: 16px;
+    width: 20px;
+    height: auto;
+}
+
+.download-button .text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    align-items: start;
+}
+
+.download-button .text span {
+    font-size: 10px;
+}
+
+.download-buttons-apple .text strong {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.download-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* apple button */
+.download-button-apple{
+    background-color: white;
+    color: black;
+}
+
+.download-button-apple .text span{
+    color: black;
+}
+
+.download-button-apple .text strong {
+    color: black;
+}
+
+/* android button */
+.download-button-android{
+    background-color: black;
+    color: white;
+}
+
+.download-button-android .text span {
+    color: #ccc;
+}
+
+.download-button-android .text strong {
+
+    color: white;
+}

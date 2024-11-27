@@ -1,0 +1,19 @@
+:root {
+    --primary-font-color: #212427; 
+    --secondary-font-color: #383838; 
+    --background-color: #F8F9FA;
+}
+
+html, body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    scroll-behavior: smooth;
+    scroll-padding-top: 50px;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}

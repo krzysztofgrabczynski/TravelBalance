@@ -1,0 +1,138 @@
+@import url("base.css");
+
+/* Overview section */
+
+.overview-section .overview-section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    flex: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.overview-section .content{
+    display: grid; 
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+    z-index: 0;
+    padding: 50px 0 50px
+}
+
+.overview-section .content .middle-wave{
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    background: url(../../media/backgrounds/middle-wave.svg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: -1;
+}
+
+.overview-section .content .text-content{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px 20px 20px;
+}
+
+.overview-section .content .text-content h1{
+    color: #FF8704;
+    font-size: 13px;
+    font-weight: 600;
+    align-self: flex-start;
+    margin-bottom: 0;
+}
+.overview-section .content .text-content h2{
+    color: var(--primary-font-color);
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.overview-section .content .text-content p{
+    color: var(--secondary-font-color);
+    font-size: 14px;
+}
+
+.overview-section .content .phone-mockup{ 
+    position: relative;
+    z-index: 1;
+}
+
+.overview-section .content .phone-mockup .first-circle{
+    height: 14px; 
+    width: 14px; 
+    background: linear-gradient(90deg, #DAA5DE, #AC8BF0);
+    border-radius: 50%; 
+    position: absolute;
+    top: 90px;
+    right: -40px;
+}
+
+.overview-section .content .phone-mockup .second-circle{
+    height: 14px; 
+    width: 14px; 
+    background: linear-gradient(90deg, #D0AFD1, #DDA8B7);
+    border-radius: 50%; 
+    position: absolute;
+    top: 140px;
+    right: -70px;
+}
+
+.overview-section .content .phone-mockup .third-circle{
+    height: 22px; 
+    width: 22px; 
+    background: linear-gradient(90deg, #E2B48E, #E29669);
+    border-radius: 50%; 
+    position: absolute;
+    top: 350px;
+    left: -70px;
+}
+
+.overview-section .content img{
+    position: relative;
+    z-index: 1;
+    display: block;
+    min-height: 100%;
+}
+
+.overview-section .content .phone-mockup .phone-background{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px; 
+    width: 300px; 
+    background: linear-gradient(90deg, #D9B967, #8EC3A7, #8EC3A7, #D9B967);
+    border-radius: 50%;  
+}
+
+@media (min-width: 756px) {
+    .overview-section .content{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .overview-section .content:nth-child(odd) .text-content{
+        order: 2;
+        text-align: left;
+        align-self: center;
+    }
+
+    .overview-section .content:nth-child(odd) .phone-mockup{
+        order: 1;
+    }
+
+    .overview-section .content:nth-child(even) .text-content{
+        order: 1;
+        align-self: center;
+        text-align: left;
+        padding-left: 50px;
+    }
+
+    .overview-section .content:nth-child(even) .phone-mockup{
+        order: 2;
+    }
+}
