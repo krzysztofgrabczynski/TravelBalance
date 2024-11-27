@@ -150,3 +150,8 @@ footer .popup-overlay .close-button:hover{
         flex-direction: row;
     }
 }
+
+.highlight{
+    font-weight: bold;
+    color: #849531;
+}
