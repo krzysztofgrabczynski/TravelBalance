@@ -1,9 +1,8 @@
 from django.views.generic import TemplateView
-from django.contrib.staticfiles.storage import staticfiles_storage
 
 
 class HomeView(TemplateView):
-    template_name = ...
+    template_name = "index.html"
 
 
 class PrivacyPolicyView(TemplateView):

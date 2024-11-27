@@ -4,6 +4,7 @@ from web import views
 
 
 urlpatterns = [
+    path("", views.HomeView.as_view(), name="home"),
     path(
         "privacy-policy/",
         views.PrivacyPolicyView.as_view(),
