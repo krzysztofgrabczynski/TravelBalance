@@ -41,7 +41,7 @@ footer .contact-us{
 }  
 
 footer .contact-us h1{
-    font-size: 20px;
+    font-size: 20px; 
     font-weight: bold;
     color: var(--primary-font-color);
 }

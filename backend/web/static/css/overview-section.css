@@ -96,6 +96,7 @@
     z-index: 1;
     display: block;
     min-height: 100%;
+    max-width: 100%;
 }
 
 .overview-section .content .phone-mockup .phone-background{
@@ -134,5 +135,37 @@
 
     .overview-section .content:nth-child(even) .phone-mockup{
         order: 2;
+    }
+}
+
+@media (max-width: 370px){
+    .overview-section .content .phone-mockup .first-circle{
+        height: 14px; 
+        width: 14px; 
+        background: linear-gradient(90deg, #DAA5DE, #AC8BF0);
+        border-radius: 50%; 
+        position: absolute;
+        top: 90px;
+        right: -30px;
+    }
+    
+    .overview-section .content .phone-mockup .second-circle{
+        height: 14px; 
+        width: 14px; 
+        background: linear-gradient(90deg, #D0AFD1, #DDA8B7);
+        border-radius: 50%; 
+        position: absolute;
+        top: 140px;
+        right: -50px;
+    }
+    
+    .overview-section .content .phone-mockup .third-circle{
+        height: 22px; 
+        width: 22px; 
+        background: linear-gradient(90deg, #E2B48E, #E29669);
+        border-radius: 50%; 
+        position: absolute;
+        top: 350px;
+        left: -40px;
     }
 }

@@ -94,6 +94,7 @@
 
 .top-section .overview img{
     padding-top: 50px;
+    max-width: 100%;
 }
 
 .top-section .statistic-bar{
