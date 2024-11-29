@@ -11,9 +11,10 @@ html, body {
     background-color: var(--background-color);
     scroll-behavior: smooth;
     scroll-padding-top: 50px;
+    overflow-x: hidden;
 }
 
-.container{
+.container{ 
     max-width: 1200px;
     margin: 0 auto;
 }
