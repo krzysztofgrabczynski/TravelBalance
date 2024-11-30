@@ -156,33 +156,6 @@
 
                 </div>
             </div>
-
-            <script>
-                const boxes = document.querySelectorAll('.overview-content');
-                console.log('Wartość boxes:', boxes);
-
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        console.log('Sprawdzany element:', entry.target);
-                        console.log('Czy widoczny:', entry.isIntersecting);
-                        if (entry.isIntersecting) {
-                            console.log('Dodano klasę visible do elementu:', entry.target);
-                            entry.target.classList.add('visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    threshold: 0.1  
-                });
-
-                boxes.forEach(box => {
-                    console.log('Obserwowany element:', box);
-                    observer.observe(box);
-                    // Dodatkowo sprawdź wymiary elementu:
-                    const rect = box.getBoundingClientRect();
-                    console.log('Wymiary elementu:', rect);
-                });
-            </script>
     
         </section>
 
@@ -192,7 +165,7 @@
                 <h1>Features</h1>
 
                 <div class="feature-grid">
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/CRUD.svg" alt="Feature CRUD icon">
                         <div class="content">
                             <h2>CRUD</h2>
@@ -200,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/pick_image.svg" alt="Feature pick image icon">
                         <div class="content">
                             <h2>Pick trip image</h2>
@@ -208,7 +181,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/statistics.svg" alt="Feature statistics icon">
                         <div class="content">
                             <h2>Check statistics</h2>
@@ -216,7 +189,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/detailed_view.svg" alt="Feature detailed view icon">
                         <div class="content">
                             <h2>Detailed view</h2>
@@ -224,7 +197,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/category.svg" alt="Feature category icon">
                         <div class="content">
                             <h2>Choose category</h2>
@@ -232,7 +205,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/currency.svg" alt="Feature currency icon">
                         <div class="content">
                             <h2>Choose currency</h2>
@@ -240,7 +213,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/register.svg" alt="Feature register via google/apple icon">
                         <div class="content">
                             <h2>Register via Google/Apple account</h2>
@@ -248,7 +221,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item slide-up">
                         <img src="../media/features/cloud.svg" alt="Feature cloud sync icon">
                         <div class="content">
                             <h2>Cloud sync</h2>
@@ -264,7 +237,7 @@
 
 
         <footer>
-            <div class="footer-container">
+            <div class="footer-container slide-down">
                 <div class="divider"></div>
                 <div class="text">
                     <h1>Ready to first trip?</h1>
@@ -338,6 +311,23 @@
 
         </footer>
 
-        
+        <script>
+            const boxes = document.querySelectorAll('.overview-content, .feature-item, .footer-container');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1  
+            });
+
+            boxes.forEach(box => {
+                observer.observe(box);
+            });
+        </script>
 </body>
 </html>

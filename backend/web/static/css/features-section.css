@@ -21,11 +21,23 @@
     gap: 36px;
 }
 
-.feature-section .feature-grid .feature-item{
+.feature-item{
     display: flex;
     align-items: center;
     gap: 10px;
+    opacity: 0;
+    transform: translateY(0%);
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
+
+.slide-up{
+    transform: translateY(100%);
+}
+
+.visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
 
 .feature-section .feature-grid .feature-item img{
     width: 100px;

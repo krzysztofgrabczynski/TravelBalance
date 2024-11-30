@@ -7,13 +7,25 @@ footer{
     border-radius: 10% 10% 0 0; 
 }
 
-footer .footer-container{
+.footer-container{
     display: flex;
     flex-direction: column;
     padding: 18px 40px 20px 40px;
     gap: 10px;
     max-width: 1200px;
     margin: 0 auto;
+    opacity: 0;
+    transform: translateY(0%);
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.slide-down{
+    transform: translateY(-100%);
+    }
+    
+.visible {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 footer .text{
