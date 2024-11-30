@@ -10,17 +10,20 @@
     padding: 10px;
 }
 
-.overview-section .content{
+.overview-content{
     display: grid; 
     grid-template-columns: 1fr;
     align-items: center;
     justify-items: center;
     position: relative;
     z-index: 0;
-    padding: 50px 0 50px
+    padding: 50px 0 50px;
+    opacity: 0;
+    transform: translateX(0%);
+    transition: transform 1s ease-out, opacity 1s ease-out;
 }
 
-.overview-section .content .middle-wave{
+.overview-section .overview-content .middle-wave{
     position: absolute;
     height: 100%;
     width: 100vw;
@@ -30,38 +33,51 @@
     z-index: -1;
 }
 
-.overview-section .content .text-content{
+.overview-section .overview-content .text-content{
     display: flex;
     flex-direction: column;
     text-align: center;
     padding: 10px 20px 20px;
 }
 
-.overview-section .content .text-content h1{
+.overview-section .overview-content .text-content h1{
     color: #FF8704;
     font-size: 13px;
     font-weight: 600;
     align-self: flex-start;
     margin-bottom: 0;
 }
-.overview-section .content .text-content h2{
+.overview-section .overview-content .text-content h2{
     color: var(--primary-font-color);
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 0;
 }
 
-.overview-section .content .text-content p{
+.overview-section .overview-content .text-content p{
     color: var(--secondary-font-color);
     font-size: 14px;
 }
 
-.overview-section .content .phone-mockup{ 
+.phone-mockup{ 
     position: relative;
     z-index: 1;
 }
 
-.overview-section .content .phone-mockup .first-circle{
+.slide-left {
+    transform: translateX(-80%);
+  }
+  
+.slide-right {
+    transform: translateX(80%);
+  }
+
+.visible {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+.overview-section .overview-content .phone-mockup .first-circle{
     height: 14px; 
     width: 14px; 
     background: linear-gradient(90deg, #DAA5DE, #AC8BF0);
@@ -71,7 +87,7 @@
     right: -40px;
 }
 
-.overview-section .content .phone-mockup .second-circle{
+.overview-section .overview-content .phone-mockup .second-circle{
     height: 14px; 
     width: 14px; 
     background: linear-gradient(90deg, #D0AFD1, #DDA8B7);
@@ -81,7 +97,7 @@
     right: -70px;
 }
 
-.overview-section .content .phone-mockup .third-circle{
+.overview-section .overview-content .phone-mockup .third-circle{
     height: 22px; 
     width: 22px; 
     background: linear-gradient(90deg, #E2B48E, #E29669);
@@ -91,7 +107,7 @@
     left: -70px;
 }
 
-.overview-section .content img{
+.overview-section .overview-content img{
     position: relative;
     z-index: 1;
     display: block;
@@ -99,7 +115,7 @@
     max-width: 100%;
 }
 
-.overview-section .content .phone-mockup .phone-background{
+.overview-section .overview-content .phone-mockup .phone-background{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -111,35 +127,35 @@
 }
 
 @media (min-width: 756px) {
-    .overview-section .content{
+    .overview-section .overview-content{
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
-    .overview-section .content:nth-child(odd) .text-content{
+    .overview-section .overview-content:nth-child(odd) .text-content{
         order: 2;
         text-align: left;
         align-self: center;
     }
 
-    .overview-section .content:nth-child(odd) .phone-mockup{
+    .overview-section .overview-content:nth-child(odd) .phone-mockup{
         order: 1;
     }
 
-    .overview-section .content:nth-child(even) .text-content{
+    .overview-section .overview-content:nth-child(even) .text-content{
         order: 1;
         align-self: center;
         text-align: left;
         padding-left: 50px;
     }
 
-    .overview-section .content:nth-child(even) .phone-mockup{
+    .overview-section .overview-content:nth-child(even) .phone-mockup{
         order: 2;
     }
 }
 
 @media (max-width: 370px){
-    .overview-section .content .phone-mockup .first-circle{
+    .overview-section .overview-content .phone-mockup .first-circle{
         height: 14px; 
         width: 14px; 
         background: linear-gradient(90deg, #DAA5DE, #AC8BF0);
@@ -149,7 +165,7 @@
         right: -30px;
     }
     
-    .overview-section .content .phone-mockup .second-circle{
+    .overview-section .overview-content .phone-mockup .second-circle{
         height: 14px; 
         width: 14px; 
         background: linear-gradient(90deg, #D0AFD1, #DDA8B7);
@@ -159,7 +175,7 @@
         right: -50px;
     }
     
-    .overview-section .content .phone-mockup .third-circle{
+    .overview-section .overview-content .phone-mockup .third-circle{
         height: 22px; 
         width: 22px; 
         background: linear-gradient(90deg, #E2B48E, #E29669);

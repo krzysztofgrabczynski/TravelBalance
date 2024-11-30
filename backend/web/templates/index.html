@@ -100,7 +100,7 @@
         <!-- Overview section -->
         <section class="overview-section" id="overview-section">
             <div class="overview-section-container">
-                <div class="content">
+                <div class="overview-content slide-left">
                     <div class="text-content">
                         <h1>FOR TRIPS</h1>
                         <h2>Sign up and add a trip anywhere</h2>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <div class="content">
+                <div class="overview-content slide-right">
                     <div class="middle-wave"></div>
                     <div class="text-content">
                         <h1>FOR EXPENSES</h1>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
 
-                <div class="content">
+                <div class="overview-content slide-left">
                     <div class="text-content">
                         <h1>FOR DETAIL VIEW</h1>
                         <h2>Switch to detailed view</h2>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-                <div class="content">
+                <div class="overview-content slide-right">
                     <div class="middle-wave"></div>
                     <div class="text-content">
                         <h1>FOR STATISTICS</h1>
@@ -156,6 +156,34 @@
 
                 </div>
             </div>
+
+            <script>
+                const boxes = document.querySelectorAll('.overview-content');
+                console.log('Wartość boxes:', boxes);
+
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        console.log('Sprawdzany element:', entry.target);
+                        console.log('Czy widoczny:', entry.isIntersecting);
+                        if (entry.isIntersecting) {
+                            console.log('Dodano klasę visible do elementu:', entry.target);
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.1  
+                });
+
+                boxes.forEach(box => {
+                    console.log('Obserwowany element:', box);
+                    observer.observe(box);
+                    // Dodatkowo sprawdź wymiary elementu:
+                    const rect = box.getBoundingClientRect();
+                    console.log('Wymiary elementu:', rect);
+                });
+            </script>
+    
         </section>
 
         <!-- Features section -->
