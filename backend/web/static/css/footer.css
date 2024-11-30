@@ -101,13 +101,29 @@ footer .popup-overlay .popup-content{
   }
 
 footer .popup-overlay .popup-content h1{
-    font-size: 26px;
-    color: var(--primary-font-color)
+    text-align: center;
+    font-size: 24px;
+    color: var(--primary-font-color);
+    margin-bottom: 0;
 }
 
-footer .popup-overlay .popup-content p{
+footer .popup-overlay .popup-content .about-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+footer .popup-overlay .popup-content .about-item h3 {
     font-size: 16px;
-    color: var(--secondary-font-color)
+    color: var(--primary-font-color);
+    margin-bottom: 0;
+}
+
+footer .popup-overlay .popup-content .about-item p{
+    font-size: 14px;
+    color: var(--secondary-font-color);
+    text-align: left;
+    margin-bottom: 0;
 }
 
 footer .popup-overlay .close-button{
@@ -168,9 +184,4 @@ footer .popup-overlay .close-button:hover{
         align-self: stretch;
         justify-self: center;
     }
-}
-
-.highlight{
-    font-weight: bold;
-    color: #849531;
 }
