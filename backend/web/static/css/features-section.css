@@ -24,7 +24,7 @@
 .feature-item{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
     opacity: 0;
     transform: translateY(0%);
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
