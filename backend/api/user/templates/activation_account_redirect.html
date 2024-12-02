@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../web/static/css/header.css">
+    <style>
+        .container {
+            max-width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .container p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+    </style>
+    <title>Account Activation</title>
+</head>
+<body>
+    <header>
+        <div class="logo-content"> 
+            <a href="{% url 'home' %}"><img src="../../../web/media/icons/logo.svg" class="logo" alt="Logo">TravelBalance</a>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Account Activated!</h1>
+        <p>Your account has been successfully activated.</p>
+        <p>You can now log in to the application and start first trip!</p>
+    </div>
+</body>
+</html>
