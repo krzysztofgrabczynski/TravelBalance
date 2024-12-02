@@ -1,5 +1,3 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,17 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Use | TravelBalance</title>
-    <link rel="stylesheet" href="{% static 'css/policies_style.css' %}">
+    <link rel="stylesheet" href="../../static/css/policies_style.css">
+    <link rel="stylesheet" href="../../static/css/header.css">
 </head>
 <body>
 
     <!-- Header -->
     <header>
-        <div class="header-content">
-            <a href="/" class="logo">
-                <img src="../../media/icons/logo.svg" alt="TravelBalance Logo" class="logo-img">
-                <span class="logo-text">TravelBalance</span>
-            </a>
+        <div class="logo-content"> 
+            <a href="{% url 'home' %}"><img src="../../media/icons/logo.svg" class="logo" alt="Logo">TravelBalance</a>
         </div>
     </header>
 
