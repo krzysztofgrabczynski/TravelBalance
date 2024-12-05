@@ -37,7 +37,7 @@
     position: absolute;
     width: 700px;
     height: auto;
-    right: -35vw;;
+    right: -500px;
     top: -490px;
     z-index: -1;
     
@@ -47,7 +47,7 @@
     position: absolute;
     width: 700px;
     height: auto;
-    left: -42vw;
+    right: 1000px;
     top: 150px;
     z-index: -1;
     transform: rotate(30deg);
