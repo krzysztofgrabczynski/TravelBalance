@@ -17,10 +17,11 @@ header {
 
 header .logo-content{
     transition: all 0.3s ease;
+    font-family: 'Caveat', sans-serif;
 }
 
 header .logo-content:hover{
-    font-size: 21px;
+    font-size: 27px;
     transform: scale(1.05);
     font-weight: 700; 
 }
@@ -31,7 +32,7 @@ header .logo-content a{
     gap: 7px;
     text-decoration: none;
     color: var(--primary-font-color);
-    font-size: 20px;
+    font-size: 26px;
     font-weight: bold;
 }
 
