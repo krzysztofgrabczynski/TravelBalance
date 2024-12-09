@@ -21,7 +21,6 @@ header .logo-content{
 }
 
 header .logo-content:hover{
-    font-size: 27px;
     transform: scale(1.05);
     font-weight: 700; 
 }
@@ -32,7 +31,7 @@ header .logo-content a{
     gap: 7px;
     text-decoration: none;
     color: var(--primary-font-color);
-    font-size: 26px;
+    font-size: 28px;
     font-weight: bold;
 }
 
@@ -50,12 +49,11 @@ header .navigation a{
     padding-right: 10px;
     text-decoration: none;
     color: var(--secondary-font-color);
-    font-size: 16px;
+    font-size: 18px;
     transition: all 0.3s ease;
 }
 
 header .navigation a:hover{
-    font-size: 17px;
     transform: scale(1.05);
     font-weight: 700; 
 }
@@ -69,13 +67,12 @@ header .navigation a:hover{
     background-color: var(--background-color);
     color: var(--primary-font-color);
     padding-right: 10px;
-    font-size: 16px;
+    font-size: 20px;
     border: none;
     cursor: pointer;
 }
 
 .navigation-mobile:hover .dropbtn{
-    font-size: 17px;
     font-weight: 600;
 }
 

@@ -47,21 +47,21 @@
 
 .overview-section .overview-content .text-content h1{
     color: #FF8704;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     align-self: flex-start;
     margin-bottom: 0;
 }
 .overview-section .overview-content .text-content h2{
     color: var(--primary-font-color);
-    font-size: 26px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 0;
 }
 
 .overview-section .overview-content .text-content p{
     color: var(--secondary-font-color);
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .phone-mockup{ 
