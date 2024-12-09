@@ -17,8 +17,6 @@
     flex-direction: column;
     text-align: center;
     padding: 50px 50px 20px 50px; 
-    position: relative;
-    z-index: 1;
 }
 
 .top-section .main-information h1 {
@@ -32,27 +30,6 @@
     color: var(--secondary-font-color);
     margin-bottom: -10px;
 }
-
-.top-section .main-information .top-wave img{
-    position: absolute;
-    width: 700px;
-    height: auto;
-    right: -500px;
-    top: -490px;
-    z-index: -1;
-    
-}
-
-.top-section .main-information .bottom-wave img{
-    position: absolute;
-    width: 700px;
-    height: auto;
-    right: 1000px;
-    top: 150px;
-    z-index: -1;
-    transform: rotate(30deg);
-}
-
 
 .top-section .overview{
     position: relative;
