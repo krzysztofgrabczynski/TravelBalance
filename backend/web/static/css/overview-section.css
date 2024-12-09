@@ -10,6 +10,21 @@
     padding: 10px;
 }
 
+.overview-section .overview-content-with-wave{
+    position: relative;
+    z-index: 0;
+}
+
+.overview-section .overview-content-with-wave .middle-wave{
+    position: absolute;
+    height: 100%;
+    width: 100vw;
+    background: url(../../media/backgrounds/middle-wave.svg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    z-index: -1;
+}
+
 .overview-content{
     display: grid; 
     grid-template-columns: 1fr;
@@ -21,16 +36,6 @@
     opacity: 0;
     transform: translateX(0%);
     transition: transform 1s ease-out, opacity 1s ease-out;
-}
-
-.overview-section .overview-content .middle-wave{
-    position: absolute;
-    height: 100%;
-    width: 100vw;
-    background: url(../../media/backgrounds/middle-wave.svg);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    z-index: -1;
 }
 
 .overview-section .overview-content .text-content{
