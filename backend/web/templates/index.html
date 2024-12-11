@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,322 +15,343 @@
     <link rel="stylesheet" href="../static/css/footer.css">
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Outfit:wght@100..900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Header -->
     <header>
-        <div class="logo-content"> 
+        <div class="logo-content">
             <a href="#top-section"><img src="../media/icons/logo.svg" class="logo" alt="Logo">TravelBalance</a>
         </div>
         <nav class="navigation">
             <a href="#overview-section" class="nav-link">Overview</a>
             <a href="#feature-section" class="nav-link">Feature List</a>
-            </nav>
+        </nav>
         <nav class="navigation-mobile">
             <button class="dropbtn">☰</button>
             <div class="dropdown">
                 <a href="#overview-section" class="nav-link">Overview</a>
                 <a href="#feature-section" class="nav-link">Feature List</a>
-            </div>  
+            </div>
         </nav>
     </header>
 
-    
-        <!-- Top main section -->
-        <section class="top-section" id="top-section">
-            <div class="top-section-container">
-                <div class="main-information">
-                    <h1>Track Trips & Expenses In One Place</h1>
-                    <p>Take off on your journey, and we’ll do the expense math for you!</p>
-                    <p>Click below to download on iOS or Android and give it a try!</p>
-                </div>
 
-                <div class="download-buttons">
-                        <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl" class="download-button download-button-apple" target="_blank">
-                            <img src="../media/icons/apple.png" alt="IOS icon">
-                            <div class="text">
-                                <span>Download on the</span>
-                                <strong>App Store</strong>
-                            </div>
-                        </a>
-                        <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl" class="download-button download-button-android" target="_blank">
-                            <img src="../media/icons/android.png" alt="Android icon">
-                            <div class="text">
-                                <span>Get it on</span>
-                                <strong>Google Play</strong>
-                            </div>
-                        </a>
-                </div>
-
-                <div class="overview">
-                    <div class="top-arrow">     
-                        <img src="../media/icons/top-arrow.png" alt="Top arrow">
-                    </div>
-                    <div class="right-circle"></div>
-                    <div class="left-circle"></div>
-
-                    <img src="../media/phone-mockups/top-section-phones.png" alt="Phone overview mockups">
-
-                    <div class="bottom-arrow">     
-                        <img src="../media/icons/bottom-arrow.png" alt="Bottom arrow">
-                    </div>
-                </div>
-
-                <ul class="statistic-bar">
-                    <li class="statistic-column">
-                        <span class="stat-number">194+</span>
-                        <span class="stat-label">countries</span>
-                    </li>
-                    <li class="statistic-column">
-                        <span class="stat-number">170+</span>
-                        <span class="stat-label">currencies</span>
-                    </li>
-                    <li class="statistic-column">
-                        <span class="stat-number">15</span>
-                        <span class="stat-label">default images</span>
-                    </li> 
-                </ul>
+    <!-- Top main section -->
+    <section class="top-section" id="top-section">
+        <img class="top-wave" src="../media/backgrounds/top-section-wave.svg">
+        <img class="bottom-wave" src="../media/backgrounds/top-section-wave.svg">
+        <div class="top-section-container">
+            <div class="main-information">
+                <h1>Track Trips & Expenses In One Place</h1>
+                <p>Take off on your journey, and we’ll do the expense math for you!</p>
+                <p>Click below to download on iOS or Android and give it a try!</p>
             </div>
-        </section>
 
-        <!-- Space -->
-        <div class="space"></div>
-    
-        <!-- Overview section -->
-        <section class="overview-section" id="overview-section">
-            <div class="overview-section-container">
-                <div class="overview-content slide-left">
-                    <div class="text-content">
-                        <h1>FOR TRIPS</h1>
-                        <h2>Sign up and add a trip anywhere</h2>
-                        <p>Simply set up a trip, select the country you’re traveling to and personalize it with one of our default images. It’s all about making your trip uniquely yours!</p>
+            <div class="download-buttons">
+                <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl"
+                    class="download-button download-button-apple" target="_blank">
+                    <img src="../media/icons/apple.png" alt="IOS icon">
+                    <div class="text">
+                        <span>Download on the</span>
+                        <strong>App Store</strong>
                     </div>
-                    <div class="phone-mockup">
-                        <div class="first-circle"></div>
-                        <div class="second-circle"></div>
-                        <div class="third-circle"></div>
-                        <img src="../media/phone-mockups/phone_for_trips.png" alt="Phone mockup trips screen">
-                        <div class="phone-background"></div>
+                </a>
+                <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl"
+                    class="download-button download-button-android" target="_blank">
+                    <img src="../media/icons/android.png" alt="Android icon">
+                    <div class="text">
+                        <span>Get it on</span>
+                        <strong>Google Play</strong>
                     </div>
-                </div>
-
-                <div class="overview-content-with-wave">
-                    <div class="middle-wave"></div>
-                    <div class="overview-content slide-right">
-                        <div class="text-content">
-                            <h1>FOR EXPENSES</h1>
-                            <h2>Track your trip expenses</h2>
-                            <p>Easily add expenses to your trip, pick categories, and check your travel stats anytime to see how much you’ve spent in each area!</p>
-                        </div>
-                        <div class="phone-mockup">
-                            <img src="../media/phone-mockups/phone_for_expenses.png" alt="Phone mockup expenses screen">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="overview-content slide-left">
-                    <div class="text-content">
-                        <h1>FOR DETAIL VIEW</h1>
-                        <h2>Switch to detailed view</h2>
-                        <p>Use the toggle button to switch from the photo view of your trips to a compact layout, focusing solely on expense details without images.</p>
-                    </div>
-                    <div class="phone-mockup">
-                        <div class="first-circle"></div>
-                        <div class="second-circle"></div>
-                        <div class="third-circle"></div>
-                        <img src="../media/phone-mockups/phone_detailed_view.png" alt="Phone mockup detailed view screen">
-                        <div class="phone-background"></div>
-                    </div>
-                </div>
-
-                <div class="overview-content-with-wave">
-                    <div class="middle-wave"></div>
-                    <div class="overview-content slide-right">
-                        <div class="text-content">
-                            <h1>FOR STATISTICS</h1>
-                            <h2>Check your travel stats</h2>
-                            <p>View your full travel history in one place. See how many trips you’ve completed, count the countries you’ve explored, and review your total travel spending!</p>
-                        </div>
-                        <div class="phone-mockup">
-                            <img src="../media/phone-mockups/phone_statistics.png" alt="Phone mockup statistics screen">
-                        </div>
-                </div>       
-                </div>
+                </a>
             </div>
-    
-        </section>
 
-        <!-- Features section -->
-        <section class="feature-section" id="feature-section">
-            <div class="feature-section-container">
-                <h1>Features</h1>
-
-                <div class="feature-grid">
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/CRUD.svg" alt="Feature CRUD icon">
-                        <div class="content">
-                            <h2>CRUD</h2>
-                            <p>Perform CRUD operations on trips and expenses in a simple and intuitive way.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/pick_image.svg" alt="Feature pick image icon">
-                        <div class="content">
-                            <h2>Pick trip image</h2>
-                            <p>Choose from 15 default images to represent their trips. Each image is carefully selected to capture a variety of travel themes and destinations.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/statistics.svg" alt="Feature statistics icon">
-                        <div class="content">
-                            <h2>Check statistics</h2>
-                            <p>See overall stats, total number of trips, countries visited, spending and access detailed stats per trip, showing expenses by category for a deeper look at where the budget goes.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/detailed_view.svg" alt="Feature detailed view icon">
-                        <div class="content">
-                            <h2>Detailed view</h2>
-                            <p>Check all your trips in a more detailed view for a clearer overview of your travel details and expenses with just one button.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/category.svg" alt="Feature category icon">
-                        <div class="content">
-                            <h2>Choose category</h2>
-                            <p>Select categories from several basic options, such as transport, health, or accommodation. This helps in organizing your expenses more effectively.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/currency.svg" alt="Feature currency icon">
-                        <div class="content">
-                            <h2>Choose currency</h2>
-                            <p>Select the currency in which your expenses are displayed. Additionally, you can enter expenses in any currency, and they will automatically convert to your app’s main currency for a consistent overview.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/register.svg" alt="Feature register via google/apple icon">
-                        <div class="content">
-                            <h2>Register via Google/Apple account</h2>
-                            <p>Log in or register via your Google or Apple account to make the process quicker and more convenient.</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item slide-up">
-                        <img src="../media/features/cloud.svg" alt="Feature cloud sync icon">
-                        <div class="content">
-                            <h2>Cloud sync</h2>
-                            <p>Access your trips anytime, from any device. Your data is securely stored, ensuring that your travel plans are always up-to-date and easily accessible wherever you are</p>
-                        </div>
-                    </div>
+            <div class="overview">
+                <div class="top-arrow">
+                    <img src="../media/icons/top-arrow.png" alt="Top arrow">
                 </div>
-            </div>
-        </section>
+                <div class="right-circle"></div>
+                <div class="left-circle"></div>
 
-        <!-- Space -->
-        <div class="space"></div>
+                <img class="top-section-phones" src="../media/phone-mockups/top-section-phones.png"
+                    alt="Phone overview mockups">
 
-
-        <footer>
-            <div class="footer-container slide-down">
-                <div class="divider"></div>
-                <div class="text">
-                    <h1>Ready to first trip?</h1>
-                </div>
-            
-                <div class="download-buttons">
-                    <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl" class="download-button download-button-apple" target="_blank">
-                        <img src="../media/icons/apple.png" alt="IOS icon">
-                        <div class="text">
-                            <span>Download on the</span>
-                            <strong>App Store</strong>
-                        </div>
-                    </a>
-                    <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl" class="download-button download-button-android" target="_blank">
-                        <img src="../media/icons/android.png" alt="Android icon">
-                        <div class="text">
-                            <span>Get it on</span>
-                            <strong>Google Play</strong>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="contact-us">
-                    <h1>Contact us</h1>
-                    <h2>twincodecorp@gmail.com</h2>
-                </div>
-
-                <div class="privacy-policy">
-                    <a href="{% url 'terms-of-use' %}">Terms of Service</a>
-                    <a href="{% url 'privacy-policy' %}">Privacy Policy</a>
-                    <a onclick="openPopup()">About us</a>
+                <div class="bottom-arrow">
+                    <img src="../media/icons/bottom-arrow.png" alt="Bottom arrow">
                 </div>
             </div>
 
-            <!-- Popup window About us -->
-            <div class="popup-overlay" id="popup">
-                <div class="popup-content">
-                  <span class="close-button" onclick="closePopup()">×</span>
-                  <!-- <h1>About Us</h1> -->
-                  <div class="about-item">
-                          <h3>❤️ Who we are</h3>
-                          <p>
-                              We are a team of young, passionate developers and avid travelers who created Travel Balance out of our love for both programming and exploring the world.
-                          </p>
-                  </div>
-                  <div class="about-item">
-                          <h3>🌎 Our Inspiration</h3>
-                          <p>
-                              As travelers ourselves, we wanted to build a tool that would not only help us track and manage our expenses during our trips but also provide others with an easy and efficient way to handle their travel finances.
-                          </p>
-                  </div>
-                  <div class="about-item">
-                          <h3>🎯 Our Goal</h3>
-                          <p>
-                              Our goal is to offer a practical solution for managing finances across different countries, helping travelers stay organized and stress-free, no matter where they are.
-                          </p>
-                  </div>    
+            <ul class="statistic-bar">
+                <li class="statistic-column">
+                    <span class="stat-number">194+</span>
+                    <span class="stat-label">countries</span>
+                </li>
+                <li class="statistic-column">
+                    <span class="stat-number">170+</span>
+                    <span class="stat-label">currencies</span>
+                </li>
+                <li class="statistic-column">
+                    <span class="stat-number">15</span>
+                    <span class="stat-label">default images</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Space -->
+    <div class="space"></div>
+
+    <!-- Overview section -->
+    <section class="overview-section" id="overview-section">
+        <div class="overview-section-container">
+            <div class="overview-content slide-left">
+                <div class="text-content">
+                    <h1>FOR TRIPS</h1>
+                    <h2>Sign up and add a trip anywhere</h2>
+                    <p>Simply set up a trip, select the country you’re traveling to and personalize it with one of our
+                        default images. It’s all about making your trip uniquely yours!</p>
+                </div>
+                <div class="phone-mockup">
+                    <div class="first-circle"></div>
+                    <div class="second-circle"></div>
+                    <div class="third-circle"></div>
+                    <img src="../media/phone-mockups/phone_for_trips.png" alt="Phone mockup trips screen">
+                    <div class="phone-background"></div>
                 </div>
             </div>
-              
-              <!-- Popup window script -->
-              <script>
-                function openPopup() {
-                    document.getElementById("popup").style.display = "flex";
-                  }
-                  
-                  function closePopup() {
-                    document.getElementById("popup").style.display = "none";
-                  }
-              </script>
 
-        </footer>
+            <div class="overview-content slide-right">
+                <div class="middle-wave"></div>
+                <div class="text-content">
+                    <h1>FOR EXPENSES</h1>
+                    <h2>Track your trip expenses</h2>
+                    <p>Easily add expenses to your trip, pick categories, and check your travel stats anytime to see
+                        how much you’ve spent in each area!</p>
+                </div>
+                <div class="phone-mockup">
+                    <img src="../media/phone-mockups/phone_for_expenses.png" alt="Phone mockup expenses screen">
+                </div>
+            </div>
 
+            <div class="overview-content slide-left">
+                <div class="text-content">
+                    <h1>FOR DETAIL VIEW</h1>
+                    <h2>Switch to detailed view</h2>
+                    <p>Use the toggle button to switch from the photo view of your trips to a compact layout, focusing
+                        solely on expense details without images.</p>
+                </div>
+                <div class="phone-mockup">
+                    <div class="first-circle"></div>
+                    <div class="second-circle"></div>
+                    <div class="third-circle"></div>
+                    <img src="../media/phone-mockups/phone_detailed_view.png" alt="Phone mockup detailed view screen">
+                    <div class="phone-background"></div>
+                </div>
+            </div>
+
+            <div class="overview-content slide-right">
+                <div class="middle-wave"></div>
+                <div class="text-content">
+                    <h1>FOR STATISTICS</h1>
+                    <h2>Check your travel stats</h2>
+                    <p>View your full travel history in one place. See how many trips you’ve completed, count the
+                        countries you’ve explored, and review your total travel spending!</p>
+                </div>
+                <div class="phone-mockup">
+                    <img src="../media/phone-mockups/phone_statistics.png" alt="Phone mockup statistics screen">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features section -->
+    <section class="feature-section" id="feature-section">
+        <div class="feature-section-container">
+            <h1>Features</h1>
+
+            <div class="feature-grid">
+                <div class="feature-item slide-up">
+                    <img src="../media/features/CRUD.svg" alt="Feature CRUD icon">
+                    <div class="content">
+                        <h2>CRUD</h2>
+                        <p>Perform CRUD operations on trips and expenses in a simple and intuitive way.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/pick_image.svg" alt="Feature pick image icon">
+                    <div class="content">
+                        <h2>Pick trip image</h2>
+                        <p>Choose from 15 default images to represent their trips. Each image is carefully selected to
+                            capture a variety of travel themes and destinations.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/statistics.svg" alt="Feature statistics icon">
+                    <div class="content">
+                        <h2>Check statistics</h2>
+                        <p>See overall stats, total number of trips, countries visited, spending and access detailed
+                            stats per trip, showing expenses by category for a deeper look at where the budget goes.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/detailed_view.svg" alt="Feature detailed view icon">
+                    <div class="content">
+                        <h2>Detailed view</h2>
+                        <p>Check all your trips in a more detailed view for a clearer overview of your travel details
+                            and expenses with just one button.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/category.svg" alt="Feature category icon">
+                    <div class="content">
+                        <h2>Choose category</h2>
+                        <p>Select categories from several basic options, such as transport, health, or accommodation.
+                            This helps in organizing your expenses more effectively.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/currency.svg" alt="Feature currency icon">
+                    <div class="content">
+                        <h2>Choose currency</h2>
+                        <p>Select the currency in which your expenses are displayed. Additionally, you can enter
+                            expenses in any currency, and they will automatically convert to your app’s main currency
+                            for a consistent overview.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/register.svg" alt="Feature register via google/apple icon">
+                    <div class="content">
+                        <h2>Register via Google/Apple account</h2>
+                        <p>Log in or register via your Google or Apple account to make the process quicker and more
+                            convenient.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item slide-up">
+                    <img src="../media/features/cloud.svg" alt="Feature cloud sync icon">
+                    <div class="content">
+                        <h2>Cloud sync</h2>
+                        <p>Access your trips anytime, from any device. Your data is securely stored, ensuring that your
+                            travel plans are always up-to-date and easily accessible wherever you are</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Space -->
+    <div class="space"></div>
+
+
+    <footer>
+        <div class="footer-container slide-down">
+            <div class="divider"></div>
+            <div class="text">
+                <h1>Ready to first trip?</h1>
+            </div>
+
+            <div class="download-buttons">
+                <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl"
+                    class="download-button download-button-apple" target="_blank">
+                    <img src="../media/icons/apple.png" alt="IOS icon">
+                    <div class="text">
+                        <span>Download on the</span>
+                        <strong>App Store</strong>
+                    </div>
+                </a>
+                <a href="https://apps.apple.com/pl/app/travelbalance/id6549954832?l=pl"
+                    class="download-button download-button-android" target="_blank">
+                    <img src="../media/icons/android.png" alt="Android icon">
+                    <div class="text">
+                        <span>Get it on</span>
+                        <strong>Google Play</strong>
+                    </div>
+                </a>
+            </div>
+
+            <div class="contact-us">
+                <h1>Contact us</h1>
+                <h2>twincodecorp@gmail.com</h2>
+            </div>
+
+            <div class="privacy-policy">
+                <a href="{% url 'terms-of-use' %}">Terms of Service</a>
+                <a href="{% url 'privacy-policy' %}">Privacy Policy</a>
+                <a onclick="openPopup()">About us</a>
+            </div>
+        </div>
+
+        <!-- Popup window About us -->
+        <div class="popup-overlay" id="popup">
+            <div class="popup-content">
+                <span class="close-button" onclick="closePopup()">×</span>
+                <!-- <h1>About Us</h1> -->
+                <div class="about-item">
+                    <h3>❤️ Who we are</h3>
+                    <p>
+                        We are a team of young, passionate developers and avid travelers who created Travel Balance out
+                        of our love for both programming and exploring the world.
+                    </p>
+                </div>
+                <div class="about-item">
+                    <h3>🌎 Our Inspiration</h3>
+                    <p>
+                        As travelers ourselves, we wanted to build a tool that would not only help us track and manage
+                        our expenses during our trips but also provide others with an easy and efficient way to handle
+                        their travel finances.
+                    </p>
+                </div>
+                <div class="about-item">
+                    <h3>🎯 Our Goal</h3>
+                    <p>
+                        Our goal is to offer a practical solution for managing finances across different countries,
+                        helping travelers stay organized and stress-free, no matter where they are.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup window script -->
         <script>
-            const boxes = document.querySelectorAll('.overview-content, .feature-item, .footer-container');
+            function openPopup() {
+                document.getElementById("popup").style.display = "flex";
+            }
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1  
-            });
-
-            boxes.forEach(box => {
-                observer.observe(box);
-            });
+            function closePopup() {
+                document.getElementById("popup").style.display = "none";
+            }
         </script>
+
+    </footer>
+
+    <script>
+        const boxes = document.querySelectorAll('.overview-content, .feature-item, .footer-container');
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        boxes.forEach(box => {
+            observer.observe(box);
+        });
+    </script>
 </body>
+
 </html>

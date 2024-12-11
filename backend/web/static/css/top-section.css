@@ -2,21 +2,50 @@
 @import url("download-buttons.css");
 
 /* Top main section */
-.top-section{
+.top-section {
     background: linear-gradient(180deg, #CADD61 0%, #F8F9FA 100%);
 }
 
-.top-section .top-section-container{
+.top-section .top-wave {
+    position: absolute;
+    width: 700px;
+    height: auto;
+    top: -390px;
+    right: -400px;
+    z-index: 1;
+}
+
+.top-section .bottom-wave {
+    position: absolute;
+    width: 700px;
+    height: auto;
+    top: 320px;
+    left: -450px;
+    z-index: 1;
+    transform: rotate(30deg);
+}
+
+@media (max-width: 1240px) {
+    .top-section .top-wave {
+        display: none;
+    }
+
+    .top-section .bottom-wave {
+        display: none;
+    }
+}
+
+.top-section .top-section-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px;
 }
 
 .top-section .main-information {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 50px 50px 20px 50px; 
+    padding: 50px 50px 20px 50px;
 }
 
 .top-section .main-information h1 {
@@ -31,12 +60,17 @@
     margin-bottom: -10px;
 }
 
-.top-section .overview{
+.top-section .overview {
     position: relative;
     z-index: 0;
 }
 
-.top-section .overview .top-arrow img{
+.top-section .overview .top-section-phones {
+    display: block;
+    margin: 0 auto;
+}
+
+.top-section .overview .top-arrow img {
     width: 70px;
     height: auto;
     position: absolute;
@@ -54,9 +88,10 @@
     height: auto;
     gap: 10px;
     padding: 80px 0 20px 0;
-} 
+    margin: 0 auto;
+}
 
-.top-section .overview .bottom-arrow img{
+.top-section .overview .bottom-arrow img {
     width: 75px;
     height: auto;
     position: absolute;
@@ -65,39 +100,39 @@
     transform: rotate(-10deg);
 }
 
-.top-section .overview .right-circle{
-    height: 50px; 
-    width: 50px; 
+.top-section .overview .right-circle {
+    height: 50px;
+    width: 50px;
     background: linear-gradient(90deg, #FA5958, #F5658F, #FDB653);
-    border-radius: 50%; 
+    border-radius: 50%;
     position: absolute;
     top: 70px;
     right: -10px;
     z-index: -1;
 }
 
-.top-section .overview .left-circle{
-    height: 70px; 
-    width: 70px; 
+.top-section .overview .left-circle {
+    height: 70px;
+    width: 70px;
     background: linear-gradient(90deg, #E2B48E, #E29669);
-    border-radius: 50%; 
+    border-radius: 50%;
     position: absolute;
     top: 78px;
     left: -35px;
     z-index: -1;
 }
 
-.top-section .overview{
+.top-section .overview {
     display: flex;
     justify-self: center;
 }
 
-.top-section .overview img{
+.top-section .overview img {
     padding-top: 50px;
     max-width: 100%;
 }
 
-.top-section .statistic-bar{
+.top-section .statistic-bar {
     height: 55px;
     border-radius: 21rem;
     background: #CADD61;
@@ -110,32 +145,31 @@
     max-width: 550px;
 }
 
-.top-section .statistic-bar .statistic-column{
-    display: flex; 
+.top-section .statistic-bar .statistic-column {
+    display: flex;
     flex-direction: column;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
 
-.top-section .statistic-bar .stat-number{
+.top-section .statistic-bar .stat-number {
     font-size: 17px;
     font-weight: bold;
 }
 
-.top-section .statistic-bar .stat-label{
+.top-section .statistic-bar .stat-label {
     font-size: 16px;
 }
 
-@media (min-width: 756px){
-    .top-section .download-buttons{
+@media (min-width: 756px) {
+    .top-section .download-buttons {
         display: flex;
         flex-direction: row;
         justify-content: center;
-        grid-template-columns: repeat(2, 1fr);  
         padding-top: 80px;
     }
 
-    .top-section .overview .top-arrow img{
+    .top-section .overview .top-arrow img {
         width: 70px;
         height: auto;
         position: absolute;
@@ -143,8 +177,8 @@
         top: -200px;
         transform: rotate(10deg);
     }
-    
-    .top-section .overview .bottom-arrow img{
+
+    .top-section .overview .bottom-arrow img {
         width: 75px;
         height: auto;
         position: absolute;
