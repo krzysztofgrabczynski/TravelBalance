@@ -186,5 +186,14 @@
         top: -40px;
         transform: rotate(-30deg);
     }
+}
 
+@media (max-width: 420px) {
+    .top-section .statistic-bar .stat-label {
+        font-size: 13px;
+    }
+
+    .top-section .statistic-bar .stat-number {
+        font-size: 15px;
+    }
 }
