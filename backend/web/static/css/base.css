@@ -11,6 +11,7 @@ html, body {
     background-color: var(--background-color);
     scroll-behavior: smooth;
     scroll-padding-top: 50px;
+    overflow-x: hidden;
 }
 
 .container{ 
