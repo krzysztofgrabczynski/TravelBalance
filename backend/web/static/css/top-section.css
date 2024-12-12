@@ -188,12 +188,23 @@
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 450px) {
     .top-section .statistic-bar .stat-label {
         font-size: 13px;
     }
 
     .top-section .statistic-bar .stat-number {
         font-size: 15px;
+    }
+
+    .top-section .overview .top-arrow img {
+        right: 50px;
+        top: -270px;
+        transform: rotate(0deg);
+    }
+
+    .top-section .overview .bottom-arrow img {
+        left: 50px;
+        top: -53px;
     }
 }
