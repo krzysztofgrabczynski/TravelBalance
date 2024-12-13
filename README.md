@@ -9,6 +9,12 @@ This app was created by a team of two passionate developers and avid travelers:
 - the mobile application frontend was created by https://github.com/BartlomiejGajdur
 - the backend and official website were implemented by me
 
+<br>
+
+## Preview
+<p align="center">
+  <img src="">
+</p>
 
 ## Description
 TravelBalance is a comprehensive mobile application designed for managing your travel expenses, available for both iOS and Android platforms. It provides features like adding trips, where you can choose a photo from a default images and optionally choose the countries you're visiting. Within each trip, you can log expenses in any currency, and the app will automatically convert them into your selected base currency (you can set base currency in main settings of the application). The app generates detailed visual statistics, including graph showing how much you've spent on different categories during each trip. On the main screen, you can view overall statistics, including the number of trips you've taken, the countries you've visited, and your total spending in your base currency. Additionally, TravelBalance offers a Pro version, which removes advertisements and provides an enhanced, ad-free experience.
@@ -37,12 +43,6 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 <a href="https://www.cloudflare.com/"> <img src="https://github.com/devicons/devicon/blob/master/icons/cloudflare/cloudflare-original-wordmark.svg" alt="cloudflare" width="60" height="60"/> </a>
 </p>
 <br>  
-
-## Preview
-<p align="center">
-  <img src="">
-</p>
-
 
 ## Features
 - [x] [log in/sign up with basic method or using google/apple]()
