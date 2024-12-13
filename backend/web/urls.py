@@ -15,4 +15,9 @@ urlpatterns = [
         views.TermsOfUsereView.as_view(),
         name="terms-of-use",
     ),
+    path(
+        "account-deletion/",
+        views.AccountDeletionView.as_view(),
+        name="account-deletion",
+    ),
 ]
