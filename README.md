@@ -45,5 +45,13 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 
 
 ## Features
+- [x] [log in/sign up with basic method or using google/apple]()
+- [x] [manage your trips]()
+- [x] [manage your expenses]()
+- [x] [change base currency]()
+- [x] [change your password]()
+- [x] [see detailed view of all trips]()
+
+
 
 [Go to top](#top) 
