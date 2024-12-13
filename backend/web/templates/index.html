@@ -318,20 +318,20 @@
                 </div>
             </div>
         </div>
-
-        <!-- Popup window script -->
-        <script>
-            function openPopup() {
-                document.getElementById("popup").style.display = "flex";
-            }
-
-            function closePopup() {
-                document.getElementById("popup").style.display = "none";
-            }
-        </script>
-
     </footer>
 
+    <!-- Popup window script -->
+    <script>
+        function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+    </script>
+
+    <!-- Animations script -->
     <script>
         const boxes = document.querySelectorAll('.overview-content, .feature-item, .footer-container');
 
@@ -350,6 +350,7 @@
             observer.observe(box);
         });
     </script>
+    
 </body>
 
 </html>
