@@ -22,7 +22,7 @@ This app was created by a team of two passionate developers and avid travelers:
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bd70bd8a-ea00-41ff-8281-1604a46d8e36" width="253" height="549"/>
   <img src="https://github.com/user-attachments/assets/52b35338-129c-4b35-b3fa-8f7e0a062d0e" width="253" height="549"/>
-  <img src="https://github.com/user-attachments/assets/c229c7c5-473e-4784-921f-6abf1b306eb3" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/5df7e0be-3708-483c-b14a-22693cff5135" width="253" height="549"/>
 </p>
 
 ## Description
