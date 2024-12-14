@@ -13,7 +13,14 @@ This app was created by a team of two passionate developers and avid travelers:
 
 ## Preview
 <p align="center">
-  <img src="">
+  <img src="https://github.com/user-attachments/assets/d15721d4-e8ac-4949-abbc-9983c25eb278" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/03a2f777-bb82-47bf-9593-fac2d3ea3266" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/d01f9a58-831f-4ec1-a10a-806d7b1c0151" width="253" height="549"/>
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bd70bd8a-ea00-41ff-8281-1604a46d8e36" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/52b35338-129c-4b35-b3fa-8f7e0a062d0e" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/c229c7c5-473e-4784-921f-6abf1b306eb3" width="253" height="549"/>
 </p>
 
 ## Description
@@ -52,6 +59,8 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 - [x] [change your password]()
 - [x] [see detailed view of all trips]()
 
+
+https://github.com/user-attachments/assets/11727c13-a21c-4d38-bd5a-cdeb4740b7f1
 
 
 [Go to top](#top) 
