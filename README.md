@@ -7,7 +7,7 @@
 
 This app was created by a team of two passionate developers and avid travelers:
 - the mobile application frontend was created by https://github.com/BartlomiejGajdur
-- the backend and official website were implemented by me
+- the backend and <i><a href="https://www.travelbalance.pl">official website</a></i> were implemented by me
 
 <br>
 
@@ -26,7 +26,7 @@ This app was created by a team of two passionate developers and avid travelers:
 ## Description
 TravelBalance is a comprehensive mobile application designed for managing your travel expenses, available for both iOS and Android platforms. It provides features like adding trips, where you can choose a photo from a default images and optionally choose the countries you're visiting. Within each trip, you can log expenses in any currency, and the app will automatically convert them into your selected base currency (you can set base currency in main settings of the application). The app generates detailed visual statistics, including graph showing how much you've spent on different categories during each trip. On the main screen, you can view overall statistics, including the number of trips you've taken, the countries you've visited, and your total spending in your base currency. Additionally, TravelBalance offers a Pro version, which removes advertisements and provides an enhanced, ad-free experience.
 
-The design of the application was created using Figma, ensuring a user-friendly and visually appealing experience. The frontend was developed by https://github.com/BartlomiejGajdur using Flutter, providing a smooth and responsive interface across both iOS and Android devices. The backend was built by me using the Django Rest Framework, ensuring secure and efficient handling of data. I also developed the official website for the app using HTML, CSS, JavaScript and took care of the server set up on a virtual machine. 
+The design of the application was created using Figma, ensuring a user-friendly and visually appealing experience. The frontend was developed by https://github.com/BartlomiejGajdur using Flutter, providing a smooth and responsive interface across both iOS and Android devices. The backend was built by me using the Django Rest Framework, ensuring secure and efficient handling of data. I also developed the <i><a href="https://www.travelbalance.pl">official website</a></i> for the app using HTML, CSS, JavaScript and took care of the server set up on a virtual machine. 
 
 To enhance user convenience, the app uses TokenAuthentication and social-oauth2, allowing users to register and log in seamlessly with their Google or Apple ID accounts.
 
