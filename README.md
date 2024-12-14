@@ -63,21 +63,19 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 
 
 ## User management
-- Traditional Registration:
-Users can sign up by providing their email and password. After registration, they will receive an activation link via email. Clicking this link activates their account and grants access to the platform.
-<p align="center"><img src="" width="253" height="549"/></p>
-
-- Simplified Registration:
-For a faster and more convenient experience, users can register and log in using Google Sign-In or Apple Sign-In, skipping the need for manual account activation.
-<p align="center"><img src="" width="253" height="549"/></p>
+- Users can sign up in the traditional way by providing their username, email and password. After registration, they will receive an activation link via email. Clicking this link activates their account and grants access to the platform. Users can also log in using Google Sign-In or Apple Sign-In for a faster and more convenient experience.
+<p align="center"><img src="https://github.com/user-attachments/assets/2b069d91-c72b-4a7f-8b2b-26544d93d7b3" width="253" height="549"/></p>
 
 - Password Recovery:
 If users forget their password, they can easily recover it by requesting a 5-digit token, which will be sent to their registered email address. This token can be used to securely reset their password.
-<p align="center"><img src="" width="253" height="549"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/e24da631-ebc7-4dfd-901d-9443b72c0ddc" width="253" height="549"/></p>
 
 - Password Management:
 Users who registered traditionally can change their password at any time through the application settings.
-<p align="center"><img src="" width="253" height="549"/></p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c05ed5ce-df9c-45a6-aa71-795e3e44a132" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/67a1b507-d3af-46c0-bc87-7af0a53bb3a4" width="253" height="549"/>
+</p>
 
 [Go to top](#top) 
 
@@ -85,9 +83,9 @@ Users who registered traditionally can change their password at any time through
 Adding/Editing/Deleting a Trip:
 Users can create a new trip by providing a name, selecting one of the available default images, and adding the countries they plan to visit. Users can then edit a trip by clicking the edit icon in the top-right corner of the trip view. There are also two ways to delete a specific trip: either during the editing process or by simply swiping left on the trip in the main screen for quick deletion.
 <p align="center">
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/852c53c5-e068-4d21-83bb-2e67da21d4f4" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/ddf0c585-ae24-45c6-b40e-aab1228f6c09" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/f82758cc-ce42-4a22-9d8b-e17212f35825" width="253" height="549"/>
 </p>
 
 [Go to top](#top) 
@@ -95,8 +93,8 @@ Users can create a new trip by providing a name, selecting one of the available 
 ## Toggle trip view
 Users can use a switch on the main screen of the application to toggle between two trip views: normal view with all information and detailed view without images, providing a more streamlined and detailed list.
 <p align="center">
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/e538d299-20d1-4383-b549-80594391e2f1" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/c8d5dbea-b06d-4c6b-9b35-320da9c5e3d1" width="253" height="549"/>
 </p>
 
 [Go to top](#top) 
@@ -107,9 +105,8 @@ Users can add an expense to a trip by providing details such as the name, amount
 
 Note: The value of each expense is displayed in the currency it was originally added in. However, for the total trip expenses, each expense is automatically converted to the base currency, which can be configured by the user in the application settings.
 <p align="center">
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/eaaf5a0e-2c18-4e35-ba1f-465f96149a85" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/1f61375c-af94-4853-88ab-2f74c9882438" width="253" height="549"/>
 </p>
 
 [Go to top](#top) 
@@ -117,8 +114,8 @@ Note: The value of each expense is displayed in the currency it was originally a
 ## Set base currency
 In the main settings of the application, users can set their **base currency**. All expenses will be automatically converted to this base currency. This allows users to see the total cost of each trip on the main screen in their chosen base currency, providing a more convenient and consistent view for better user experience. User can change the **base currency** at any time.
 <p align="center">
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/da0021e2-d49d-4221-b2c8-2faeb4035e80" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/1028503f-cb9b-4497-b621-ad8b41588c65" width="253" height="549"/>
 </p>
 
 [Go to top](#top) 
@@ -126,8 +123,8 @@ In the main settings of the application, users can set their **base currency**. 
 ## Purchase a premium version
 In the main settings, users can also purchase a lifetime premium version of the app. With the premium version, users will enjoy an ad-free experience and have access to unlimited features, without any restrictions.
 <p align="center">
-  <img src="" width="253" height="549"/>
-  <img src="" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/cf5df028-e2bb-40ba-acde-a201ed872e7e" width="253" height="549"/>
+  <img src="https://github.com/user-attachments/assets/44c3c207-9f17-45df-ae08-c9a297924465" width="253" height="549"/>
 </p>
 
 [Go to top](#top) 
