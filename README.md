@@ -1,6 +1,8 @@
 
 # <p align=center> <a name="top">TravelBalance</a></p>
 
+<p align=center><strong>Official website: <i>https://www.travelbalance.pl</i></strong></p>
+
 
 ## Short overview
 **TravelBalance** is a mobile application for iOS and Android designed to help you manage your expenses while traveling. It allows users to easily create trips to any destination, add expenses in any currency, and seamlessly display all statistics, converting them into a chosen base currency. Our goal is to provide a practical solution for managing travel finances and helping travelers stay organized and stress-free.
@@ -52,15 +54,29 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 <br>  
 
 ## Features
-- [x] [log in/sign up with basic method or using google/apple]()
+- [x] [user management](user-management)
 - [x] [manage your trips]()
 - [x] [manage your expenses]()
 - [x] [change base currency]()
 - [x] [change your password]()
 - [x] [see detailed view of all trips]()
 
+## User management
 
-https://github.com/user-attachments/assets/11727c13-a21c-4d38-bd5a-cdeb4740b7f1
+- Traditional Registration:
+Users can sign up by providing their email and password. After registration, they will receive an activation link via email. Clicking this link activates their account and grants access to the platform.
+<p align="center"><img src="" width="253" height="549"/></p>
 
+- Simplified Registration:
+For a faster and more convenient experience, users can register and log in using Google Sign-In or Apple Sign-In, skipping the need for manual account activation.
+<p align="center"><img src="" width="253" height="549"/></p>
+
+- Password Recovery:
+If users forget their password, they can easily recover it by requesting a 5-digit token, which will be sent to their registered email address. This token can be used to securely reset their password.
+<p align="center"><img src="" width="253" height="549"/></p>
+
+- Password Management:
+Users who registered traditionally can change their password at any time through the application settings.
+<p align="center"><img src="" width="253" height="549"/></p>
 
 [Go to top](#top) 
