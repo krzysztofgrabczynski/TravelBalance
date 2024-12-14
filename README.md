@@ -58,8 +58,8 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 - [x] [trip management](#trip-management)
 - [x] [toggle trip view](#toggle-trip-view)
 - [x] [expense management](#expense-management)
-- [x] [change base currency]()
-- [x] [purchase a premium version]() 
+- [x] [set base currency](#set-base-currency)
+- [x] [purchase a premium version](#purchase-a-premium-version) 
 
 
 ## User management
@@ -92,7 +92,7 @@ Users can create a new trip by providing a name, selecting one of the available 
 
 [Go to top](#top) 
 
-## Detailed view of all trips
+## Toggle trip view
 Users can use a switch on the main screen of the application to toggle between two trip views: normal view with all information and detailed view without images, providing a more streamlined and detailed list.
 <p align="center">
   <img src="" width="253" height="549"/>
@@ -108,6 +108,24 @@ Users can add an expense to a trip by providing details such as the name, amount
 Note: The value of each expense is displayed in the currency it was originally added in. However, for the total trip expenses, each expense is automatically converted to the base currency, which can be configured by the user in the application settings.
 <p align="center">
   <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+</p>
+
+[Go to top](#top) 
+
+## Set base currency
+In the main settings of the application, users can set their **base currency**. All expenses will be automatically converted to this base currency. This allows users to see the total cost of each trip on the main screen in their chosen base currency, providing a more convenient and consistent view for better user experience. User can change the **base currency** at any time.
+<p align="center">
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+</p>
+
+[Go to top](#top) 
+
+## Purchase a premium version
+In the main settings, users can also purchase a lifetime premium version of the app. With the premium version, users will enjoy an ad-free experience and have access to unlimited features, without any restrictions.
+<p align="center">
   <img src="" width="253" height="549"/>
   <img src="" width="253" height="549"/>
 </p>
