@@ -54,7 +54,7 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 <br>  
 
 ## Features
-- [x] [user management](user-management)
+- [x] [user management](#user-management)
 - [x] [manage your trips]()
 - [x] [manage your expenses]()
 - [x] [change base currency]()
