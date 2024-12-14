@@ -55,14 +55,14 @@ To enhance user convenience, the app uses TokenAuthentication and social-oauth2,
 
 ## Features
 - [x] [user management](#user-management)
-- [x] [manage your trips]()
-- [x] [manage your expenses]()
+- [x] [trip management](#trip-management)
+- [x] [toggle trip view](#toggle-trip-view)
+- [x] [expense management](#expense-management)
 - [x] [change base currency]()
-- [x] [change your password]()
-- [x] [see detailed view of all trips]()
+- [x] [purchase a premium version]() 
+
 
 ## User management
-
 - Traditional Registration:
 Users can sign up by providing their email and password. After registration, they will receive an activation link via email. Clicking this link activates their account and grants access to the platform.
 <p align="center"><img src="" width="253" height="549"/></p>
@@ -78,5 +78,38 @@ If users forget their password, they can easily recover it by requesting a 5-dig
 - Password Management:
 Users who registered traditionally can change their password at any time through the application settings.
 <p align="center"><img src="" width="253" height="549"/></p>
+
+[Go to top](#top) 
+
+## Trip management
+Adding/Editing/Deleting a Trip:
+Users can create a new trip by providing a name, selecting one of the available default images, and adding the countries they plan to visit. Users can then edit a trip by clicking the edit icon in the top-right corner of the trip view. There are also two ways to delete a specific trip: either during the editing process or by simply swiping left on the trip in the main screen for quick deletion.
+<p align="center">
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+</p>
+
+[Go to top](#top) 
+
+## Detailed view of all trips
+Users can use a switch on the main screen of the application to toggle between two trip views: normal view with all information and detailed view without images, providing a more streamlined and detailed list.
+<p align="center">
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+</p>
+
+[Go to top](#top) 
+
+## Expense management
+Adding/Editing/Deleting an Expense:
+Users can add an expense to a trip by providing details such as the name, amount, currency, and category. Every expense can be edited by tapping on it in the expense list. Users can delete an expense in two ways: either during the editing process or by swiping left on the expense in the list for quick deletion.
+
+Note: The value of each expense is displayed in the currency it was originally added in. However, for the total trip expenses, each expense is automatically converted to the base currency, which can be configured by the user in the application settings.
+<p align="center">
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+  <img src="" width="253" height="549"/>
+</p>
 
 [Go to top](#top) 
