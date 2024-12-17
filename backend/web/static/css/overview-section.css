@@ -22,25 +22,30 @@
 
 .overview-content {
     display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
     justify-items: center;
     position: relative;
     z-index: 0;
+}
+
+.overview-animation {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
     padding: 50px 0 50px;
     opacity: 0;
     transform: translateX(0%);
     transition: transform 1s ease-out, opacity 1s ease-out;
 }
 
-.overview-section .overview-content .text-content {
+.text-content {
     display: flex;
     flex-direction: column;
     text-align: center;
     padding: 10px 20px 20px;
 }
 
-.overview-section .overview-content .text-content h1 {
+.text-content h1 {
     color: #FF8704;
     font-size: 16px;
     font-weight: 600;
@@ -48,14 +53,14 @@
     margin-bottom: 0;
 }
 
-.overview-section .overview-content .text-content h2 {
+.text-content h2 {
     color: var(--primary-font-color);
     font-size: 30px;
     font-weight: bold;
     margin-bottom: 0;
 }
 
-.overview-section .overview-content .text-content p {
+.text-content p {
     color: var(--secondary-font-color);
     font-size: 16px;
 }
@@ -78,7 +83,7 @@
     opacity: 1;
 }
 
-.overview-section .overview-content .phone-mockup .first-circle {
+.phone-mockup .first-circle {
     height: 14px;
     width: 14px;
     background: linear-gradient(90deg, #DAA5DE, #AC8BF0);
@@ -88,7 +93,7 @@
     right: -40px;
 }
 
-.overview-section .overview-content .phone-mockup .second-circle {
+.phone-mockup .second-circle {
     height: 14px;
     width: 14px;
     background: linear-gradient(90deg, #D0AFD1, #DDA8B7);
@@ -98,7 +103,7 @@
     right: -70px;
 }
 
-.overview-section .overview-content .phone-mockup .third-circle {
+.phone-mockup .third-circle {
     height: 22px;
     width: 22px;
     background: linear-gradient(90deg, #E2B48E, #E29669);
@@ -108,7 +113,7 @@
     left: -70px;
 }
 
-.overview-section .overview-content img {
+.overview-animation img {
     position: relative;
     z-index: 1;
     display: block;
@@ -116,7 +121,7 @@
     max-width: 100%;
 }
 
-.overview-section .overview-content .phone-mockup .phone-background {
+.phone-mockup .phone-background {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -128,35 +133,35 @@
 }
 
 @media (min-width: 756px) {
-    .overview-section .overview-content {
+    .overview-animation{
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
-    .overview-section .overview-content:nth-child(odd) .text-content {
+    .overview-animation:nth-child(odd) .text-content {
         order: 2;
         text-align: left;
         align-self: center;
     }
 
-    .overview-section .overview-content:nth-child(odd) .phone-mockup {
+    .overview-animation:nth-child(odd) .phone-mockup {
         order: 1;
     }
 
-    .overview-section .overview-content:nth-child(even) .text-content {
+    .overview-animation:nth-child(even) .text-content {
         order: 1;
         align-self: center;
         text-align: left;
         padding-left: 50px;
     }
 
-    .overview-section .overview-content:nth-child(even) .phone-mockup {
+    .overview-animation:nth-child(even) .phone-mockup {
         order: 2;
     }
 }
 
 @media (max-width: 370px) {
-    .overview-section .overview-content .phone-mockup .first-circle {
+    .overview-animation .phone-mockup .first-circle {
         height: 14px;
         width: 14px;
         background: linear-gradient(90deg, #DAA5DE, #AC8BF0);
@@ -166,7 +171,7 @@
         right: -30px;
     }
 
-    .overview-section .overview-content .phone-mockup .second-circle {
+    .overview-animation .phone-mockup .second-circle {
         height: 14px;
         width: 14px;
         background: linear-gradient(90deg, #D0AFD1, #DDA8B7);
@@ -176,7 +181,7 @@
         right: -50px;
     }
 
-    .overview-section .overview-content .phone-mockup .third-circle {
+    .overview-animation .phone-mockup .third-circle {
         height: 22px;
         width: 22px;
         background: linear-gradient(90deg, #E2B48E, #E29669);
