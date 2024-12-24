@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "api.trip",
     "api.expense",
     "api.currency",
+    "api.subscription",
     # social_auth
     "oauth2_provider",
     "social_django",
