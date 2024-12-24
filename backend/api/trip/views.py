@@ -9,7 +9,7 @@ from api.trip.models import Trip
 from api.expense.models import Expense
 from api.trip.serializers import TripReadSerializer, TripWriteSerializer
 from api.permissions import ObjectOwnerPermission
-from api.subscription_restrictions import add_trip_limit
+from api.subscription.subscription_restrictions import add_trip_limit
 
 
 @method_decorator(add_trip_limit, name="create")
