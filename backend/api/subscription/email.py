@@ -9,8 +9,12 @@ class PurchaseSubscriptionNotification(BaseEmailMessage):
 
     def __init__(self, context=None, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
-        purchase_failed = self.context.get("purchase_failed", None)
-        if purchase_failed:
+        status = self.context.get("status")
+        if status == "FAILED":
             self.email_subject = "TravelBalance purchase subscription - FAILED"
-        else:
+        elif status == "PASSED":
             self.email_subject = "TravelBalance purchase subscription - PASSED"
+        else:
+            self.email_subject = (
+                "TravelBalance purchase subscription - FAILED IN STATUS"
+            )
