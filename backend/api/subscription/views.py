@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 
 from api.subscription.JWT import generate_app_store_server_jwt
+from api.subscription.tasks import send_purchase_subscription_notification
 
 
 load_dotenv()
@@ -14,12 +15,46 @@ load_dotenv()
 
 class Subscription(APIView):
     def post(self, request, *args, **kwargs):
+        status_code = None
+
+        try:
+            data, user_id = self.subscription(request, *args, **kwargs)
+            status_code = 200
+            email_context = {
+                "subscription_data": data,
+                "status": "PASSED",
+                "user_id": user_id,
+                "to": os.environ.get("EMAIL_HOST_USER"),
+            }
+        except PermissionDenied as e:
+            status_code = e.detail
+            email_context = {
+                "status": "FAILED",
+                "status_code": status_code,
+                "to": os.environ.get("EMAIL_HOST_USER"),
+            }
+        except Exception as e:
+            status_code = 3000
+            email_context = {
+                "status": "FAILED",
+                "status_code": status_code,
+                "message": str(e),
+                "to": os.environ.get("EMAIL_HOST_USER"),
+            }
+
+        send_purchase_subscription_notification.delay(email_context)
+        return Response(
+            {"status_code": status_code},
+            status=200 if status_code == 200 else 401,
+        )
+
+    def subscription(self, request, *args, **kwargs):
         user = request.user
         if not user.is_authenticated:
-            raise PermissionDenied("status=2001")
+            raise PermissionDenied("2001")
         transaction_id = request.data.get("transaction_id")
         if not transaction_id:
-            raise PermissionDenied("status=2002")
+            raise PermissionDenied("2002")
 
         environment = request.data.get("environment", "PRODUCTION")
         if environment == "SANDBOX":
@@ -48,12 +83,12 @@ class Subscription(APIView):
         if not decoded_transaction["bundleId"] == os.environ.get(
             "IOS_IAP_BID"
         ):
-            raise PermissionDenied("status=2003")
+            raise PermissionDenied("2003")
 
         try:
             user.is_premium = True
             user.save()
         except:
-            raise PermissionDenied("status=2004")
+            raise PermissionDenied("2004")
 
-        return Response(status=200)
+        return decoded_transaction, user.id
