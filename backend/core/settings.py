@@ -235,6 +235,12 @@ FEEDBACK_SEND_NOTIFICATION_EMAIL_TEMPLATE = (
 )
 FEEDBACK_SEND_NOTIFICATION_EMAIL_SUBJECT = None
 
+# Purchase subscription send notification email
+PURCHASE_SUBSCRIPTION_NOTIFICATION_EMAIL_TEMPLATE = (
+    "purchase_subscription_notification_email_template.html"
+)
+PURCHASE_SUBSCRIPTION_NOTIFICATION_EMAIL_SUBJECT = None
+
 # Celery and Redis
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
