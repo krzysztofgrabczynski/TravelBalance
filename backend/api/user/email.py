@@ -1,5 +1,4 @@
 from django.core.mail import EmailMultiAlternatives
-from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.encoding import force_bytes
