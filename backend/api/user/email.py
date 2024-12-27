@@ -94,5 +94,5 @@ class FeedbackSendNotification(BaseEmailMessage):
     def __init__(self, context=None, *args, **kwargs):
         super().__init__(context, *args, **kwargs)
         feedback_type = self.context.get("feedback_type")
-        if "feedback_type":
+        if feedback_type:
             self.email_subject = f"Feedback semd from TravelBalance application - {feedback_type}"
