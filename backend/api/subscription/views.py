@@ -27,10 +27,16 @@ class Subscription(APIView):
                 "to": os.environ.get("EMAIL_HOST_USER"),
             }
         except PermissionDenied as e:
-            status_code = e.detail
+            if isinstance(e.detail, dict):
+                status_code = e.detail["status"]
+                error_msg = e.detail["error_msg"]
+            else:
+                status_code = e.detail
+                error_msg = None
             email_context = {
                 "status": "FAILED",
                 "status_code": status_code,
+                "message": error_msg,
                 "to": os.environ.get("EMAIL_HOST_USER"),
             }
         except Exception as e:
@@ -74,6 +80,11 @@ class Subscription(APIView):
         transaction = requests.get(url=url_path, headers=headers)
         response_data = transaction.json()
 
+        if "errorMessage" in response_data:
+            raise PermissionDenied(
+                {"status": "2005", "error_msg": response_data["errorMessage"]}
+            )
+
         decoded_transaction = jwt.decode(
             response_data["signedTransactionInfo"],
             algorithms="ES256",
@@ -93,6 +104,8 @@ class Subscription(APIView):
 
         return decoded_transaction, user.id
 
+
+# TESTING APPLE SERVER NOTIFICATIONS
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
