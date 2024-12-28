@@ -49,6 +49,9 @@ venv/
 *.a
 *.lib
 
+# Pem files
+*.p8
+
 # Executables
 *.exe
 *.out
