@@ -92,3 +92,25 @@ class Subscription(APIView):
             raise PermissionDenied("2004")
 
         return decoded_transaction, user.id
+
+
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse
+
+
+@require_POST
+@csrf_exempt
+def subscription_notifications(request):
+    print("Start subscription notifications...")
+    print("Request: ", request)
+    print("Request dir: ", dir(request))
+    print("Request vars: ", vars(request))
+    try:
+        data = request.data
+        print("data: ", data)
+    except:
+        print("nie udalo sie printowac daty")
+
+    print("End subscription notifications...")
+    return HttpResponse("subscription notifications not impemented")

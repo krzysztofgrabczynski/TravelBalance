@@ -28,4 +28,9 @@ urlpatterns = [
         subscription_views.Subscription.as_view(),
         name="subscription",
     ),
+    path(
+        "subscription/notifications/",
+        subscription_views.subscription_notifications,
+        name="subscription-notifications",
+    ),
 ]
