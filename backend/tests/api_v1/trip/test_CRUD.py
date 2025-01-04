@@ -132,7 +132,7 @@ class TestListTrips(AuthenticateUserWithTokenMixin, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response_content["trips"]), len(trips))
 
-    def test_list_trips_statistics(self):
+    def test_list_trips_statistics_total_trips_amount(self):
         trip = Trip.objects.create(
             user=self.user,
             name="test_trip",
@@ -153,4 +153,42 @@ class TestListTrips(AuthenticateUserWithTokenMixin, TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(statistics["total_trips_amount"], 2)
-        self.assertEqual(statistics["visited_countries_amount"], 1)
+
+    def test_list_trips_statistics_visited_country_amount(self):
+        self.country_1 = Country.objects.create(name="test_country_1")
+        self.country_2 = Country.objects.create(name="test_country_2")
+        self.country_3 = Country.objects.create(name="test_country_3")
+
+        trip_1 = Trip.objects.create(
+            user=self.user,
+            name="test_trip",
+            currencies_rates=self.currency,
+        )
+        trip_1.countries.set([self.country_1.id, self.country_2.id])
+
+        trip_2 = Trip.objects.create(
+            user=self.user,
+            name="test_trip",
+            currencies_rates=self.currency,
+        )
+        trip_2.countries.set([self.country_1.id])
+
+        trip_3 = Trip.objects.create(
+            user=self.user,
+            name="test_trip",
+            currencies_rates=self.currency,
+        )
+        trip_3.countries.set(
+            [self.country_1.id, self.country_2.id, self.country_3.id]
+        )
+
+        response = self.client.get("/api/v1/trip/")
+        response_content = json.loads(response.content.decode("utf-8"))
+        statistics = response_content["statistics"]
+
+        expected_result = 3
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            statistics["visited_countries_amount"], expected_result
+        )
