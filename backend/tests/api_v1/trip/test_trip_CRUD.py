@@ -53,11 +53,10 @@ class TestCRUDTrip(AuthenticateUserWithTokenMixin, TestCase):
         trip.countries.set([self.country.id])
 
         response = self.client.get(f"/api/v1/trip/{trip.id}/")
-        trip = Trip.objects.first()
+        response_content = json.loads(response.content.decode("utf-8"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(trip.user, self.user)
-        self.assertEqual(trip.name, "test_trip")
+        self.assertEqual(response_content["name"], "test_trip")
 
     def test_update_trip(self):
         trip = Trip.objects.create(
