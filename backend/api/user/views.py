@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import permissions
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from django.contrib.auth import get_user_model
 from api.user.models import MyUser
 from django.http import HttpRequest
@@ -58,6 +59,7 @@ class UserViewSet(
     serializer_class = serializers.UserSerializer
     token_generator = default_token_generator
     permission_classes = [permissions.IsAuthenticated, ObjectOwnerPermission]
+    renderer_classes = [JSONRenderer, TemplateHTMLRenderer]
 
     SAFE_ACTIONS = [
         "create",
@@ -133,11 +135,20 @@ class UserViewSet(
     )
     def account_activation(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=kwargs)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.user
-        user.is_active = True
-        user.save()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if serializer.is_valid():
+            user = serializer.user
+            user.is_active = True
+            user.save()
+            return Response(
+                status=status.HTTP_200_OK,
+                template_name="activation_account_redirect.html",
+            )
+
+        return Response(
+            {"errors": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST,
+            template_name="activation_account_redirect.html",
+        )
 
     @action(methods=["post"], detail=False)
     def forgot_password(self, request, *args, **kwargs):
