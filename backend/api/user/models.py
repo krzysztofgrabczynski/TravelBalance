@@ -35,7 +35,7 @@ class FeedbackFromUser(models.Model):
         SUGGESTION = "Suggestion"
         OTHER = "Other"
 
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     message = models.TextField(max_length=200, blank=False)
     type = models.CharField(
         max_length=10, choices=FeedbackType.choices, blank=False
@@ -44,4 +44,5 @@ class FeedbackFromUser(models.Model):
     resolved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"User: {self.user.username} - {self.type}"
+        username = self.user.username if self.user else "---"
+        return f"User: {username} - {self.type}"
