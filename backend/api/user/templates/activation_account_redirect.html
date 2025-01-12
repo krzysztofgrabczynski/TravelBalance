@@ -33,9 +33,14 @@
         </div>
     </header>
     <div class="container">
-        <h1>Account Activated!</h1>
-        <p>Your account has been successfully activated.</p>
-        <p>You can now log in to the application and start first trip!</p>
+        {% if errors %}
+            <h1 style="color:rgb(245, 8, 8)">Activation Failed!</h1>
+            <p>Something went wrong with your account activation.</p>
+            <p>Please contact the administration at <a href="mailto:twincodecorp@gmail.com">twincodecorp@gmail.com</a>.</p>
+        {% else %}
+            <h1>Account Activated!</h1>
+            <p>Your account has been successfully activated.</p>
+            <p>You can now log in to the application and start your first trip!</p>
+        {% endif %}
     </div>
 </body>
-</html>
